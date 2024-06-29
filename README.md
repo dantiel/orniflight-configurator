@@ -1,6 +1,6 @@
 # OrniFlight Configurator
 
-![Betaflight](of_logo.jpg)
+![OrniFlight](of_logo.png)
 
 OrniFlight Configurator is a crossplatform configuration tool for the OrniFlight flight control system.
 
