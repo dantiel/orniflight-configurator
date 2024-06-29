@@ -1671,16 +1671,16 @@
         "message": "Загрузить значения профиля по умолчанию."
     },
     "pidTuningReceivedProfile": {
-        "message": "Установить профиль полетного контроллера: <strong class=\"message-positive\">$1</strong>"
+        "message": "Установить профиль полетного контроллера: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningReceivedRateProfile": {
-        "message": "Установить Rate профиль полетного контроллера: <strong class=\"message-positive\">$1</strong>"
+        "message": "Установить Rate профиль полетного контроллера: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedProfile": {
-        "message": "Загружен профиль: <strong class=\"message-positive\">$1</strong>"
+        "message": "Загружен профиль: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedRateProfile": {
-        "message": "Загружен Rate-профиль: <strong class=\"message-positive\">$1</strong>"
+        "message": "Загружен Rate-профиль: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningDataRefreshed": {
         "message": "Данные PID <strong>бновлены</strong>"
@@ -2237,7 +2237,7 @@
         "message": "Мастер"
     },
     "motorsNotice": {
-        "message": "<strong>Режим тестирования моторов / Предупреждение об арминге:</strong><br /> Перемещение ползунков или арминг вашего аппарата с помощью передающей аппаратуры может привести к <strong>вращению моторов</strong>.<br />Во избежание травм <strong class=\"message-negative\">снимите все пропеллеры</strong> перед использованием этого функционала.<br />Включение \"режима тестирования моторов\" также временно отключит режим \"Защиты От Неконтролируемого Полёта\" - всё это предотвратит дизарминг моторов во время стендового тестирования без пропеллеров.<br />"
+        "message": "<strong>Режим тестирования моторов / Предупреждение об арминге:</strong><br /> Перемещение ползунков или арминг вашего аппарата с помощью передающей аппаратуры может привести к <strong>вращению моторов</strong>.<br />Во избежание травм accentAlt class=\"message-negative\">снимите все пропеллеры</strong> перед использованием этого функционала.<br />Включение \"режима тестирования моторов\" также временно отключит режим \"Защиты От Неконтролируемого Полёта\" - всё это предотвратит дизарминг моторов во время стендового тестирования без пропеллеров.<br />"
     },
     "motorsEnableControl": {
         "message": "<strong>Я понимаю всю опасность</strong>, пропеллеры сняты - включить управление моторами и арминг, и отключить \"Режим Защиты От Неконтролируемого Полёта\"."

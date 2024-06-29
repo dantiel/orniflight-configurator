@@ -24,6 +24,7 @@ var css_dark = [
     './css/tabs-dark/osd-dark.css',
     './css/tabs-dark/power-dark.css',
     './css/tabs-dark/transponder-dark.css',
+    './css/tabs-dark/static_tab-dark.css',
 ]
 
 var DarkTheme = {

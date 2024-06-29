@@ -1,7 +1,8 @@
 :root {
-    --accent: #ffbb00;
+    --accent: #8998fe;
+    --accentAlt: #8998fe;
     --subtleAccent: #9c9c9c;
-    --quietHeader: #bf8606;
+    --quietHeader: #393c88;
     --defaultText: #ffffff;
     --subtleText: #c0c0c0;
     --mutedText: #d6d6d6;
@@ -11,6 +12,12 @@
     --paper: url(../../images/paper-dark.jpg);
     --ledAccent: #6e6e6e;
     --ledBackground: #424242;
+    --linkColor: #bfc6fb;
+    
+    --buttonBorderColor: #3a4192;
+    --headerBackgroundColor: var(--buttonBorderColor);
+    --contentBackgroundColor: #202020;
+    --contentBackgroundImage: url(../../images/feathers_dark.png);
 }
 
 body {
@@ -18,19 +25,25 @@ body {
 }
 
 a {
-    color: #ffc549;
+    color: var(--linkColor);
 }
 
 #options-window {
-    background-color: #393b3a;
+    background-color: var(--contentBackgroundColor);
+  
 }
 
 #content {
-    background-color: #393b3a;
+    /*background: var(--contentBackgroundColor) var(--contentBackgroundImage);
+    background-size: 400px;
+    */
+    background-color: var(--contentBackgroundColor);
 }
 
 #content.logopen {
-    background-color: #393b3a;
+
+    background: var(--contentBackgroundColor) var(--contentBackgroundImage);
+    background-size: 400px;
 }
 
 #status-bar {
@@ -44,7 +57,7 @@ a {
 dialog {
     background-color: #3a3d3c;
     color:white;
-    border: 1px solid #ffbb2a;
+    border: 1px solid var(--accentAlt);
 }
 
 /* Note */
@@ -58,16 +71,16 @@ dialog {
 }
 
 .content_toolbar .btn a {
-    border: 1px solid #ffbb2a;
+    border: 1px solid var(--accentAlt);
 }
 
 .content_toolbar .btn a.disabled {
-    border: 1px solid #ffbb2a;
+    border: 1px solid var(--accentAlt);
 }
 
 .gui_box {
     border: 1px solid #4d4d4d;
-    background-color: #393b3a;
+    background-color: var(--headerBackgroundColor);
 }
 
 .gui_box grey .block {
@@ -76,7 +89,7 @@ dialog {
 
 .gui_box grey .block .head {
     border-bottom: 1px solid #9c9c9c;
-    background-color: #393b3a;
+    background-color: var(--headerBackgroundColor);
 }
 
 .gui_box grey .block.info {
@@ -84,11 +97,11 @@ dialog {
 }
 
 .gui_warning {
-    background: #393b3a;
+    background: var(--headerBackgroundColor);
 }
 
 .gui_note {
-    background: #393b3a;
+    background: var(--headerBackgroundColor);
 }
 
 .grey {
@@ -96,29 +109,29 @@ dialog {
 }
 
 .gui_box_bottombar {
-    background-color: #393b3a;
+    background-color: var(--headerBackgroundColor);
 }
 
 .fixed_band {
-    background-color: #393b3a;
+    background-color: var(--headerBackgroundColor);
 }
 
 .default_btn a.disabled {
-    background-color: #393b3a;
-    border: 1px solid #ffbb2a;
+    background-color: var(--headerBackgroundColor);
+    border: 1px solid var(--accentAlt);
 }
 
 .small a {
-    border: 1px solid #ffbb2a;
+    border: 1px solid var(--accentAlt);
 }
 
 #quad-status_wrapper {
-    color: #393b3a;
+    color: var(--headerBackgroundColor);
 }
 
 button {
-    border: 1px solid #ffbb2a;
-    background-color: #ffbb2a;
+    border: 1px solid #8998fe;
+    background-color: #8998fe;
     color: black;
 }
 
@@ -152,14 +165,26 @@ button {
 }
 
 .jBox-container {
-    background: #393b3a;
+    background: var(--headerBackgroundColor);
     color:white;
 }
 
 .jBox-Modal .jBox-title,
 .jBox-Confirm .jBox-title {
-    background: #393b3a;
+    background: var(--headerBackgroundColor);
     border-bottom: 1px solid #9c9c9c;
     text-shadow: 0 1px 1px #ffffff;
     color: white;
 }
+
+
+.tooltip {
+  background-color: var(--sideBackground);
+}
+
+
+
+
+
+
+

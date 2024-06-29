@@ -41,9 +41,9 @@ var gitChangeSetId;
 var nwBuilderOptions = {
     version: '0.36.4',
     files: './dist/**/*',
-    macIcns: './src/images/bf_icon.icns',
-    macPlist: { 'CFBundleDisplayName': 'Betaflight Configurator'},
-    winIco: './src/images/bf_icon.ico',
+    macIcns: './src/images/of_icon.icns',
+    macPlist: { 'CFBundleDisplayName': 'OrniFlight Configurator'},
+    winIco: './src/images/of_icon.ico',
     zip: false
 };
 
@@ -670,10 +670,10 @@ function release_osx64() {
             target: path.join(RELEASE_DIR, getReleaseFilename('macOS', 'dmg')),
             basepath: path.join(APPS_DIR, pkg.name, 'osx64'),
             specification: {
-                title: 'Betaflight Configurator',
+                title: 'OrniFlight Configurator',
                 contents: [
                     { 'x': 448, 'y': 342, 'type': 'link', 'path': '/Applications' },
-                    { 'x': 192, 'y': 344, 'type': 'file', 'path': pkg.name + '.app', 'name': 'Betaflight Configurator.app' }
+                    { 'x': 192, 'y': 344, 'type': 'file', 'path': pkg.name + '.app', 'name': 'OrniFlight Configurator.app' }
                 ],
                 background: path.join(__dirname, 'assets/osx/dmg-background.png'),
                 format: 'UDZO',

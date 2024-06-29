@@ -495,20 +495,24 @@ MspHelper.prototype.process_data = function(dataHandler) {
             case MSPCodes.MSP_SERVO_CONFIGURATIONS:
                 SERVO_CONFIG = []; // empty the array as new data is coming in
                 if (semver.gte(CONFIG.apiVersion, "1.33.0")) {
-                    if (data.byteLength % 12 == 0) {
-                        for (var i = 0; i < data.byteLength; i += 12) {
-                            var arr = {
-                                'min':                      data.readU16(),
-                                'max':                      data.readU16(),
-                                'middle':                   data.readU16(),
-                                'rate':                     data.read8(),
-                                'indexOfChannelToForward':  data.readU8(),
-                                'reversedInputSources':     data.readU32()
-                            };
+                    // if (data.byteLength % 12 == 0) {
+                    for (var i = 0; i < Math.floor(data.byteLength / 12) * 12; i += 12) {                        
+                        var arr = {
+                            'min':                      data.readU16(),
+                            'max':                      data.readU16(),
+                            'middle':                   data.readU16(),
+                            'rate':                     data.read8(),
+                            'indexOfChannelToForward':  data.readU8(),
+                            'reversedInputSources':     data.readU32()
+                        };
 
-                            SERVO_CONFIG.push(arr);
-                        }
+                        SERVO_CONFIG.push(arr);
                     }
+                    
+                    SERVO_CONFIG.ornithopter_glide_deg = data.readU8() - 128;
+                    
+                    // }
+                    
                 } else if (semver.gte(CONFIG.apiVersion, "1.12.0")) {
                     if (data.byteLength % 14 == 0) {
                         for (var i = 0; i < data.byteLength; i += 14) {
@@ -1030,6 +1034,9 @@ MspHelper.prototype.process_data = function(dataHandler) {
                             FILTER_CONFIG.gyro_lowpass_dyn_max_hz = data.readU16();
                             FILTER_CONFIG.dterm_lowpass_dyn_min_hz = data.readU16();
                             FILTER_CONFIG.dterm_lowpass_dyn_max_hz = data.readU16();
+                            FILTER_CONFIG.ondas_gain = data.readU8();
+                            console.log("FILTER_CONFIG",FILTER_CONFIG);
+                            
                             if (semver.gte(CONFIG.apiVersion, "1.42.0")) {
                                 FILTER_CONFIG.dyn_notch_range = data.readU8();
                                 FILTER_CONFIG.dyn_notch_width_percent = data.readU8();
@@ -1096,9 +1103,14 @@ MspHelper.prototype.process_data = function(dataHandler) {
                                         ADVANCED_TUNING.dMinAdvance = data.readU8();
                                         ADVANCED_TUNING.useIntegratedYaw = data.readU8();
                                         ADVANCED_TUNING.integratedYawRelax = data.readU8();
-
+                                        ADVANCED_TUNING.flapBaseFrequency = data.readU8();
+                                        ADVANCED_TUNING.flapBaseAmplitude = data.readU8() - 128;
+                                        
+                                        console.log("ADVANCED_TUNING", ADVANCED_TUNING);
+                                        
                                         if(semver.gte(CONFIG.apiVersion, "1.42.0")) {
                                             ADVANCED_TUNING.itermRelaxCutoff = data.readU8();
+                                            
                                         }
                                     }
                                 }
@@ -1935,8 +1947,9 @@ MspHelper.prototype.crunch = function(code) {
                           .push16(FILTER_CONFIG.dyn_notch_q)
                           .push16(FILTER_CONFIG.dyn_notch_min_hz)
                           .push8(FILTER_CONFIG.gyro_rpm_notch_harmonics)
-                          .push8(FILTER_CONFIG.gyro_rpm_notch_min_hz);
+                          .push8(FILTER_CONFIG.gyro_rpm_notch_min_hz)
                 }
+                    buffer.push8(FILTER_CONFIG.ondas_gain);
             }
             break;
         case MSPCodes.MSP_SET_PID_ADVANCED:
@@ -1991,8 +2004,10 @@ MspHelper.prototype.crunch = function(code) {
                                           .push8(ADVANCED_TUNING.dMinGain)
                                           .push8(ADVANCED_TUNING.dMinAdvance)
                                           .push8(ADVANCED_TUNING.useIntegratedYaw)
-                                          .push8(ADVANCED_TUNING.integratedYawRelax);
-                                          
+                                          .push8(ADVANCED_TUNING.integratedYawRelax)
+                                          .push8(ADVANCED_TUNING.flapBaseFrequency)
+                                          .push8(ADVANCED_TUNING.flapBaseAmplitude + 128);
+                                    console.log("ADVANCED_TUNING",ADVANCED_TUNING);
                                     if(semver.gte(CONFIG.apiVersion, "1.42.0")) {
                                         buffer.push8(ADVANCED_TUNING.itermRelaxCutoff);
                                     }
@@ -2249,36 +2264,48 @@ MspHelper.prototype.sendServoConfigurations = function(onCompleteCallback) {
                     .push16(SERVO_CONFIG[i].middle)
                     .push8(SERVO_CONFIG[i].rate);
             }
+
             nextFunction = send_channel_forwarding;
         } else {
-            // send one at a time, with index
-
             var servoConfiguration = SERVO_CONFIG[servoIndex];
+            // send other servo config as a smaller package
+            if (SERVO_CONFIG.ornithopter_glide_deg && !SERVO_CONFIG.ornithopter_glide_deg_sent) {
+                buffer.push(SERVO_CONFIG.ornithopter_glide_deg + 128);
+                SERVO_CONFIG.ornithopter_glide_deg_sent = true;
+                console.log("added glide deg" , SERVO_CONFIG.ornithopter_glide_deg, buffer);
+            } else {
+                // send one at a time, with index
+                buffer.push8(servoIndex)
+                    .push16(servoConfiguration.min)
+                    .push16(servoConfiguration.max)
+                    .push16(servoConfiguration.middle)
+                    .push8(servoConfiguration.rate);
 
-            buffer.push8(servoIndex)
-                .push16(servoConfiguration.min)
-                .push16(servoConfiguration.max)
-                .push16(servoConfiguration.middle)
-                .push8(servoConfiguration.rate);
+                if (semver.lt(CONFIG.apiVersion, "1.33.0")) {
+                    buffer.push8(servoConfiguration.angleAtMin)
+                        .push8(servoConfiguration.angleAtMax);
+                }
 
-            if (semver.lt(CONFIG.apiVersion, "1.33.0")) {
-                buffer.push8(servoConfiguration.angleAtMin)
-                    .push8(servoConfiguration.angleAtMax);
+                var out = servoConfiguration.indexOfChannelToForward;
+                if (out == undefined) {
+                    out = 255; // Cleanflight defines "CHANNEL_FORWARDING_DISABLED" as "(uint8_t)0xFF"
+                }
+
+                servoIndex++;
+                console.log("added servo", servoIndex, buffer);
+                        
+                buffer.push8(out)
+                    .push32(servoConfiguration.reversedInputSources);
+                
             }
-
-            var out = servoConfiguration.indexOfChannelToForward;
-            if (out == undefined) {
-                out = 255; // Cleanflight defines "CHANNEL_FORWARDING_DISABLED" as "(uint8_t)0xFF"
-            }
-            buffer.push8(out)
-                .push32(servoConfiguration.reversedInputSources);
-
+                        
             // prepare for next iteration
-            servoIndex++;
-            if (servoIndex == SERVO_CONFIG.length) {
+            if (servoIndex == SERVO_CONFIG.length + 1) {
                 nextFunction = onCompleteCallback;
             }
         }
+        
+        
         MSP.send_message(MSPCodes.MSP_SET_SERVO_CONFIGURATION, buffer, false, nextFunction);
     }
 

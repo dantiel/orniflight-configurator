@@ -1,5 +1,5 @@
 .tab-transponder .text .disabled {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-transponder .gui_box span {

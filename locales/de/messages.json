@@ -1709,16 +1709,16 @@
         "message": "Standartprofilwerte geladen."
     },
     "pidTuningReceivedProfile": {
-        "message": "Geladenes Profil: <strong class=\"message-positive\">$1</strong>"
+        "message": "Geladenes Profil: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningReceivedRateProfile": {
-        "message": "Geladenes Rate Profil: <strong class=\"message-positive\">$1</strong>"
+        "message": "Geladenes Rate Profil: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedProfile": {
-        "message": "geladenes Profil: <strong class=\"message-positive\">$1</strong>"
+        "message": "geladenes Profil: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedRateProfile": {
-        "message": "gelandenes Rate Profil: <strong class=\"message-positive\">$1</strong>"
+        "message": "gelandenes Rate Profil: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningDataRefreshed": {
         "message": "PID Daten <strong>aktualisiert</strong>"
@@ -2279,7 +2279,7 @@
         "message": "Master"
     },
     "motorsNotice": {
-        "message": "<strong>Motor Testmodus - Hinweis:</strong><br />Bewegen der Regler oder Arming des Fluggerätes über die Fernsteuerung wird die Motoren <strong>anlaufen</strong> lassen.<br />Um Verletzungen zu vermeiden <strong class=\"message-negative\"> bitte ALLE Propeller entfernen</strong>.<br />Der Testmodus wird auch den Abhebeschutz deakvieren, so dass sich das Gerät ohne Propeller nicht selbst abschaltet.<br />"
+        "message": "<strong>Motor Testmodus - Hinweis:</strong><br />Bewegen der Regler oder Arming des Fluggerätes über die Fernsteuerung wird die Motoren <strong>anlaufen</strong> lassen.<br />Um Verletzungen zu vermeiden accentAlt class=\"message-negative\"> bitte ALLE Propeller entfernen</strong>.<br />Der Testmodus wird auch den Abhebeschutz deakvieren, so dass sich das Gerät ohne Propeller nicht selbst abschaltet.<br />"
     },
     "motorsEnableControl": {
         "message": "<strong>Ich weiß was ich mache</strong>, Propeller sind entfernt - Motorkontrolle aktivieren und Abhebeschutz deaktivieren."

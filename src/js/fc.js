@@ -411,6 +411,7 @@ var FC = {
             dyn_notch_min_hz:           0,
             gyro_rpm_notch_harmonics:   0,
             gyro_rpm_notch_min_hz:      0,
+            ondas_gain:                 0
         };
 
         ADVANCED_TUNING = {
@@ -450,6 +451,8 @@ var FC = {
             dMinAdvance:                0,
             useIntegratedYaw:           0,
             integratedYawRelax:         0,
+            flapBaseFrequency:          0,
+            flapBaseAmplitude:          0,
         };
 
         SENSOR_CONFIG = {
@@ -562,7 +565,9 @@ var FC = {
             dterm_notch_cutoff:             160,
             dterm_notch_hz:                 260,
             yaw_lowpass_hz:                 100,
+            ondas_gain:                     100
         };
+        
 
         DEFAULT_PIDS = [
             42, 85, 35, 20, 90,

@@ -1,5 +1,6 @@
 :root {
-    --accent: #ffbb00;
+    --accent:  #8998fe;
+    --accent3: #aeb6f7;
     --error: red; 
     --subtleAccent: silver;
     --quietText: #ffffff;
@@ -12,7 +13,11 @@
     --sideBackground: #ffffff;
     --paper: url(../../images/paper.jpg);
     --ledAccent: #adadad;
+    --hoverColor: #e1e2f8;
     --ledBackground: #e9e9e9;
+    --buttonHoverColor: #e1e2f8;
+    --buttonBorderColor: #3a4192;
+    --headerBackgroundColor:  var(--buttonBorderColor);
 }
 
 * {
@@ -79,7 +84,7 @@ a.disabled {
     margin-top: -45px;
     background-color: var(--accent);
     border-radius: 3px;
-    border: 1px solid #e8b423;
+    border: 1px solid  var(--accent3);
     color: #000;
     float: right;
     font-weight: bold;
@@ -92,7 +97,7 @@ a.disabled {
 }
 
 .cf_doc_version_bt a:hover {
-    background-color: #fecb3f;
+    background-color:  var(--hoverColor);
     transition: all ease 0.2s;
 }
 
@@ -146,7 +151,7 @@ input[type="number"]::-webkit-inner-spin-button {
 #logo {
     position: relative;
     float: left;
-    height: 70px;
+    height: 100px;
     z-index: 0;
     background-image: url(../images/light-wide-2.svg);
     background-repeat: no-repeat;
@@ -154,15 +159,15 @@ input[type="number"]::-webkit-inner-spin-button {
     background-position: left center;
     background-size: contain;
     margin-left: 15px;
-    margin-top: 14px;
+    margin-top: 7px;
 }
 
 .logo_text {
     position: absolute;
     height: 20px;
     width: 260px;
-    left: 80px;
-    top: 50px;
+    left: 104px;
+    top: 78px;
     color: #949494;
     opacity: 0.5;
     font-size: 10px;
@@ -518,7 +523,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 #log a {
     font-weight: normal;
-    color: #ffbb00;
+    color:  var(--accent);
 }
 
 #log a:hover {
@@ -1053,7 +1058,7 @@ dialog {
 /* Note */
 .note {
     background-color: #fff7cd;
-    border: 1px solid #ffe55f;
+    border: 1px solid  var(--buttonHoverColor);
     margin-bottom: 10px;
     margin-top: 0px;
     border-radius: 3px;
@@ -1089,7 +1094,7 @@ dialog {
     margin-right: 20px;
     background-color: var(--accent);
     border-radius: 3px;
-    border: 1px solid #dba718;
+    border: 1px solid  var(--buttonBorderColor);
     color: #000;
     float: right;
     font-weight: bold;
@@ -1105,7 +1110,7 @@ dialog {
 }
 
 .content_toolbar .btn a:hover {
-    background-color: #ffcc3e;
+    background-color:  var(--buttonHoverColor);
     transition: all ease 0.2s;
 }
 
@@ -1253,7 +1258,7 @@ dialog {
 }
 
 .gui_warning .gui_box_titlebar {
-    background-color: #dc0000;
+    background-color: #3a4192;
     background-image: linear-gradient(-45deg, rgba(255, 255, 255, .3) 10%, transparent 10%, transparent 20%,
         rgba(255, 255, 255, .3) 20%, rgba(255, 255, 255, .3) 30%, transparent 30%, transparent 40%,
         rgba(255, 255, 255, .3) 40%, rgba(255, 255, 255, .3) 50%, transparent 50%, transparent 60%,
@@ -1334,7 +1339,7 @@ dialog {
     margin-right: 20px;
     background-color: var(--accent);
     border-radius: 3px;
-    border: 1px solid #dba718;
+    border: 1px solid  var(--buttonBorderColor);
     color: #000;
     float: right;
     font-weight: bold;
@@ -1350,7 +1355,7 @@ dialog {
 }
 
 .fixed_band .save_btn a:hover {
-    background-color: #ffcc3f;
+    background-color:  var(--buttonHoverColor);
     transition: all ease 0.2s;
 }
 
@@ -1368,7 +1373,7 @@ dialog {
     text-align: center;
     background-color: var(--accent);
     border-radius: 4px;
-    border: 1px solid #dba718;
+    border: 1px solid  var(--buttonBorderColor);
     color: #000;
     font-weight: 600;
     font-size: 12px;
@@ -1385,7 +1390,7 @@ dialog {
 }
 
 .default_btn a:hover {
-    background-color: #ffcc3f;
+    background-color:  var(--buttonHoverColor);
     color: #000;
     text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
     transition: all ease 0.2s;
@@ -1394,7 +1399,7 @@ dialog {
 }
 
 .default_btn a:active {
-    background-color: #ffcc3f;
+    background-color:  var(--buttonHoverColor);
     transition: all ease 0.0s;
     box-shadow: inset 0px 1px 5px rgba(0, 0, 0, 0.35);
 }
@@ -1409,7 +1414,7 @@ dialog {
     margin-right: 10px;
     background-color: var(--accent);
     border-radius: 3px;
-    border: 1px solid #dba718;
+    border: 1px solid  var(--buttonBorderColor);
     color: #000;
     font-weight: bold;
     font-size: 12px;
@@ -1465,13 +1470,13 @@ dialog {
     background-color: var(--accent);
     text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
     color: #000;
-    border: 1px solid #dba718;
+    border: 1px solid  var(--buttonBorderColor);
     transition: all ease 0.2s;
 }
 
 .green a:hover {
-    background-color: #ffcc3f;
-    border: 1px solid #dba718;
+    background-color:  var(--buttonHoverColor);
+    border: 1px solid  var(--buttonBorderColor);
     text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
     color: #000;
     transition: all ease 0.2s;
@@ -1588,7 +1593,7 @@ dialog {
 
 .connect_b a.connect {
     background-color: var(--accent);
-    border: 1px solid #dba718;
+    border: 1px solid  var(--buttonBorderColor);
     background-image: url(../images/icons/cf_icon_usb2_white.svg);
     background-repeat: no-repeat;
     background-size: 44px;
@@ -1597,7 +1602,7 @@ dialog {
 }
 
 .connect_b a.connect:hover {
-    background-color: #ffcc3f;
+    background-color:  var(--buttonHoverColor);
 }
 
 .connect_b a.connect.active {
@@ -1634,7 +1639,7 @@ dialog {
 
 .firmware_b a.flash {
     background-color: var(--accent);
-    border: 1px solid #dba718;
+    border: 1px solid  var(--buttonBorderColor);
     background-image: url(../images/icons/cf_icon_flasher_white.svg);
     background-repeat: no-repeat;
     background-size: 30px;
@@ -1643,7 +1648,7 @@ dialog {
 }
 
 .firmware_b a.flash:hover {
-    background-color: #ffcc3f;
+    background-color:  var(--buttonHoverColor);
 }
 
 .firmware_b a.flash.active {
@@ -1953,7 +1958,7 @@ button {
 
 button.active {
     background-color: var(--accent);
-    border: 1px solid #dba718;
+    border: 1px solid  var(--buttonBorderColor);
     color: #000;
 }
 
@@ -2124,4 +2129,10 @@ input {
 #dialogResetToCustomDefaults-content {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+
+strong {
+  font-weight:bold;
+  color:  var(--accent); 
 }

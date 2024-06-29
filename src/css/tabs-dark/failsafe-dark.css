@@ -4,12 +4,12 @@
 }
 
 .tab-failsafe .number input:disabled {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
     color: grey;
 }
 
 .tab-failsafe .radioarea {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-failsafe .gui_box span {
@@ -22,7 +22,7 @@
 }
 
 .tab-failsafe .modename {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-failsafe .switchMode {

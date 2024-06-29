@@ -277,13 +277,13 @@ GUI_control.prototype.switchery = function() {
         if(DarkTheme.configEnabled) {
             var switchery = new Switchery(elem, {
               size: 'small',
-              color: '#ffbb00',
+              color: '#8998fe',
               secondaryColor: '#858585'
             });
         } else {
             var switchery = new Switchery(elem, {
               size: 'small',
-              color: '#ffbb00',
+              color: '#8998fe',
               secondaryColor: '#c4c4c4'
             });
         }
@@ -296,12 +296,12 @@ GUI_control.prototype.switchery = function() {
     $('.toggle').each(function(index, elem) {
         if(DarkTheme.configEnabled) {
             var switchery = new Switchery(elem, {
-              color: '#ffbb00',
+              color: '#8998fe',
               secondaryColor: '#858585'
             });
         } else {
             var switchery = new Switchery(elem, {
-                color: '#ffbb00',
+                color: '#8998fe',
                 secondaryColor: '#c4c4c4'
             });
         }
@@ -315,13 +315,13 @@ GUI_control.prototype.switchery = function() {
         if(DarkTheme.configEnabled) {
             var switchery = new Switchery(elem, {
                 className: 'switcherymid',
-                color: '#ffbb00',
+                color: '#8998fe',
                 secondaryColor: '#858585'
              });
         } else {
             var switchery = new Switchery(elem, {
                 className: 'switcherymid',
-                color: '#ffbb00',
+                color: '#8998fe',
                 secondaryColor: '#c4c4c4'
              });
         }

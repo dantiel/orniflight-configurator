@@ -1708,16 +1708,16 @@
         "message": "Valores padrão do perfil carregados."
     },
     "pidTuningReceivedProfile": {
-        "message": "Perfil aplicado a partir do controlador de voo: <strong class=\"message-positive\">$1</strong>"
+        "message": "Perfil aplicado a partir do controlador de voo: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningReceivedRateProfile": {
-        "message": "Perfil de taxas aplicado a partir do controlador de voo: <strong class=\"message-positive\">$1</strong>"
+        "message": "Perfil de taxas aplicado a partir do controlador de voo: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedProfile": {
-        "message": "Perfil Carregado: <strong class=\"message-positive\">$1</strong>"
+        "message": "Perfil Carregado: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedRateProfile": {
-        "message": "Perfil de taxas carregado: <strong class=\"message-positive\">$1</strong>"
+        "message": "Perfil de taxas carregado: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningDataRefreshed": {
         "message": "Dados do PID <strong>atualizados</strong>"
@@ -2278,7 +2278,7 @@
         "message": "Mestre"
     },
     "motorsNotice": {
-        "message": "<strong>Aviso sobre o modo de Teste de Motor / Armar:</strong><br />Mover os sliders ou armar a sua aeronave com o transmissor irá fazer com que os motores <strong>girem</strong>.<br />Para evitar ferimentos, <strong class=\"message-negative\">remova TODAS as hélices</strong> antes de usar esta função.<br />Habilitar o modo de Teste de Motor também irá temporariamente desabilitar a Prevenção contra voo acidental, afim de evitar o desarme da aeronave enquanto estiver testando na sua bancada, sem as hélices.<br />"
+        "message": "<strong>Aviso sobre o modo de Teste de Motor / Armar:</strong><br />Mover os sliders ou armar a sua aeronave com o transmissor irá fazer com que os motores <strong>girem</strong>.<br />Para evitar ferimentos, accentAlt class=\"message-negative\">remova TODAS as hélices</strong> antes de usar esta função.<br />Habilitar o modo de Teste de Motor também irá temporariamente desabilitar a Prevenção contra voo acidental, afim de evitar o desarme da aeronave enquanto estiver testando na sua bancada, sem as hélices.<br />"
     },
     "motorsEnableControl": {
         "message": "<strong>Eu entendo os riscos</strong>, as hélices foram removidas - habilitar o controle do motor, armar e desativar a Prevenção contra voo acidental."

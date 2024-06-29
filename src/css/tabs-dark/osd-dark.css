@@ -22,6 +22,6 @@
 }
 
 .tab-osd input[type='checkbox']:checked:after {
-    background: #ffbb00;
+    background:  var(--accent);
     border: 1px solid #404040;
 }

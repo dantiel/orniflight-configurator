@@ -1,8 +1,8 @@
 <div class="tab-pid_tuning toolbar_fixed_bottom">
-    <div class="content_wrapper">
+    <div class="content_wrapper"> 
         <div class="tab_title" i18n="tabPidTuning"></div>
         <div class="cf_doc_version_bt">
-            <a id="button-documentation" href="https://github.com/betaflight/betaflight/releases" target="_blank" rel="noopener noreferrer"></a>
+            <a id="button-documentation" href="https://github.com/dantiel/orniflight/releases" target="_blank" rel="noopener noreferrer"></a>
         </div>
         <div class="cf_column">
             <div class="profile single-field">
@@ -430,6 +430,30 @@
                             <tr class="dtermSetpointTransitionWarning">
                                 <td colspan="3">
                                     <span i18n="pidTuningDtermSetpointTransitionWarning"></span>
+                                </td>
+                            </tr>
+
+                            <tr class="flapBaseFrequency">
+                                <td><input type="number" name="flapBaseFrequency-number" step="1" min="1" max="1000"/></td>
+                                <td colspan="1">
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningFlapBaseFrequency"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningFlapBaseFrequencyHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="flapBaseAmplitude">
+                                <td><input type="number" name="flapBaseAmplitude-number" step="1" min="-100" max="100"/></td>
+                                <td colspan="1">
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningFlapBaseAmplitude"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningFlapBaseAmplitudeHelp"></div>
+                                    </div>
                                 </td>
                             </tr>
 
@@ -899,6 +923,35 @@
                         </table>
 
                         <table class="filterTable">
+                          
+                            <tr>
+                                <th colspan="2">
+                                    <div class="pid_mode">
+                                        <div i18n="pidTuningFlappingFiltersGroup" />
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningFlappingFilterHelp" />
+                                    </div>
+                                </th>
+                            </tr>
+
+
+
+                            <tr class="ondasGain">
+                                <td>
+                                    <span class="groupSwitchValue">
+                                        <span class="inputSwitch"><input type="checkbox" id="ondasEnabled" class="toggle" /></span>
+                                        <span class="inputValue"><input type="number" name="ondasGain" step="1" min="1" max="100"/></span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningOndasGain"></span></strong>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            
                             <tr>
                                 <th colspan="2">
                                     <div class="pid_mode">

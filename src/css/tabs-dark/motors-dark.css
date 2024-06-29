@@ -1,5 +1,5 @@
 .tab-motors .plot_control {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-motors .plot_control select {
@@ -8,11 +8,11 @@
 }
 
 .tab-motors .motorblock {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-motors .m-block {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-motors .m-block .label {
@@ -20,7 +20,7 @@
 }
 
 .tab-motors .m-block .meter-bar {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-motors .motor_testing .notice {

@@ -1,5 +1,5 @@
 .tab-setup #interactive_block {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-setup .attitude_info {
@@ -12,5 +12,5 @@
 }
 
 .tab-setup #interactive_block a.reset:hover {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }

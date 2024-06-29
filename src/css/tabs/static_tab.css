@@ -1,9 +1,13 @@
 #tab-static {
-    background-color: inherit;
+/*    background-color: inherit;
     background-image: url(/images/osd-bg-1.jpg);
     background-attachment: fixed;
     background-size: cover;
     background-position: bottom right;
+*/
+    background-image: url(/images/feathers_white.png);
+    background-repeat: repeat;
+    background-size: 500px;
 }
 
 #tab-static span {
@@ -32,6 +36,12 @@
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 40px;
-    background-color: inherit;
+    background-color: rgba(255,255,255,0.7);/*inherit;*/
     max-width: 650px;
+/*    opacity: 0.7;*/
 }
+
+
+
+
+

@@ -611,7 +611,7 @@
     },
 
     "defaultWelcomeIntro": {
-        "message": "Welcome to <strong>Betaflight - Configurator</strong>, a utility designed to simplify updating, configuring and tuning of your flight controller."
+        "message": "Welcome to <strong>OrniFlight - Configurator</strong>, a utility designed to simplify updating, configuring and tuning of your flight controller."
     },
 
     "defaultWelcomeHead": {
@@ -1660,6 +1660,36 @@
     "pidTuningFeedforwardTransition": {
         "message": "Feedforward transition"
     },
+    
+    
+    "pidTuningFlappingFiltersGroup": {
+        "message": "Flapping Filters"
+    },
+    "pidTuningOndasGain": {
+        "message": "ONDAS gain"
+    },
+    "servosOrnithopterGlideDegree": {
+        "message": "Ornithopter glide degree"
+    },
+    "pidTuningFlapBaseFrequency": {
+        "message": "Flap base frequency"
+    },
+    "pidTuningFlapBaseAmplitude": {
+        "message": "Flap base amplitude"
+    },
+    "pidTuningFlapBaseFrequencyHelp": {
+        "message": "Controls the speed of the flapping motion. Higher values result in slower wing movements."
+    },
+    "pidTuningFlapBaseAmplitudeHelp": {
+        "message": "Controls the extent of the wing movement. Higher values result in larger wing movements."
+    },
+    "servosOrnithopterSettingsGroup": {
+      "message": "Ornithopter Servo Settings"
+    },
+    "servosOrnithopterSettingsHelp": {
+      "message": "Settings for flapping servos. <strong>Glide</strong> degree set the deviation of flap centre from glide position when throttle is off and servos are not flapping."
+    },
+
     "pidTuningFeedforwardTransitionHelp": {
         "message": "With this parameter, the Feedforward term can be reduced near the center of the sticks, which results in smoother end of flips and rolls.<br> The value represents a point of stick deflection: 0 - stick centered, 1 - full deflection. When the stick is above that point, Feedforward is kept constant at its configured value. When the stick is positioned below that point, Feedforward is reduced proportionally, reaching 0 at the stick center position.<br> Value of 1 gives maximum smoothing effect, while value of 0 keeps the Feedforward fixed at its configured value over the whole stick range."
     },
@@ -1812,16 +1842,16 @@
         "message": "Loaded default profile values."
     },
     "pidTuningReceivedProfile": {
-        "message": "Flight controller set Profile: <strong class=\"message-positive\">$1</strong>"
+        "message": "Flight controller set Profile: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningReceivedRateProfile": {
-        "message": "Flight controller set Rateprofile: <strong class=\"message-positive\">$1</strong>"
+        "message": "Flight controller set Rateprofile: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedProfile": {
-        "message": "Loaded Profile: <strong class=\"message-positive\">$1</strong>"
+        "message": "Loaded Profile: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedRateProfile": {
-        "message": "Loaded Rateprofile: <strong class=\"message-positive\">$1</strong>"
+        "message": "Loaded Rateprofile: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningDataRefreshed": {
         "message": "PID data <strong>refreshed</strong>"
@@ -2116,6 +2146,9 @@
     "adjustmentsFunction30": {
         "message": "LED Profile Selection"
     },
+    "adjustmentsFunction31": {
+        "message": "Flap Speed"
+    },
     "adjustmentsSave": {
         "message": "Save"
     },
@@ -2391,7 +2424,7 @@
         "message": "Master"
     },
     "motorsNotice": {
-        "message": "<strong>Motor Test Mode / Arming Notice:</strong><br />Moving the sliders or arming your craft with the transmitter will cause the motors to <strong>spin up</strong>.<br />In order to prevent injury <strong class=\"message-negative\">remove ALL propellers</strong> before using this feature.<br />Enabling motor test mode will also temporarily disable Runaway Takeoff Prevention, to stop it from disarming the craft when bench testing without propellers.<br />"
+        "message": "<strong>Motor Test Mode / Arming Notice:</strong><br />Moving the sliders or arming your craft with the transmitter will cause the motors to <strong>spin up</strong>.<br />In order to prevent injury accentAlt class=\"message-negative\">remove ALL propellers</strong> before using this feature.<br />Enabling motor test mode will also temporarily disable Runaway Takeoff Prevention, to stop it from disarming the craft when bench testing without propellers.<br />"
     },
     "motorsEnableControl": {
         "message": "<strong>I understand the risks</strong>, the propellers are removed - enable motor control and arming, and disable Runaway Takeoff Prevention."
@@ -3347,6 +3380,9 @@
     },
     "pidTuningLowpassFilterHelp": {
         "message": "The Lowpass Filters can have two variants: static and dynamic. For a determined lowpass filter number only one (static or dynamic) can be enabled at the same time. The static only has a Cutoff that is a value that defines in some way where the filter starts. The dynamic defines a min and max values, that is the range where the Cutoff is placed. This Cutoff moves from min to max at the same time than you move the throttle stick."
+    },
+    "pidTuningFlappingFilterHelp": {
+        "message": "Flapping Filters enhance the stability and control of flapping wing motion by applying advanced filtering techniques. ONDAS (Oscillating Normalized Dynamic Adaptive Stabilization) Gain adjusts the influence of stabilization throughout the flapping motion. Higher values enhance stability by increasing adaptive control, while lower values reduce stabilization, minimizing attenuation at the extrema of flap phases for more natural dynamics."
     },
     "pidTuningGyroNotchFiltersGroup": {
         "message": "Gyro Notch Filters"

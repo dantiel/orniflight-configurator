@@ -11,7 +11,7 @@
 }
 
 .tab-pid_tuning .throttle_limit th {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
     border-bottom: 1px solid #5e5e5e;
 }
 
@@ -57,12 +57,12 @@
 }
 
 .tab-pid_tuning .tab_container {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-pid_tuning .tab_container td {
     background-color: #535655;
-    border-right: 1px solid #393b3a;
+    border-right: 1px solid  var(--headerBackgroundColor);
 }
 
 .tab-pid_tuning .tab_container td:last-child {
@@ -70,17 +70,17 @@
 }
 
 .tab-pid_tuning .tab_container td.active {
-    background-color: #ffbb2a;
+    background-color:  var(--headerBackgroundColor);
     color: black;
 }
 
 .tab-pid_tuning .tab_container td.active a {
-    background-color: #ffbb2a;
+    background-color:  var(--headerBackgroundColor);
     color: black;
 }
 
 .fancy.header {
-  background-color: #393b3a;
+  background-color:  var(--headerBackgroundColor);
 }
 
 .pid_roll {
@@ -103,7 +103,7 @@
 }
 
 .pid_titlebar {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-pid_tuning .number input {
@@ -116,7 +116,7 @@
 }
 
 .tab-pid_tuning .bottomarea {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-pid_tuning .profile select {
@@ -130,11 +130,11 @@
 }
 
 .tabarea {
-    background: #393b3a;
+    background:  var(--headerBackgroundColor);
 }
 
 .tab-pid_tuning .regular-button.disabled {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-pid_tuning .sliderLabels th {
@@ -155,5 +155,5 @@
 }
 
 .tab-pid_tuning .slidersWarning {
-    background: #542415;
+    background: #1f2356;
 }

@@ -1618,16 +1618,16 @@
         "message": "Valori predefiniti del profilo caricati"
     },
     "pidTuningReceivedProfile": {
-        "message": "Profilo del controllore di volo: <strong class=\"message-positive\">$1</strong>"
+        "message": "Profilo del controllore di volo: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningReceivedRateProfile": {
-        "message": "Profilo velocità controllore di volo: <strong class=\"message-positive\">$1</strong>"
+        "message": "Profilo velocità controllore di volo: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedProfile": {
-        "message": "Profilo caricato: <strong class=\"message-positive\">$1</strong>"
+        "message": "Profilo caricato: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedRateProfile": {
-        "message": "Profilo Velocità Caricato: <strong class=\"message-positive\">$1</strong>"
+        "message": "Profilo Velocità Caricato: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningDataRefreshed": {
         "message": "dati dei PID <strong>aggiornati</strong>"
@@ -2164,7 +2164,7 @@
         "message": "Master"
     },
     "motorsNotice": {
-        "message": "<strong>Avviso Modalità Test Motore / Armamento motore:</strong> <br /> spostare i cursori o armare il modello con il radiocomando farà sì che i motori <strong>girino</strong>. <br /> al fine di evitare lesioni <strong class=\"message-negative\"> rimuovere tutte le eliche </strong> prima di utilizzare questa funzionalità. <br /> Attivare la modalità di prova del motore disattiverà temporaneamente anche la prevenzione decollo fuori controllo, per impedirgli di disarmare il modello quando si sta eseguendo dei test senza eliche. <br />"
+        "message": "<strong>Avviso Modalità Test Motore / Armamento motore:</strong> <br /> spostare i cursori o armare il modello con il radiocomando farà sì che i motori <strong>girino</strong>. <br /> al fine di evitare lesioni accentAlt class=\"message-negative\"> rimuovere tutte le eliche </strong> prima di utilizzare questa funzionalità. <br /> Attivare la modalità di prova del motore disattiverà temporaneamente anche la prevenzione decollo fuori controllo, per impedirgli di disarmare il modello quando si sta eseguendo dei test senza eliche. <br />"
     },
     "motorsEnableControl": {
         "message": "<strong>Ho compreso i rischi</strong>, le eliche sono state rimosse - abilita il controllo motori e armamento motori e disabilita prevenzione decollo fuori controllo."

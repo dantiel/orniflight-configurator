@@ -67,7 +67,7 @@ function setupAnalytics(result) {
 
     var debugMode = typeof process === "object" && process.versions['nw-flavor'] === 'sdk';
 
-    analytics = new Analytics('UA-123002063-1', userId, 'Betaflight Configurator', CONFIGURATOR.version, CONFIGURATOR.gitChangesetId, GUI.operating_system, checkForDebugVersions, optOut, debugMode, getBuildType());
+    analytics = new Analytics('UA-123002063-1', userId, 'OrniFlight Configurator', CONFIGURATOR.version, CONFIGURATOR.gitChangesetId, GUI.operating_system, checkForDebugVersions, optOut, debugMode, getBuildType());
 
     function logException(exception) {
         analytics.sendException(exception.stack);
@@ -135,7 +135,7 @@ function startProcess() {
     }
 
     if (!GUI.isOther() && GUI.operating_system !== 'ChromeOS') {
-        checkForConfiguratorUpdates();
+        //checkForConfiguratorUpdates();
     }
 
     // log webgl capability
@@ -308,6 +308,11 @@ function startProcess() {
 
     // options
     $('a#options').click(function () {
+
+        if (GUI.isNWJS()) {
+            var win = GUI.nwGui.Window.get();
+            //win.showDevTools();
+        }
         var el = $(this);
 
         if (!el.hasClass('active')) {
@@ -350,7 +355,7 @@ function startProcess() {
 
                             ConfigStorage.set({'checkForConfiguratorUnstableVersions': checked});
 
-                            checkForConfiguratorUpdates();
+                            //checkForConfiguratorUpdates();
                         });
                     });
                 } else {
@@ -566,8 +571,8 @@ function setDarkTheme(enabled) {
 }
 
 function checkForConfiguratorUpdates() {
-    var releaseChecker = new ReleaseChecker('configurator', 'https://api.github.com/repos/betaflight/betaflight-configurator/releases');
-
+    var releaseChecker = new ReleaseChecker('configurator', 'https://api.github.com/repos/dantiel/orniflight-configurator/releases');
+    
     releaseChecker.loadReleaseData(notifyOutdatedVersion);
 }
 
@@ -764,9 +769,9 @@ function getConfiguratorVersion() {
 }
 
 function updateTopBarVersion(firmwareVersion, firmwareId, hardwareId) {
-    var versionText = getConfiguratorVersion() + '<br />';
+    var versionText = getConfiguratorVersion() + " | ";// + '<br />';
 
-    versionText = versionText + getFirmwareVersion(firmwareVersion, firmwareId) + '<br />';
+    versionText = versionText + getFirmwareVersion(firmwareVersion, firmwareId) + " | ";// + '<br />';
 
     versionText = versionText + getTargetVersion(hardwareId);
 

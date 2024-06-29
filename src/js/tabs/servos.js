@@ -30,7 +30,6 @@ TABS.servos.initialize = function (callback) {
     get_servo_configurations();
     
     function update_ui() {
-            
         if (semver.lt(CONFIG.apiVersion, "1.12.0") || SERVO_CONFIG.length == 0) {
             
             $(".tab-servos").removeClass("supported");
@@ -59,6 +58,9 @@ TABS.servos.initialize = function (callback) {
         function process_servos(name, alternate, obj) {
         
             $('div.supported_wrapper').show();
+            
+            var ornithopterGlideDegreeNumberElement = $('input[name="ornithopterGlideDegree-number"]');
+            ornithopterGlideDegreeNumberElement.val(SERVO_CONFIG.ornithopter_glide_deg / 1);
             
             $('div.tab-servos table.fields').append('\
                 <tr> \
@@ -124,6 +126,8 @@ TABS.servos.initialize = function (callback) {
                 SERVO_CONFIG[info.obj].rate = val;
             });
             
+            SERVO_CONFIG.ornithopter_glide_deg = parseInt($('input[name=ornithopterGlideDegree-number]', this).val());
+            SERVO_CONFIG.ornithopter_glide_deg_sent = false;
             //
             // send data to FC
             //

@@ -1776,16 +1776,16 @@
         "message": "Charger les valeur par défaut du profil."
     },
     "pidTuningReceivedProfile": {
-        "message": "Profil du contrôleur de vol activé: <strong class=\"message-positive\">$1</strong>"
+        "message": "Profil du contrôleur de vol activé: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningReceivedRateProfile": {
-        "message": "Rateprofile du contrôleur de vol activé: <strong class=\"message-positive\">$1</strong>"
+        "message": "Rateprofile du contrôleur de vol activé: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedProfile": {
-        "message": "Profil chargé: <strong class=\"message-positive\">$1</strong>"
+        "message": "Profil chargé: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedRateProfile": {
-        "message": "Rateprofile chargé: <strong class=\"message-positive\">$1</strong>"
+        "message": "Rateprofile chargé: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningDataRefreshed": {
         "message": "PID données <strong>raffraîchit</strong>"
@@ -2343,7 +2343,7 @@
         "message": "Maître"
     },
     "motorsNotice": {
-        "message": "<strong>Mode test moteurs / Attention armement:</strong><br />Bouger les curseurs ou armer l'appareil avec la télécommande fait <<strong>tourner les moteurs</strong>.<br />Afin d'éviter de graves blessures <strong class=\"message-negative\">retirer TOUTES les hélices</strong> avant d'activer cette fonction.<br />Le mode test moteurs désactive temporairement la prévention de décollage intempestif, afin d’empêcher le désarmement pendant les essais sans hélices.<br />"
+        "message": "<strong>Mode test moteurs / Attention armement:</strong><br />Bouger les curseurs ou armer l'appareil avec la télécommande fait <<strong>tourner les moteurs</strong>.<br />Afin d'éviter de graves blessures accentAlt class=\"message-negative\">retirer TOUTES les hélices</strong> avant d'activer cette fonction.<br />Le mode test moteurs désactive temporairement la prévention de décollage intempestif, afin d’empêcher le désarmement pendant les essais sans hélices.<br />"
     },
     "motorsEnableControl": {
         "message": "<strong>Je comprends les riques</strong>, les hélices sont retirées - autoriser l'armement et le contrôle des moteurs et désactiver le Runaway Takeoff Prevention."

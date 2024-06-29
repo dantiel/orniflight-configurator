@@ -13,11 +13,11 @@
 }
 
 .tab-landing .content_top {
-    height: 140px;
+    height: 210px;
     background: #fff;
     padding: 20px;
-    background-image: url(../../images/pattern.png);
-    background-size: 300px;
+    background-image: url(../../images/feathers_white.png);
+    background-size: 400px;
 }
 
 .tab-landing .content_mid {
@@ -127,11 +127,11 @@
 }
 
 .tab-landing .content_mid .text1 {
-    width: 37%;
+    width: 47%;
 }
 
 .tab-landing .content_mid .text2 {
-    width: 40%;
+    width: 53%;
 }
 
 .tab-landing .content_mid .text2 ul {

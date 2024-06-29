@@ -1712,16 +1712,16 @@
         "message": "Cargados valores por defecto del perfil."
     },
     "pidTuningReceivedProfile": {
-        "message": "Controlador de vuelo establecido Perfil: <strong class=\"message-positive\">$1</strong>"
+        "message": "Controlador de vuelo establecido Perfil: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningReceivedRateProfile": {
-        "message": "Controlador de vuelo establecido Perfil de Tasas: <strong class=\"message-positive\">$1</strong>"
+        "message": "Controlador de vuelo establecido Perfil de Tasas: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedProfile": {
-        "message": "Cargado Perfil: <strong class=\"message-positive\">$1</strong>"
+        "message": "Cargado Perfil: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedRateProfile": {
-        "message": "Cargado Perfil de Tasas: <strong class=\"message-positive\">$1</strong>"
+        "message": "Cargado Perfil de Tasas: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningDataRefreshed": {
         "message": "Datos PID <strong>refrescados</strong>"
@@ -2282,7 +2282,7 @@
         "message": "Maestro"
     },
     "motorsNotice": {
-        "message": "<strong>Aviso Modo Test de Motor / Armado:</strong><br />Mover los controles deslizantes o armar la aeronave con el transmisor provocará que los motores <strong>giren</strong>.<br />Para evitar lesiones <strong class=\"message-negative\">quita TODAS las hélices</strong> antes de utilizar esta funcionalidad.<br />Activar el modo test de motor también desactivará temporalmente la Protección de Despegue Incontrolado, para evitar que desarme la aeronave mientras está en el banco de pruebas sin hélices.<br />"
+        "message": "<strong>Aviso Modo Test de Motor / Armado:</strong><br />Mover los controles deslizantes o armar la aeronave con el transmisor provocará que los motores <strong>giren</strong>.<br />Para evitar lesiones accentAlt class=\"message-negative\">quita TODAS las hélices</strong> antes de utilizar esta funcionalidad.<br />Activar el modo test de motor también desactivará temporalmente la Protección de Despegue Incontrolado, para evitar que desarme la aeronave mientras está en el banco de pruebas sin hélices.<br />"
     },
     "motorsEnableControl": {
         "message": "<strong>Entiendo los riesgos</strong>, las hélices están quitadas - activar control de motor y armado y desactivar la Protección de Despegue Incontrolado."

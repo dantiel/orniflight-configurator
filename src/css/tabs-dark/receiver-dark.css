@@ -4,7 +4,7 @@
 }
 
 .tab-receiver .bars .meter-bar {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-receiver .bars .meter-bar .label {
@@ -12,7 +12,7 @@
 }
 
 .tab-receiver .tunings {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-receiver .tunings table td {
@@ -20,7 +20,7 @@
 }
 
 .tab-receiver .tunings table tr:nth-child(odd) {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-receiver .tunings table input {

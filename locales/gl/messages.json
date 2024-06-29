@@ -1783,16 +1783,16 @@
         "message": "Cargados os valeres por defecto do perfil."
     },
     "pidTuningReceivedProfile": {
-        "message": "Perfil do controlador de voo seleccionado: <strong class=\"message-positive\">$1</strong>"
+        "message": "Perfil do controlador de voo seleccionado: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningReceivedRateProfile": {
-        "message": "Perfil de tasas do controlador de voo seleccionado: <strong class=\"message-positive\">$1</strong>"
+        "message": "Perfil de tasas do controlador de voo seleccionado: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedProfile": {
-        "message": "Perfil cargado: <strong class=\"message-positive\">$1</strong>"
+        "message": "Perfil cargado: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedRateProfile": {
-        "message": "Perfil de tasas cargado: <strong class=\"message-positive\">$1</strong>"
+        "message": "Perfil de tasas cargado: accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningDataRefreshed": {
         "message": "Datos PID <strong>actualizados</strong>"
@@ -2353,7 +2353,7 @@
         "message": "Master"
     },
     "motorsNotice": {
-        "message": "<strong>Modo proba de motor / Aviso de armado: </strong><br/> Mover os controis ou armar a aeronave coa emisora ​​fará que os motores <strong> xiren </strong>.<br/> Para previr lesións <strong class=\"message-negative\">retirar Tódalas hélices </strong> antes de empregar esta función. <br/> A habilitación do modo de proba do motor tamén desactivará temporalmente a prevención de despegue para evitar que desarme a nave cando o banco fai a proba sen hélices.<br/>"
+        "message": "<strong>Modo proba de motor / Aviso de armado: </strong><br/> Mover os controis ou armar a aeronave coa emisora ​​fará que os motores <strong> xiren </strong>.<br/> Para previr lesións accentAlt class=\"message-negative\">retirar Tódalas hélices </strong> antes de empregar esta función. <br/> A habilitación do modo de proba do motor tamén desactivará temporalmente a prevención de despegue para evitar que desarme a nave cando o banco fai a proba sen hélices.<br/>"
     },
     "motorsEnableControl": {
         "message": "<strong> Comprendo os riscos </strong>, as hélices están retiradas: permítese o control e armado do motor, e desactívase a prevención do despegue de Runaway."

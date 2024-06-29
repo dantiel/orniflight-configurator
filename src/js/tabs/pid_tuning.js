@@ -274,6 +274,11 @@ TABS.pid_tuning.initialize = function (callback) {
             var feedforwardTransitionNumberElement = $('input[name="feedforwardTransition-number"]');
             feedforwardTransitionNumberElement.val(ADVANCED_TUNING.feedforwardTransition / 100);
 
+            var flapBaseFrequencyNumberElement = $('input[name="flapBaseFrequency-number"]');
+            flapBaseFrequencyNumberElement.val(ADVANCED_TUNING.flapBaseFrequency / 1);
+            var flapBaseAmplitudeNumberElement = $('input[name="flapBaseAmplitude-number"]');
+            flapBaseAmplitudeNumberElement.val(ADVANCED_TUNING.flapBaseAmplitude / 1);
+
             // AntiGravity Mode
             var antiGravityModeSelect = $('.antigravity select[id="antiGravityMode"]');
             antiGravityModeSelect.change(function () {
@@ -341,6 +346,8 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.integratedYaw').hide();
         }
 
+        $('.pid_filter input[name="ondasGain"]').val(FILTER_CONFIG.ondas_gain);
+
         if (semver.gte(CONFIG.apiVersion, "1.42.0")) {
             $('.smartfeedforward').hide();
 
@@ -353,6 +360,7 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.pid_filter input[name="dynamicNotchWidthPercent"]').val(FILTER_CONFIG.dyn_notch_width_percent);
             $('.pid_filter input[name="dynamicNotchQ"]').val(FILTER_CONFIG.dyn_notch_q);
             $('.pid_filter input[name="dynamicNotchMinHz"]').val(FILTER_CONFIG.dyn_notch_min_hz);
+
 
             $('.rpmFilter').toggle(MOTOR_CONFIG.use_dshot_telemetry);
 
@@ -469,6 +477,14 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.pid_filter input[name="dTermNotchFrequency"]').val(checked ? hz : 0).attr('disabled', !checked)
                     .attr("min", checked ? 1 : 0).change();
             $('.pid_filter input[name="dTermNotchCutoff"]').attr('disabled', !checked).change();
+        });
+
+        $('input[id="ondasEnabled"]').change(function() {
+            var checked = $(this).is(':checked');
+            var gain = FILTER_CONFIG.ondas_gain > 0 ? FILTER_CONFIG.ondas_gain : FILTER_DEFAULT.ondas_gain;
+
+            $('.pid_filter input[name="ondasGain"]').val(checked ? gain : 0).attr('disabled', !checked)
+                    .attr("min", checked ? 1 : 0).change();
         });
 
         $('input[id="gyroLowpassEnabled"]').change(function() {
@@ -606,6 +622,7 @@ TABS.pid_tuning.initialize = function (callback) {
         $('input[id="dtermLowpassDynEnabled"]').prop('checked', FILTER_CONFIG.dterm_lowpass_dyn_min_hz != 0 && FILTER_CONFIG.dterm_lowpass_dyn_min_hz < FILTER_CONFIG.dterm_lowpass_dyn_max_hz).change();
         $('input[id="dtermLowpass2Enabled"]').prop('checked', FILTER_CONFIG.dterm_lowpass2_hz != 0).change();
         $('input[id="yawLowpassEnabled"]').prop('checked', FILTER_CONFIG.yaw_lowpass_hz != 0).change();
+        $('input[id="ondasEnabled"]').prop('checked', FILTER_CONFIG.ondas_gain != 0).change();
     }
 
     function form_to_pid_and_rc() {
@@ -712,6 +729,9 @@ TABS.pid_tuning.initialize = function (callback) {
 
             ADVANCED_TUNING.feedforwardTransition = parseInt($('input[name="feedforwardTransition-number"]').val() * 100);
 
+            ADVANCED_TUNING.flapBaseFrequency = parseInt($('input[name="flapBaseFrequency-number"]').val() * 1);
+            ADVANCED_TUNING.flapBaseAmplitude = parseInt($('input[name="flapBaseAmplitude-number"]').val() * 1);
+
             ADVANCED_TUNING.antiGravityMode = $('select[id="antiGravityMode"]').val();
         }
 
@@ -751,6 +771,8 @@ TABS.pid_tuning.initialize = function (callback) {
             FILTER_CONFIG.gyro_rpm_notch_harmonics = rpmFilterEnabled ? parseInt($('.pid_filter input[name="rpmFilterHarmonics"]').val()) : 0;
             FILTER_CONFIG.gyro_rpm_notch_min_hz = parseInt($('.pid_filter input[name="rpmFilterMinHz"]').val());
         }
+
+        FILTER_CONFIG.ondas_gain = parseInt($('.pid_filter input[name="ondasGain"]').val());
     }
 
     function showAllPids() {
@@ -1340,7 +1362,7 @@ TABS.pid_tuning.initialize = function (callback) {
                 context.moveTo(midx, midy);
                 context.quadraticCurveTo(midxr, midyr, canvasWidth, 0);
                 context.lineWidth = 2;
-                context.strokeStyle = '#ffbb00';
+                context.strokeStyle = '#8998fe';
                 context.stroke();
             }, 0);
         }).trigger('input');
@@ -2038,6 +2060,7 @@ TABS.pid_tuning.updateRatesLabels = function() {
 };
 
 TABS.pid_tuning.updateFilterWarning = function() {
+    var ondasEnabled = $('input[id="ondasEnabled"]').is(':checked');
     var gyroDynamicLowpassEnabled = $('input[id="gyroLowpassDynEnabled"]').is(':checked');
     var gyroLowpass1Enabled = $('input[id="gyroLowpassEnabled"]').is(':checked');
     var dtermDynamicLowpassEnabled = $('input[id="dtermLowpassDynEnabled"]').is(':checked');

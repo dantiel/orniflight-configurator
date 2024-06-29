@@ -1,10 +1,10 @@
 .tab-onboard_logging .regular-button.disabled {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-onboard_logging .dataflash-contents,
 .tab-onboard_logging .sdcard-contents {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-onboard_logging .dataflash-used,
@@ -13,7 +13,7 @@
 }
 
 .tab-onboard_logging progress::-webkit-progress-bar {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-onboard_logging .blackboxRate select,
@@ -24,5 +24,5 @@
 }
 
 .tab-onboard_logging .sdcard-icon {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }

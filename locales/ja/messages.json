@@ -1712,16 +1712,16 @@
         "message": "デフォルトProfileをロードしました。"
     },
     "pidTuningReceivedProfile": {
-        "message": "Profileをセット:<strong class=\"message-positive\">$1</strong>"
+        "message": "Profileをセット:accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningReceivedRateProfile": {
-        "message": "Rateprofileをセット:<strong class=\"message-positive\">$1</strong>"
+        "message": "Rateprofileをセット:accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedProfile": {
-        "message": "Profileをロードしました:<strong class=\"message-positive\">$1</strong>"
+        "message": "Profileをロードしました:accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedRateProfile": {
-        "message": "Rateprofileをロードしました:<strong class=\"message-positive\">$1</strong>"
+        "message": "Rateprofileをロードしました:accentAlt class=\"message-positive\">$1</strong>"
     },
     "pidTuningDataRefreshed": {
         "message": "PIDデータ <strong>更新しました</strong>"
@@ -2282,7 +2282,7 @@
         "message": "Master"
     },
     "motorsNotice": {
-        "message": "<strong>モーターテストモード / アーミングでの注意:</strong><br />スライダーを動かすか、又は送信機から機体をアームした場合、モーターが<strong>回転</strong>します。<br />事故防止のために、この機能を使用する前に<strong class=\"message-negative\">全てのプロペラ</strong>を取り外してください。<br />モーターテストモードを有効にする事により一時的に暴走離陸防止機能 [Runaway Takeoff Prevention] が無効になります。これはプロペラを外した状態でベンチテストする際に機体がディスアームするのを防止するためです。<br />"
+        "message": "<strong>モーターテストモード / アーミングでの注意:</strong><br />スライダーを動かすか、又は送信機から機体をアームした場合、モーターが<strong>回転</strong>します。<br />事故防止のために、この機能を使用する前にaccentAlt class=\"message-negative\">全てのプロペラ</strong>を取り外してください。<br />モーターテストモードを有効にする事により一時的に暴走離陸防止機能 [Runaway Takeoff Prevention] が無効になります。これはプロペラを外した状態でベンチテストする際に機体がディスアームするのを防止するためです。<br />"
     },
     "motorsEnableControl": {
         "message": "<strong>リスクを認識し</strong>、プロペラは全て外しました - モーター制御とアーミングを可能にし、暴走離陸防止機能を無効にします。"

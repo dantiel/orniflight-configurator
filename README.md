@@ -1,23 +1,21 @@
-# Betaflight Configurator
+# OrniFlight Configurator
 
-![Betaflight](http://static.rcgroups.net/forums/attachments/6/1/0/3/7/6/a9088900-228-bf_logo.jpg)
+![Betaflight](of_logo.jpg)
 
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/betaflight-configurator/localized.svg)](https://crowdin.com/project/betaflight-configurator)
+OrniFlight Configurator is a crossplatform configuration tool for the OrniFlight flight control system.
 
-Betaflight Configurator is a crossplatform configuration tool for the Betaflight flight control system.
+It runs as an app within Google Chrome and allows you to configure the OrniFlight software running on any [supported OrniFlight target](https://github.com/dantiel/orniflight/tree/master/src/main/target).
 
-It runs as an app within Google Chrome and allows you to configure the Betaflight software running on any [supported Betaflight target](https://github.com/betaflight/betaflight/tree/master/src/main/target).
+There is also now a standalone version available, since Google Chrome Apps are getting deprecated on platforms that aren't Chrome OS. [Downloads are available in Releases.](https://github.com/dantiel/orniflight-configurator/releases)
 
-There is also now a standalone version available, since Google Chrome Apps are getting deprecated on platforms that aren't Chrome OS. [Downloads are available in Releases.](https://github.com/betaflight/betaflight-configurator/releases)
-
-Various types of aircraft are supported by the tool and by Betaflight, e.g. quadcopters, hexacopters, octocopters and fixed-wing aircraft.
+Various types of flapping aircraft are supported by the tool and by OrniFlight, e.g. twin flapters, quad flapters, etc.
 
 ## Authors
 
-Betaflight Configurator is a [fork](#credits) of the Cleanflight Configurator with support for Betaflight instead of Cleanflight.
+OrniFlight Configurator is a [fork](#credits) of the Betaflight Configurator with support for OrniFlight instead of Betaflight.
 
-This configurator is the only configurator with support for Betaflight specific features. It will likely require that you run the latest firmware on the flight controller.
-If you are experiencing any problems please make sure you are running the [latest firmware version](https://github.com/betaflight/betaflight/releases/).
+This configurator is the only configurator with support for OrniFlight specific features. It will likely require that you run the latest firmware on the flight controller.
+If you are experiencing any problems please make sure you are running the [latest firmware version](https://github.com/dantiel/orniflight/releases/).
 
 ## Installation
 
@@ -25,29 +23,11 @@ If you are experiencing any problems please make sure you are running the [lates
 
 **This is the default installation method, and at some point in the future this will become the only way available for most platforms. Please use this method whenever possible.**
 
-Download the installer from [Releases.](https://github.com/betaflight/betaflight-configurator/releases)
+Download the installer from [Releases.](https://github.com/dantiel/orniflight-configurator/releases)
 
 #### Note for MacOS X users
 
-Changes to the security model used in the latest versions of MacOS X 10.14 (Mojave) and 10.15 (Catalina) mean that the operating system will show an error message ('"Betaflight Configurator.app" is damaged and can’t be opened. You should move it to the Trash.') when trying to install the application. To work around this, run the following command in a terminal before installing: `sudo spctl --master-disable`. Then install Betaflight configurator, and after verifying that the installation has worked, run `sudo spctl --master-enable`.
-
-
-### Via Chrome Web Store (for ChromeOS)
-
-[![available in the Chrome web store for Chromeos](https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_206x58.png)](https://chrome.google.com/webstore/detail/dlgclabibdhkfnbkajgkplmkpndajfom)
-
-1. Visit the [Betaflight Configurator product page in the Chrome web store](https://chrome.google.com/webstore/detail/dlgclabibdhkfnbkajgkplmkpndajfom)
-2. Click **+ Add to Chrome**
-
-Please note - the application will automatically update itself when new versions are released.  Please ensure you maintain configuration backups as described in the Betaflight documentation.
-
-(A deprecated legacy version for all platforms is also available [here](https://chrome.google.com/webstore/detail/betaflight-configurator/kdaghagfopacdngbohiknlhcocjccjao).)
-
-### Unstable Testing Versions
-
-Unstable testing versions of the lates builds of the configurator for most platforms can be downloaded from [here](https://ci.betaflight.tech/job/BetaFlight_Configurator/).
-
-**Be aware that these versions are intended for testing / feedback only, and may be buggy or broken, and can cause flight controller settings to be corrupted. Caution is advised when using these versions.**
+Changes to the security model used in the latest versions of MacOS X 10.14 (Mojave) and 10.15 (Catalina) mean that the operating system will show an error message ('"OrniFlight Configurator.app" is damaged and can’t be opened. You should move it to the Trash.') when trying to install the application. To work around this, run the following command in a terminal before installing: `sudo spctl --master-disable`. Then install OrniFlight configurator, and after verifying that the installation has worked, run `sudo spctl --master-enable`.
 
 ## Native app build via NW.js
 
@@ -88,12 +68,6 @@ If no platform is provided, all the platforms will be done in sequence.
 
 You can also use multiple platforms e.g. `yarn gulp <taskname> --osx64 --linux64`.
 
-## Languages
-
-Betaflight Configurator has been translated into several languages. The application will try to detect and use your system language if a translation into this language is available. You can help [translating the application into your language](https://crowdin.com/project/betaflight-configurator).
-
-If you prefer to have the application in English or any other language, you can select your desired language in the options menu of the application.
-
 ## Notes
 
 ### WebGL
@@ -110,17 +84,15 @@ If you have 3D model animation problems, enable "Override software rendering lis
 
 ## Support
 
-If you need help please reach out on the [betaflightgroup](https://betaflightgroup.slack.com) slack channel before raising issues on github. Register and [request slack access here](https://slack.betaflight.com).
-
 ### Issue trackers
 
-For Betaflight configurator issues raise them here
+For OrniFlight configurator issues raise them here
 
-https://github.com/betaflight/betaflight-configurator/issues
+https://github.com/dantiel/orniflight-configurator/issues
 
-For Betaflight firmware issues raise them here
+For OrniFlight firmware issues raise them here
 
-https://github.com/betaflight/betaflight/issues
+https://github.com/dantiel/orniflight/issues
 
 ## Technical details
 
@@ -132,7 +104,8 @@ We accept clean and reasonable patches, submit them!
 
 ## Credits
 
+Betaflight squad - based on Betaflight 4.0.6 and Betaflight configurator 10.6.0
+
 ctn - primary author and maintainer of Baseflight Configurator from which Cleanflight Configurator project was forked.
 
 Hydra -  author and maintainer of Cleanflight Configurator from which this project was forked.
-

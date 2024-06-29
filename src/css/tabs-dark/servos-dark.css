@@ -7,7 +7,7 @@
 }
 
 .tab-servos table .main {
-    background-color: #393b3a;
+    background-color:  var(--headerBackgroundColor);
 }
 
 .tab-servos table input[type="number"] {

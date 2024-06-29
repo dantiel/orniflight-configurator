@@ -292,7 +292,7 @@ TABS.adjustments.adjust_template = function () {
     var elementsNumber;
 
     if (semver.gte(CONFIG.apiVersion, "1.41.0")) {
-        elementsNumber = 31; // OSD Profile Select & LED Profile Select
+        elementsNumber = 32; // OSD Profile Select & LED Profile Select & Flap Speed Modificator
     } else if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
         elementsNumber = 29; // PID Audio
     } else if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
