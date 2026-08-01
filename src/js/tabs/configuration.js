@@ -199,13 +199,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         self.analyticsChanges = {};
 
         var mixer_list_e = $('select.mixerList');
-        for (var selectIndex = 0; selectIndex < mixerList.length; selectIndex++) {
-            mixerList.forEach(function (mixerEntry, mixerIndex) {
-                if (mixerEntry.pos === selectIndex) {
-                    mixer_list_e.append('<option value="' + (mixerIndex + 1) + '">' + mixerEntry.name + '</option>');
-                }
-            });
-        }
+        mixerList.forEach(function (mixerEntry, mixerIndex) {
+            if (mixerEntry && mixerEntry.name) {
+                mixer_list_e.append('<option value="' + mixerIndex + '">' + mixerEntry.name + '</option>');
+            }
+        });
 
         function refreshMixerPreview() {
             var mixer = MIXER_CONFIG.mixer
@@ -215,7 +213,8 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 reverse = MIXER_CONFIG.reverseMotorDir ? "_reversed" : "";
             }
 
-            $('.mixerPreview img').attr('src', './resources/motor_order/' + mixerList[mixer - 1].image + reverse + '.svg');
+            var entry = mixerList[mixer] || mixerList[27] || {image:'ornithopter'};
+            $('.mixerPreview img').attr('src', './resources/motor_order/' + entry.image + reverse + '.svg');
         };
 
         var reverseMotorSwitch_e = $('#reverseMotorSwitch');

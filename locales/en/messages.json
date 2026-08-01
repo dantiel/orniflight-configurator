@@ -3,7 +3,7 @@
         "message": "0"
     },
     "windowTitle": {
-        "message": "Betaflight Configurator",
+        "message": "OrniFlight Configurator",
         "description": "Title of the application window, usually not translated"
     },
     "yes": {
@@ -221,7 +221,7 @@
         "message": "Show update notifications for unstable versions of the configurator"
     },
     "configuratorUpdateNotice": {
-        "message": "You are using an outdated version of the <b>Betaflight Configurator</b>.<br>Version <b>$1</b> is available online, please visit <a href=\"$2\" target=\"_blank\">the release page</a> to download and install the latest version with fixes and improvements.<br>Please close the configurator window before updating."
+        "message": "You are using an outdated version of the <b>OrniFlight Configurator</b>.<br>Version <b>$1</b> is available online, please visit <a href=\"$2\" target=\"_blank\">the release page</a> to download and install the latest version with fixes and improvements.<br>Please close the configurator window before updating."
     },
     "configuratorUpdateWebsite": {
         "message": "Go to Release Website"
@@ -474,7 +474,7 @@
         "message": "This firmware version is <span class=\"message-negative\">not supported</span>. Please upgrade to firmware that supports api version <strong>$1</strong> or higher. Use CLI for backup before flashing. CLI backup/restore procedure is in the documention.<br />Alternatively download and use an old version of the configurator if you are not ready to upgrade."
     },
     "firmwareTypeNotSupported": {
-        "message": "Non - Cleanflight/Betaflight firmware is <span class=\"message-negative\">not supported</span>, except for CLI mode."
+        "message": "Non-OrniFlight firmware is <span class=\"message-negative\">not supported</span>, except for CLI mode."
     },
     "firmwareUpgradeRequired": {
         "message": "The firmware on this device needs upgrading to a newer version. Use CLI for backup before flashing. CLI backup/restore procedure is in the documention.<br />Alternatively download and use an old version of the configurator if you are not ready to upgrade."
@@ -519,7 +519,7 @@
     },
 
     "tabSwitchUpgradeRequired": {
-        "message": "You need to <strong>upgrade</strong> your firmware to the latest version of Betaflight before you can use the $1 tab."
+        "message": "You need to <strong>upgrade</strong> your firmware to the latest version of OrniFlight before you can use the $1 tab."
     },
     "firmwareVersion": {
         "message": "Firmware Version: <strong>$1</strong>"
@@ -618,16 +618,16 @@
         "message": "Hardware"
     },
     "defaultWelcomeText": {
-        "message": "The application supports all hardware that can run Betaflight. Check flash tab for full list of hardware.<br><br> <a href=\"https://github.com/betaflight/blackbox-log-viewer/releases\" target=\"_blank\"> Download Betaflight Blackbox Log Viewer</a><br /><br />The firmware source code can be downloaded from <a href=\"https://github.com/betaflight/betaflight\" title=\"www.github.com\" target=\"_blank\">here</a><br /><br />Latest <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com\" target=\"_blank\">CP210x Drivers</a> can be downloaded from <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com\" target=\"_blank\">here</a><br />Latest <a href=\"http://www.st.com/web/en/catalog/tools/PF257938\" title=\"http://www.st.com\" target=\"_blank\">STM USB VCP Drivers</a> can be downloaded from <a href=\"http://www.st.com/web/en/catalog/tools/PF257938\" title=\"http://www.st.com\" target=\"_blank\">here</a><br />Latest <a href=\"http://zadig.akeo.ie/\" title=\"http://zadig.akeo.ie\" target=\"_blank\">Zadig</a> for Windows USB driver installation can be downloaded from <a href=\"http://zadig.akeo.ie/\" title=\"http://zadig.akeo.ie\" target=\"_blank\">here</a><br />"
+        "message": "The application supports all hardware that can run OrniFlight. Check flash tab for full list of hardware.<br><br>The firmware source code can be downloaded from <a href=\"https://github.com/dantiel/orniflight\" title=\"www.github.com\" target=\"_blank\">here</a><br /><br />Latest <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com\" target=\"_blank\">CP210x Drivers</a> can be downloaded from <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com\" target=\"_blank\">here</a><br />Latest <a href=\"http://www.st.com/web/en/catalog/tools/PF257938\" title=\"http://www.st.com\" target=\"_blank\">STM USB VCP Drivers</a> can be downloaded from <a href=\"http://www.st.com/web/en/catalog/tools/PF257938\" title=\"http://www.st.com\" target=\"_blank\">here</a><br />Latest <a href=\"http://zadig.akeo.ie/\" title=\"http://zadig.akeo.ie\" target=\"_blank\">Zadig</a> for Windows USB driver installation can be downloaded from <a href=\"http://zadig.akeo.ie/\" title=\"http://zadig.akeo.ie\" target=\"_blank\">here</a><br />"
     },
     "defaultContributingHead": {
         "message": "Contributing"
     },
     "defaultContributingText": {
-        "message": "If you would like to help make Betaflight even better you can help in many ways, including:<br /><ul><li>Answering other users questions on the forums and IRC.</li><li>Contributing code to the firmware and configurator - new features, fixes, improvements</li><li>Testing <a href=\"https://github.com/Betaflight/betaflight/pulls\" target=\"_blank\">new features/fixes</a> and providing feedback.</li><li>Helping out with <a href=\"https://github.com/betaflight/betaflight/issues\" target=\"_blank\">issues and commenting on feature requests</a>.</li><li>Collaborate by <a href=\"https://crowdin.com/project/betaflight-configurator\" target=\"_blank\">translating the configurator application</a> into your language.</li><li></li></ul>"
+        "message": "If you would like to help make OrniFlight even better you can help in many ways, including:<br /><ul><li>Answering other users questions on the forums.</li><li>Contributing code to the firmware and configurator - new features, fixes, improvements</li><li>Testing <a href=\"https://github.com/dantiel/orniflight/pulls\" target=\"_blank\">new features/fixes</a> and providing feedback.</li><li>Helping out with <a href=\"https://github.com/dantiel/orniflight/issues\" target=\"_blank\">issues and commenting on feature requests</a>.</li><li></li></ul>"
     },
     "defaultFacebookText": {
-        "message": "We also have a <a href=\"https://www.facebook.com/groups/betaflightgroup/\" target=\"_blank\">Facebook Group</a>.<br />Join us to get a place to talk about Betaflight, ask configuration questions, or just hang out with fellow pilots."
+        "message": "Join the community to talk about OrniFlight, ask configuration questions, or just hang out with fellow ornithopter pilots."
     },
     "defaultChangelogHead": {
         "message": "Configurator - Changelog"
@@ -639,13 +639,13 @@
         "message": "Open Source / Donation Notice"
     },
     "defaultDonateText": {
-        "message": "<p><strong>Betaflight</strong> is a flight controller software that is <strong>open source</strong> and is available free of charge <strong>without warranty</strong> to all users.</p><p>If you found the Betaflight or Betaflight configurator useful, please consider <strong>supporting</strong> its development by donating.</p>"
+        "message": "<p><strong>OrniFlight</strong> is a flight controller software for ornithopters that is <strong>open source</strong> and is available free of charge <strong>without warranty</strong> to all users.</p><p>If you found OrniFlight or the OrniFlight Configurator useful, please consider <strong>supporting</strong> its development by donating.</p>"
     },
     "defaultDonateBottom": {
         "message": "<p>If you want to contribute financially on an ongoing basis, you should consider becoming a patron for us on $t(patreonLink.message).</p>"
     },
     "patreonLink": {
-        "message": "<a href=\"https://www.patreon.com/betaflight\" target=\"_blank\">Patreon</a>",
+        "message": "<a href=\"https://github.com/sponsors/dantiel\" target=\"_blank\">GitHub Sponsors</a>",
         "description": "Patreon is name, and should not require translation"
     },
     "defaultDonate": {
@@ -658,13 +658,13 @@
         "message": "Documentation / Manual"
     },
     "defaultDocumentation": {
-        "message": "Betaflight documentation is available in release notes and wiki.<br /><br />"
+        "message": "OrniFlight documentation is available in release notes and wiki.<br /><br />"
     },
     "defaultDocumentation1": {
-        "message": "The Betaflight wiki is a great resource for information, it can be found <a href=\"https://github.com/betaflight/betaflight/wiki\" target=\"_blank\">here</a>."
+        "message": "The OrniFlight wiki is a great resource for information, it can be found <a href=\"https://github.com/dantiel/orniflight/wiki\" target=\"_blank\">here</a>."
     },
     "defaultDocumentation2": {
-        "message": "The release notes for the firmware can be read at GitHub releases page, <a href=\"https://github.com/Betaflight/Betaflight/releases\" target=\"_blank\">here</a>."
+        "message": "The release notes for the firmware can be read at GitHub releases page, <a href=\"https://github.com/dantiel/orniflight/releases\" target=\"_blank\">here</a>."
     },
     "defaultSupportHead": {
         "message": "Support"
@@ -682,20 +682,20 @@
         "message": "<a href=\"http://www.rcgroups.com/forums/showthread.php?t=2464844&page=1\" target=\"_blank\">RC Groups thread</a>"
     },
     "defaultSupport2": {
-        "message": "<a href=\"http://betaflight.info\" target=\"_blank\">Betaflight Wiki</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight/wiki\" target=\"_blank\">OrniFlight Wiki</a>"
     },
     "defaultSupport3": {
-        "message": "<a href=\"https://www.youtube.com/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Betaflight Videos</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight\" target=\"_blank\">OrniFlight on GitHub</a>"
     },
     "defaultSupport4": {
-        "message": "<a href=\"https://github.com/Betaflight\" target=\"_blank\">GitHub</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight\" target=\"_blank\">GitHub</a>"
     },
     "defaultSupport5": {
-        "message": "<a href=\"https://slack.betaflight.com\" target=\"_blank\">Betaflight devs on slack</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight/discussions\" target=\"_blank\">OrniFlight Discussions</a>"
     },
 
     "initialSetupBackupAndRestoreApiVersion": {
-        "message": "<span class=\"message-negative\">Backup and restore functionality disabled.</span> You have firmware with API version <span class=\"message-negative\">$1</span>, backup and restore requires <span class=\"message-positive\">$2</span>.  Please backup your settings via the CLI, see Betaflight documentation for procedure."
+        "message": "<span class=\"message-negative\">Backup and restore functionality disabled.</span> You have firmware with API version <span class=\"message-negative\">$1</span>, backup and restore requires <span class=\"message-positive\">$2</span>.  Please backup your settings via the CLI, see OrniFlight documentation for procedure."
     },
     "initialSetupButtonCalibrateAccel": {
         "message": "Calibrate Accelerometer"
@@ -707,7 +707,7 @@
         "message": "Calibrate Magnetometer"
     },
     "initialSetupCalibrateMagText": {
-        "message": "Move multirotor at least <strong>360</strong> degrees on all axis of rotation, you have 30 seconds to perform this task"
+        "message": "Move the ornithopter at least <strong>360</strong> degrees on all axis of rotation, you have 30 seconds to perform this task"
     },
     "initialSetupButtonCalibratingText": {
         "message": "Calibrating..."
@@ -895,7 +895,7 @@
         "description": "Message that pops up to describe the BST arming disable flag"
     },
     "initialSetupArmingDisableFlagsTooltipMSP": {
-        "message": "MSP connection is active, probably with this Betaflight Configurator",
+        "message": "MSP connection is active, probably with this OrniFlight Configurator",
         "description": "Message that pops up to describe the MSP arming disable flag"
     },
     "initialSetupArmingDisableFlagsTooltipPARALYZE": {
@@ -1029,7 +1029,7 @@
         "message": "ONESHOT ESC support"
     },
     "featureONESHOT125Tip": {
-        "message": "Disconnect flight battery and remove props before enabling."
+        "message": "Disconnect flight battery and secure wings before enabling."
     },
     "featureBLACKBOX": {
         "message": "Blackbox flight data recorder"
@@ -1194,7 +1194,7 @@
         "message": "Motor direction is reversed"
     },
        "configurationReverseMotorSwitchHelp": {
-        "message": "This option configures the mixer to expect the motor direction to be reversed and the propellers to be on accordingly. <strong>Warning:</strong> This does not reverse the motor direction. Use the configuration tool for your ESCs or switch the ESC - motor wiring order to achieve this. Also, make sure to check with propellers off that your motors are rotating in the directions shown in the diagram above before attempting to arm."
+        "message": "This option configures the mixer to expect the motor direction to be reversed. <strong>Warning:</strong> This does not reverse the motor direction. Use the configuration tool for your ESCs or switch the ESC - motor wiring order to achieve this. Also, make sure to check with wings secured that your motors are rotating in the directions shown in the diagram above before attempting to arm."
     },
     "configurationAutoDisarmDelay": {
         "message": "Disarm motors after set delay [seconds] (Requires MOTOR_STOP feature)"
@@ -1248,7 +1248,7 @@
         "message": "Beacon Tone"
     },
     "configurationDshotBeaconHelp": {
-        "message": "The Dshot beacon uses the ESCs and motors to produce sound. This means that the Dshot beacon cannot be used when the motors are spinning. In Betaflight 3.4 and newer, when arming is attempted while the Dshot beacon is active, there is a 2 second delay after the last Dshot beacon tone before the craft is armed. This is to prevent the Dshot beacon functionality from interfering with the Dshot commands sent when arming.<br/><strong>Warning:</strong> Since the Dshot beacon is running current through your motors when active, this can result in excessive heat production and damage to your motors and / or ESCs if the beacon strength is set too high. Use BLHeli Configurator or the BLHeli Suite to adjust and test the beacon strength."
+        "message": "The Dshot beacon uses the ESCs and motors to produce sound. This means that the Dshot beacon cannot be used when the motors are spinning. In OrniFlight 3.4 and newer, when arming is attempted while the Dshot beacon is active, there is a 2 second delay after the last Dshot beacon tone before the craft is armed. This is to prevent the Dshot beacon functionality from interfering with the Dshot commands sent when arming.<br/><strong>Warning:</strong> Since the Dshot beacon is running current through your motors when active, this can result in excessive heat production and damage to your motors and / or ESCs if the beacon strength is set too high. Use BLHeli Configurator or the BLHeli Suite to adjust and test the beacon strength."
     },
     "configurationBeeper": {
         "message": "Beeper Configuration"
@@ -1350,7 +1350,7 @@
         "message": "<strong>Note:</strong> Make sure your FC is able to operate at these speeds! Check CPU and cycletime stability. Changing this may require PID re-tuning. TIP: Disable Accelerometer and other sensors to gain more performance."
     },
     "configurationLoopTimeNo32KhzHelp": {
-        "message": "$t(configurationLoopTimeHelp.message)<br><strong>Note about 32 kHz gyro sampling mode:</strong> Support for 32 kHz gyro sampling mode was added to Betaflight as an experimental feature. In the years that it was available, it has never shown that it has any advantage over 8 kHz gyro sampling mode, due to its susceptibility to vibrations, and its high noise level which require aggressive filtering, causing delays in the control loop. For this reason, <strong>support for 32 kHz gyro sampling mode has been dropped</strong> in Betaflight 4.0."
+        "message": "$t(configurationLoopTimeHelp.message)<br><strong>Note about 32 kHz gyro sampling mode:</strong> Support for 32 kHz gyro sampling mode was added as an experimental feature. In the years that it was available, it has never shown that it has any advantage over 8 kHz gyro sampling mode, due to its susceptibility to vibrations, and its high noise level which require aggressive filtering, causing delays in the control loop. For this reason, <strong>support for 32 kHz gyro sampling mode has been dropped</strong> in OrniFlight 4.0."
     },
     "configurationGPS": {
         "message": "GPS"
@@ -1549,11 +1549,11 @@
        "description": "Advance of the D Min feature"
     },
     "pidTuningDMinFeatureHelp": {
-        "message": "D Min provides a way to have a lower level of D in normal flight and a higher level for quick maneuvers that might cause overshoot, like flips and rolls. It also brings D up during prop wash. Gain adjusts how fast D gets up to its maximum value and is based on gyro to determine sharp moves and propwash events. Advance makes D go up earlier by using setpoint instead of gyro to determine sharp moves.",
+        "message": "D Min provides a way to have a lower level of D in normal flight and a higher level for quick maneuvers that might cause overshoot, like flips and rolls. It also brings D up during turbulence. Gain adjusts how fast D gets up to its maximum value and is based on gyro to determine sharp moves and turbulence events. Advance makes D go up earlier by using setpoint instead of gyro to determine sharp moves.",
         "description": "D Min feature helpicon message"
     },
     "pidTuningDMinHelp": {
-        "message": "Controls the strength of dampening (D-term) in normal forward flight.<br>With D_min enabled, the Active D-gain changes during flight. In normal forward flight it is at the D_min gains below. During a sharp move or during prop wash, the Active D-gain raises to the Derivative gains specified to the left.<br><br>Full Derivative gains are reached on sharp stick inputs, but only partial are achieved during prop wash.<br>Adjust the D_Min Gain and Advance to control the gain boost sensitivity and timing.",
+        "message": "Controls the strength of dampening (D-term) in normal forward flight.<br>With D_min enabled, the Active D-gain changes during flight. In normal forward flight it is at the D_min gains below. During a sharp move or during turbulence, the Active D-gain raises to the Derivative gains specified to the left.<br><br>Full Derivative gains are reached on sharp stick inputs, but only partial are achieved during turbulence.<br>Adjust the D_Min Gain and Advance to control the gain boost sensitivity and timing.",
         "description": "D Min helpicon message on PID table titlebar"
     },
     "pidTuningPidSettings": {
@@ -1662,11 +1662,152 @@
     },
     
     
-    "pidTuningFlappingFiltersGroup": {
-        "message": "Flapping Filters"
+    "pidTuningOndasGroup": {
+        "message": "Wing Trajectory Modulation (ONDAS)"
     },
-    "pidTuningOndasGain": {
-        "message": "ONDAS gain"
+    "pidTuningCadenceGain": {
+        "message": "Cadence Gain",
+        "description": "P-term → k₀ spring constant. Phase timing modulation. Higher values accelerate wing phase more aggressively in response to pitch error."
+    },
+    "pidTuningCadenceGainHelp": {
+        "message": "P-term modulates k₀ (phase drive strength). Higher values = more aggressive pitch response by varying wing phase acceleration. 'Push harder now.'"
+    },
+    "pidTuningFerocityDGain": {
+        "message": "Ferocity D-Gain",
+        "description": "D-term → dwell ratio (wave sharpness). Higher values deepen the breathing pause at stroke extremes when error rate is high."
+    },
+    "pidTuningFerocityDGainHelp": {
+        "message": "D-term modulates ferocity (dwell ratio / wave sharpness) at stroke extremes. Higher values deepen the pause between strokes when pitch error accelerates, redistributing rhythm to stabilize."
+    },
+    "pidTuningBalanceGain": {
+        "message": "Balance Gain",
+        "description": "I-term → upstroke/downstroke thrust symmetry. Persistent asymmetry shifts thrust balance between half-cycles."
+    },
+    "pidTuningBalanceGainHelp": {
+        "message": "I-term creates persistent thrust imbalance between upstroke and downstroke. Positive = harder upstrokes (pitch-down bias). Compensates for wing asymmetry."
+    },
+    "pidTuningFerocityPGain": {
+        "message": "Ferocity P-Gain",
+        "description": "P-term → dwell ratio (wave sharpness). Proportional component of ferocity. PD-blend determines wave shape response."
+    },
+    "pidTuningFerocityPGainHelp": {
+        "message": "P-term ferocity blend. Together with D-gain, controls how wave sharpness responds to error magnitude vs. error rate. Both feed the dwell ratio."
+    },
+    "pidTuningFerocityRollGain": {
+        "message": "Ferocity Roll Gain",
+        "description": "Roll P → common ferocity gate. Higher values let roll demands sharpen the wing stroke for more bite against air resistance."
+    },
+    "pidTuningFerocityRollGainHelp": {
+        "message": "Roll P-term feeds into common-mode ferocity. When rolling, wing stroke sharpens — increasing its bite against lateral air resistance."
+    },
+    "pidTuningFerocityYawGain": {
+        "message": "Ferocity Yaw Gain",
+        "description": "Yaw P → common ferocity gate. Higher values let yaw demands sharpen the wing stroke."
+    },
+    "pidTuningFerocityYawGainHelp": {
+        "message": "Yaw P-term feeds into common-mode ferocity. When yawing, wing stroke sharpens — increasing rotational authority."
+    },
+    "pidTuningWarpGain": {
+        "message": "Warp Gain",
+        "description": "Roll P → L/R ferocity differential. Creates independent left/right waveforms for bank maneuvers."
+    },
+    "pidTuningWarpGainHelp": {
+        "message": "Roll P drives a ferocity differential between left and right wings. Left wing = base + warp; Right wing = base − warp. Enables bank differential thrust."
+    },
+    "pidTuningWarpYawGain": {
+        "message": "Warp Yaw Gain",
+        "description": "Yaw P → fore/aft ferocity differential. Creates differential for turn coordination."
+    },
+    "pidTuningWarpYawGainHelp": {
+        "message": "Yaw P drives fore/aft ferocity differential. Modulates wing asymmetry during turns for coordinated flight."
+    },
+    "pidTuningAnchorGain": {
+        "message": "Anchor Gain",
+        "description": "Static → k₂ damping coefficient. Higher values tighten frequency lock, making wing frequency more stable against throttle transients."
+    },
+    "pidTuningAnchorGainHelp": {
+        "message": "Varies the wing ODE k₂ damping from tight (high value) to loose (0). Higher = more stable flap frequency, less responsive to throttle changes. Lower = more organic frequency drift."
+    },
+    "pidTuningResonanceGain": {
+        "message": "Resonance Gain",
+        "description": "Flap-coherent error amplifier. Errors that beat with wing frequency get amplified. Phase-locked loop for pitch."
+    },
+    "pidTuningResonanceGainHelp": {
+        "message": "Multiplies pitch error by sin(θ), leaky-integrates to extract flap-coherent DC, remodulates and amplifies. Errors synchronized with the wing stroke get boosted — a phase-locked resonance filter."
+    },
+    "pidTuningWingGeometryGroup": {
+        "message": "Wing Pair Geometry",
+        "description": "Phase 2 section header for per-wing-pair mount angles and phase shifts"
+    },
+    "pidTuningWingGeometryHelp": {
+        "message": "Per-wing-pair servo mount incidence and flapping phase offset. Used for multi-wing ornithopters (twin/quad flapters). Incidence tilts the servo neutral angle; phase shift offsets the flapping waveform between pairs."
+    },
+    "pidTuningServoMountAngle0": {
+        "message": "Wing Pair 1 Incidence",
+        "description": "Servo mount angle for wing pair 1 (−30..+30°)"
+    },
+    "pidTuningServoMountAngle1": {
+        "message": "Wing Pair 2 Incidence"
+    },
+    "pidTuningServoMountAngle2": {
+        "message": "Wing Pair 3 Incidence"
+    },
+    "pidTuningServoMountAngle3": {
+        "message": "Wing Pair 4 Incidence"
+    },
+    "pidTuningServoMountAngleHelp": {
+        "message": "Angles the servo's neutral position — the wing's resting incidence. Positive = leading edge up. Adjust per pair to tune lift distribution across the craft."
+    },
+    "pidTuningFlappingPhaseShift0": {
+        "message": "Wing Pair 1 Phase Offset",
+        "description": "Flapping phase shift for wing pair 1 (−180..+180°)"
+    },
+    "pidTuningFlappingPhaseShift1": {
+        "message": "Wing Pair 2 Phase Offset"
+    },
+    "pidTuningFlappingPhaseShift2": {
+        "message": "Wing Pair 3 Phase Offset"
+    },
+    "pidTuningFlappingPhaseShift3": {
+        "message": "Wing Pair 4 Phase Offset"
+    },
+    "pidTuningFlappingPhaseShiftHelp": {
+        "message": "Offsets the flapping waveform phase between wing pairs. 0° = in sync; 180° = alternating. Use for multi-wing coordination and yaw authority."
+    },
+    "pidTuningAdvancedOndasGroup": {
+        "message": "Advanced ONDAS Gains",
+        "description": "Phase 2 section header for prescience, espelho, saudade, SSFF gains"
+    },
+    "pidTuningAdvancedOndasHelp": {
+        "message": "Experimental feed-forward and learning gains. These modulate stroke prediction, self-noise cancellation, per-stroke adaptation, and trim authority."
+    },
+    "pidTuningPrescienceGain": {
+        "message": "Prescience Gain",
+        "description": "Stroke-ahead prediction gain (0–100)"
+    },
+    "pidTuningPrescienceGainHelp": {
+        "message": "Stroke-ahead prediction. Feeds future stroke parameters forward based on current trend. Higher values anticipate more aggressively — too high induces oscillation."
+    },
+    "pidTuningEspelhoGain": {
+        "message": "Espelho Gain",
+        "description": "Wing-self-noise cancellation gain (0–100)"
+    },
+    "pidTuningEspelhoGainHelp": {
+        "message": "Cancels wing's own vibrational noise from the control signal. 'Espelho' (mirror) reflects and subtracts wing self-resonance. Higher values clean the signal more aggressively."
+    },
+    "pidTuningSaudadeGain": {
+        "message": "Saudade Gain",
+        "description": "Per-stroke learning rate (0–100)"
+    },
+    "pidTuningSaudadeGainHelp": {
+        "message": "Per-stroke learning rate for the adaptive control. 'Saudade' — a lingering memory — accumulates corrections stroke by stroke. Higher values learn faster but risk over-adaptation."
+    },
+    "pidTuningSsffGain": {
+        "message": "SSFF Gain",
+        "description": "Stroke-synchronous feed-forward trim authority (0–100)"
+    },
+    "pidTuningSsffGainHelp": {
+        "message": "Stroke-synchronous feed-forward gain. Applies a pre-computed trim correction synchronized to the wing phase. Higher values give the FF path more authority over the PID loop."
     },
     "servosOrnithopterGlideDegree": {
         "message": "Ornithopter glide degree"
@@ -1726,7 +1867,7 @@
         "message": "Derivative"
     },
     "pidTuningDerivativeHelp": {
-        "message": "Controls the strength of dampening to ANY motion on the craft.  For stick moves, the D-term dampens the command. For an outside influence (prop wash OR wind gust) the D-term dampens the influence.<br><br>Higher gains provide more dampening and reduce overshoot by P-term and FF.<br>However, the D-term is VERY sensitive to gyro high frequency vibrations (noise | magnifies by 10x to 100x).<br><br>High frequency noise can cause motor heat and burn out motors if D-gains are too high or the gyro noise is not filtered well (see Filters tab).<br><br>Think of the D-term as the shock absorber on your car, but with the negative inherent property of magnifying high frequency gyro noise.",
+        "message": "Controls the strength of dampening to ANY motion on the craft. For stick moves, the D-term dampens the command. For an outside influence (turbulence OR wind gust) the D-term dampens the influence.<br><br>Higher gains provide more dampening and reduce overshoot by P-term and FF.<br>However, the D-term is VERY sensitive to gyro high frequency vibrations (noise | magnifies by 10x to 100x).<br><br>High frequency noise can cause servo heat and damage if D-gains are too high or the gyro noise is not filtered well (see Filters tab).<br><br>Think of the D-term as the shock absorber on your car, but with the negative inherent property of magnifying high frequency gyro noise.",
         "description": "Derivative Term helpicon message on PID table titlebar"
     },
     "pidTuningFeedforward": {
@@ -1864,10 +2005,10 @@
         "message": "Please read receiver chapter of the documentation.  Configure serial port (if required), receiver mode (serial/ppm/pwm), provider (for serial receivers), bind receiver, set channel map, configure channel endpoints/range on TX so that all channels go from ~1000 to ~2000.  Set midpoint (default 1500), trim channels to 1500, configure stick deadband, verify behaviour when TX is off or out of range.<br /><span class=\"message-negative\">IMPORTANT:</span> Before flying read failsafe chapter of documentation and configure failsafe."
     },
     "tuningHelp": {
-        "message": "<b>Tuning tips</b><br /><span class=\"message-negative\">IMPORTANT:</span> It is important to verify motor temperatures during first flights. The higher the filter value gets the better it may fly, but you also will get more noise into the motors. <br>Default value of 100Hz is optimal, but for noiser setups you can try lowering Dterm filter to 50Hz and possibly also the gyro filter."
+        "message": "<b>Tuning tips</b><br /><span class=\"message-negative\">IMPORTANT:</span> It is important to verify servo temperatures during first flights. The higher the filter value gets the better it may fly, but you also will get more noise into the servos.<br>Default value of 100Hz is optimal, but for noisier setups you can try lowering Dterm filter to 50Hz and possibly also the gyro filter."
     },
     "tuningHelpSliders": {
-        "message": "<span class=\"message-negative\">IMPORTANT:</span> We recommend using the sliders to change filter settings. Move both sliders together.<br>It is best to make relatively small changes and test fly after each change. Check the motor temperatures closely before making further changes.<br>Less filtering (sliders to the right, higher cutoff values) will improve propwash, but will let more noise through to the motors, making them hotter, possibly hot enough to burn out.  Less filtering is possible on most clean builds and if rpm filtering is enabled.<br>Unusually high or low filter settings may cause flyaways on arming. The defaults are safe for typical 5\" quads.<br><strong>Note:</strong> Changing profiles will only change the D-term filter settings. Gyro filter settings are the same for all profiles.",
+        "message": "<span class=\"message-negative\">IMPORTANT:</span> We recommend using the sliders to change filter settings. Move both sliders together.<br>It is best to make relatively small changes and test fly after each change. Check the servo temperatures closely before making further changes.<br>Less filtering (sliders to the right, higher cutoff values) will improve turbulence handling, but will let more noise through to the servos, making them hotter, possibly hot enough to burn out. Less filtering is possible on most clean builds and if rpm filtering is enabled.<br>Unusually high or low filter settings may cause flyaways on arming. The defaults are safe for typical ornithopter builds.<br><strong>Note:</strong> Changing profiles will only change the D-term filter settings. Gyro filter settings are the same for all profiles.",
         "description": "Filter tuning subtab note"
     },
     "filterWarning": {
@@ -1953,7 +2094,7 @@
     },
 
     "receiverMspWarningText": {
-        "message": "These sticks allow Betaflight to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and propellers must not be attached.</strong><br><br>This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if propellers are left on.</strong>"
+        "message": "These sticks allow OrniFlight to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and wings must be secured.</strong><br><br>This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if wings are not secured.</strong>"
     },
     "receiverMspEnableButton": {
         "message": "Enable controls"
@@ -2160,7 +2301,7 @@
         "message": "Your flight controller's firmware does not support transponder functionality."
     },
     "transponderInformation": {
-        "message": "Transponders systems allow race organizers to time your laps.  The transponder is fitted to your aircraft and when your aircraft passes the timing gate the track-side receiver registers your code and records your laptime.  When fitting an IR based transponder your should ensure that it points outward from your aircraft towards the track-side receivers and that the light beam is not obstructed by your airframe, battery-straps, cables, propellers, etc."
+        "message": "Transponders systems allow organizers to time your laps.  The transponder is fitted to your aircraft and when your aircraft passes the timing gate the track-side receiver registers your code and records your laptime.  When fitting an IR based transponder your should ensure that it points outward from your aircraft towards the track-side receivers and that the light beam is not obstructed by your airframe, battery-straps, cables, wings, etc."
     },
     "transponderConfigurationType": {
         "message": "Transponder type"
@@ -2420,16 +2561,6 @@
         "message": "T: {{motorsESCTempValue}}&deg;C",
         "description": "To put under the motors in the motors tab. KEEP IT SHORT or not translate. Shows the ESC temperature if available."
     },
-    "motorsMaster": {
-        "message": "Master"
-    },
-    "motorsNotice": {
-        "message": "<strong>Motor Test Mode / Arming Notice:</strong><br />Moving the sliders or arming your craft with the transmitter will cause the motors to <strong>spin up</strong>.<br />In order to prevent injury accentAlt class=\"message-negative\">remove ALL propellers</strong> before using this feature.<br />Enabling motor test mode will also temporarily disable Runaway Takeoff Prevention, to stop it from disarming the craft when bench testing without propellers.<br />"
-    },
-    "motorsEnableControl": {
-        "message": "<strong>I understand the risks</strong>, the propellers are removed - enable motor control and arming, and disable Runaway Takeoff Prevention."
-    },
-
     "sensorsInfo": {
         "message": "Keep in mind that using fast update periods and rendering multiple graphs at the same time is resource heavy and will burn your battery quicker if you use a laptop.<br />We recommend to only render graphs for sensors you are interested in while using reasonable update periods."
     },
@@ -2730,7 +2861,7 @@
         "message": "Select your board to see available online firmware releases - Select the correct firmware appropriate for your board."
     },
     "firmwareFlasherOnlineSelectBoardHint": {
-        "message": "Starting with Betaflight 4.1, Betaflight is introducing support for <strong>Unified Targets</strong>. The concept of Unified Targets means that the same firmware .hex file can be used for all boards using the same MCU (F4, F7). To make the different boards work with the same firmware, a specific configuration file is deployed alongside the firmware when a Unified Target is flashed.<br>This version of Betaflight configurator supports flashing of Unified Targets with the respective board specific configurations in one step. The different firmware types that are available for each board are shown in the drop-down as follows:<br><br><strong>&lt;board name&gt;</strong> or<br><strong>&lt;board name&gt; (Legacy)</strong>:<br>non-unified target, or pre-4.1 versions of the firmware for Unified Targets.<br><br><strong>&lt;board name&gt; (&lt;manufacturer id&gt;)</strong>:<br>(4 character manufacturer id)<br>Unified Target.<br><br><strong>Please use Unified Targets where available.</strong> If you encounter problems using a Unified Target, please open an <a href=\"https://github.com/betaflight/betaflight/issues\" target=\"_blank\" rel=\"noopener noreferrer\">issue</a> and then use the non-unified target until the issue has been resolved."
+        "message": "Starting with OrniFlight 4.1, OrniFlight introduces support for <strong>Unified Targets</strong>. The concept of Unified Targets means that the same firmware .hex file can be used for all boards using the same MCU (F4, F7). To make the different boards work with the same firmware, a specific configuration file is deployed alongside the firmware when a Unified Target is flashed.<br>This version of OrniFlight Configurator supports flashing of Unified Targets with the respective board specific configurations in one step. The different firmware types that are available for each board are shown in the drop-down as follows:<br><br><strong>&lt;board name&gt;</strong> or<br><strong>&lt;board name&gt; (Legacy)</strong>:<br>non-unified target, or pre-4.1 versions of the firmware for Unified Targets.<br><br><strong>&lt;board name&gt; (&lt;manufacturer id&gt;)</strong>:<br>(4 character manufacturer id)<br>Unified Target.<br><br><strong>Please use Unified Targets where available.</strong> If you encounter problems using a Unified Target, please open an <a href=\"https://github.com/dantiel/orniflight/issues\" target=\"_blank\" rel=\"noopener noreferrer\">issue</a> and then use the non-unified target until the issue has been resolved."
     },
     "firmwareFlasherOnlineSelectFirmwareVersionDescription": {
         "message": "Select firmware version for your board."
@@ -2835,13 +2966,13 @@
         "message": "Message:"
     },
     "firmwareFlasherWarningText": {
-        "message": "Please do <span class=\"message-negative\">not</span> try to flash <strong>non-Betaflight</strong> hardware with this firmware flasher.<br />Do <span class=\"message-negative\">not</span> <strong>disconnect</strong> the board or <strong>turn off</strong> your computer while flashing.<br /><br /><strong>Note: </strong>STM32 bootloader is stored in ROM, it cannot be bricked.<br /><strong>Note: </strong><span class=\"message-negative\">Auto-Connect</span> is always disabled while you are inside firmware flasher.<br /><strong>Note: </strong>Make sure you have a backup; some upgrades/downgrades will wipe your configuration.<br /><strong>Note:</strong> If you have problems flashing <strong>try disconnecting all cables from your FC</strong> first, try rebooting, upgrade chrome, upgrade drivers.<br /><strong>Note:</strong> When flashing boards that have directly connected USB sockets (most newer boards) ensure you have read the USB Flashing section of the Betaflight manual and have the correct software and drivers installed"
+        "message": "Please do <span class=\"message-negative\">not</span> try to flash <strong>non-Orniflight</strong> hardware with this firmware flasher.<br />Do <span class=\"message-negative\">not</span> <strong>disconnect</strong> the board or <strong>turn off</strong> your computer while flashing.<br /><br /><strong>Note: </strong>STM32 bootloader is stored in ROM, it cannot be bricked.<br /><strong>Note: </strong><span class=\"message-negative\">Auto-Connect</span> is always disabled while you are inside firmware flasher.<br /><strong>Note: </strong>Make sure you have a backup; some upgrades/downgrades will wipe your configuration.<br /><strong>Note:</strong> If you have problems flashing <strong>try disconnecting all cables from your FC</strong> first, try rebooting, upgrade chrome, upgrade drivers.<br /><strong>Note:</strong> When flashing boards that have directly connected USB sockets (most newer boards) ensure you have read the USB Flashing section of the Orniflight manual and have the correct software and drivers installed"
     },
     "firmwareFlasherRecoveryHead": {
         "message": "<strong>Recovery / Lost communication</strong>"
     },
     "firmwareFlasherRecoveryText": {
-        "message": "If you have lost communication with your board follow these steps to restore communication: <ul><li>Power off</li><li>Enable 'No reboot sequence', enable 'Full chip erase'.</li><li>Jumper the BOOT pins or hold BOOT button.</li><li>Power on (activity LED will NOT flash if done correctly).</li><li>Install all STM32 drivers and Zadig if required (see <a href=\"https://github.com/betaflight/betaflight/wiki/Installing-Betaflight\"target=\"_blank\">USB Flashing</a> section of Betaflight manual).</li><li>Close configurator, Close all running chrome instances, Close all Chrome apps, Restart Configurator.</li><li>Release BOOT button if your FC has one.</li><li>Flash with correct firmware (using manual baud rate if specified in your FC's manual).</li><li>Power off.</li><li>Remove BOOT jumper.</li><li>Power on (activity LED should flash).</li><li>Connect normally.</li></ul>"
+        "message": "If you have lost communication with your board follow these steps to restore communication: <ul><li>Power off</li><li>Enable 'No reboot sequence', enable 'Full chip erase'.</li><li>Jumper the BOOT pins or hold BOOT button.</li><li>Power on (activity LED will NOT flash if done correctly).</li><li>Install all STM32 drivers and Zadig if required (see <a href=\"https://github.com/dantiel/orniflight/wiki/Installing-Orniflight\"target=\"_blank\">USB Flashing</a> section of Orniflight manual).</li><li>Close configurator, Close all running chrome instances, Close all Chrome apps, Restart Configurator.</li><li>Release BOOT button if your FC has one.</li><li>Flash with correct firmware (using manual baud rate if specified in your FC's manual).</li><li>Power off.</li><li>Remove BOOT jumper.</li><li>Power on (activity LED should flash).</li><li>Connect normally.</li></ul>"
     },
     "firmwareFlasherButtonLeave": {
         "message": "Leave Firmware Flasher"
@@ -3220,7 +3351,7 @@
         "message": "RC Expo Power"
     },
     "pidTuningRcExpoPowerHelp": {
-        "message": "The exponent that is used when calculating RC Expo. In Betaflight versions prior to 3.0, value is fixed at 3."
+        "message": "The exponent that is used when calculating RC Expo. In firmware versions prior to 3.0, value is fixed at 3."
     },
     "pidTuningLevel": {
         "message": "Angle/Horizon"
@@ -3259,7 +3390,7 @@
         "message": "Profile independent Filter Settings"
     },
     "pidTuningFilterSlidersHelp": {
-        "message": "Sliders to adjust the quad gyro and D-term filtering.<br><br>More Filtering gives you smoother flight, but also increases gyro signal delay (Phase Delay) to the PID loop which will result in worse aggressive flight performance, prop wash handling, stick response and if excessive can cause oscillations.<br><br>Less Filtering reduces the gyro signal delay, but can increase motor temperatures due to the D-term reacting to the high frequency motor vibrations (noise).<br>Additionally, if filtering is excessively low, it will cause a decrease in flight performance (higher noise to signal ratio).",
+        "message": "Sliders to adjust the craft gyro and D-term filtering.<br><br>More Filtering gives you smoother flight, but also increases gyro signal delay (Phase Delay) to the PID loop which will result in worse aggressive flight performance, turbulence handling, stick response and if excessive can cause oscillations.<br><br>Less Filtering reduces the gyro signal delay, but can increase servo temperatures due to the D-term reacting to high frequency vibrations (noise).<br>Additionally, if filtering is excessively low, it will cause a decrease in flight performance (higher noise to signal ratio).",
         "description": "Overall helpicon message for filter tuning sliders"
     },
     "pidTuningSliderLowFiltering": {
@@ -3279,7 +3410,7 @@
         "description": "Gyro filter tuning slider label"
     },
     "pidTuningGyroFilterSliderHelp": {
-        "message": "Raises or Lowers the default Gyro Lowpass Filters in proportion to each-other. The gyro filtering is applied before the PID loop.<br>General motor noise ranges per quad class:<br><br>6\"+ quads - generally within 100hz to 330hz<br>5\" quads - generally within 220hz to 500hz<br>Whoop to 3\" quads - generally within 300hz to 850hz<br><br>Generally, you want to set the slider to have the Gyro Lowpass 1 Dynamic Min/Max Cutoff range cover the above.<br>However, for smoother flights use More Filtering on the slider. To get a more aggressive filter tune, use Less Filtering on the slider.<br><br>With Less Filtering BE CAREFUL to not get radical as to cause a fly-away or burn out motors.<br>Note frame resonance issues, bad bearings, and beat up props may cause you to need more filtering.",
+        "message": "Raises or Lowers the default Gyro Lowpass Filters in proportion to each-other. The gyro filtering is applied before the PID loop.<br>General noise ranges per craft class:<br><br>Large ornithopters - generally within 100hz to 330hz<br>Medium ornithopters - generally within 220hz to 500hz<br>Small ornithopters - generally within 300hz to 850hz<br><br>Generally, you want to set the slider to have the Gyro Lowpass 1 Dynamic Min/Max Cutoff range cover the above.<br>However, for smoother flights use More Filtering on the slider. To get a more aggressive filter tune, use Less Filtering on the slider.<br><br>With Less Filtering BE CAREFUL to not get radical as to cause a fly-away or burn out servos.<br>Note frame resonance issues, worn bearings, and damaged wings may cause you to need more filtering.",
         "description": "Gyro filtering tuning slider helpicon message"
     },
     "pidTuningDTermFilterSlider": {
@@ -3343,19 +3474,19 @@
         "description": "Master gain tuning slider helpicon message"
     },
     "pidTuningPDRatioSliderHelp":{
-        "message": "Lower PD balance will lower overall response but will also reduce a possibility of fast bounceback after a flip or roll.<br><br>Higher PD balance provides faster reponse and better propwash handling. However, if your PD balance is too high you will get oscillations after a flip or roll and extended oscillations during prop wash.",
+        "message": "Lower PD balance will lower overall response but will also reduce a possibility of fast bounceback after a flip or roll.<br><br>Higher PD balance provides faster response and better turbulence handling. However, if your PD balance is too high you will get oscillations after a flip or roll and extended oscillations during turbulence.",
         "description": "PD balance tuning slider helpicon message"
     },
     "pidTuningPDGainSliderHelp":{
-        "message": "Lower P and D gain will result in cooler motors but will result in more propwash oscillation. Too low value may cause the quad to be unstable.<br><br>P and D terms work together to reduce propwash.<br><br>Higher values will increase motor heat and could increase oscillations during smooth forward flight due to higher D term gains.",
+        "message": "Lower P and D gain will result in cooler servos but will result in more turbulence oscillation. Too low value may cause the craft to be unstable.<br><br>P and D terms work together to reduce turbulence.<br><br>Higher values will increase servo heat and could increase oscillations during smooth forward flight due to higher D term gains.",
         "description": "P and D gain tuning slider helpicon message"
     },
     "pidTuningResponseSliderHelp":{
         "message": "Lower values will worsen the stick response and may result in slow bounceback at the end of a flip or roll (I-term windup).<br><br>Higher value will have a better stick response for sharp moves. However, too high of values can cause overshoots and fast bounceback at the end of a flip or roll.",
         "description": "Stick response gain tuning slider helpicon message"
     },
-    "pidTuningGyroLowpassFiltersGroup": {
-        "message": "Gyro Lowpass Filters"
+    "pidTuningOndasHelp": {
+        "message": "ONDAS — PID Error Decomposition into Wing Trajectory. <strong>Cadence</strong>: P→k₀ spring (phase timing). <strong>Ferocity</strong>: P+D→dwell ratio (wave sharpness). <strong>Balance</strong>: I→up/down thrust symmetry. <strong>Warp</strong>: Roll/Yaw P→L/R ferocity differential. <strong>Anchor</strong>: k₂ damping. <strong>Resonance</strong>: flap-coherent lock-in filter."
     },
     "pidTuningGyroLowpassFrequency": {
         "message": "Gyro Lowpass 1 Cutoff Frequency [Hz]"
@@ -3577,7 +3708,7 @@
         "message": "Integrated Yaw"
     },
     "pidTuningIntegratedYawCaution": {
-        "message": "<span class=\"message-negative\">CAUTION</span>: if you enable this feature, you must adjust the YAW PID accordingly. More info <a href=\"https://github.com/betaflight/betaflight/wiki/Integrated-Yaw\" target=\"_blank\">here</a>"
+        "message": "<span class=\"message-negative\">CAUTION</span>: if you enable this feature, you must adjust the YAW PID accordingly. More info <a href=\"https://github.com/dantiel/orniflight/wiki/Integrated-Yaw\" target=\"_blank\">here</a>"
     },
     "pidTuningIntegratedYawHelp": {
         "message": "Integrated Yaw is a feature which corrects a fundamental issue with quad control: while the pitch and roll axis are controlled by the thrust differentials the props generate yaw is different. Integrated Yaw fixes this by integrating the output of the yaw pid before applying them to the mixer. This normalizes the way the pids work. You can now tune as any other axis. It requires use of absolute control since no I is needed with Integrated Yaw."
@@ -3587,7 +3718,7 @@
         "message": "Arbitrary board rotation in degrees, to allow mounting it sideways / upside down / rotated etc. When running external sensors, use the sensor alignments (Gyro, Acc, Mag) to define sensor position independent from board orientation. "
     },
     "failsafeFeaturesHelpOld": {
-        "message": "Failsafe configuration has changed considerably. Use Betaflight <strong>v1.12.0+</strong> to enable the improved configuration panel."
+        "message": "Failsafe configuration has changed considerably. Use OrniFlight Configurator <strong>v1.12.0+</strong> to enable the improved configuration panel."
     },
     "failsafePaneTitleOld": {
         "message": "Receiver failsafe"
@@ -3722,7 +3853,7 @@
         "message": "Save"
     },
     "powerFirmwareUpgradeRequired": {
-        "message": "Firmware upgrade <span class=\"message-negative\">required</span>. Battery/Amperage/Voltage configurations using API &lt; 1.33.0 (Betaflight release &lt;= 3.17) is not supported."
+        "message": "Firmware upgrade <span class=\"message-negative\">required</span>. Battery/Amperage/Voltage configurations using API &lt; 1.33.0 (firmware release &lt;= 3.17) is not supported."
     },
     "powerBatteryVoltageMeterSource": {
         "message": "Voltage Meter Source"
@@ -3773,7 +3904,7 @@
         "message": "To calibrate, use a multimeter to measure the actual voltage / current draw on your craft (with a battery plugged in), and enter the values below. Then, with the same battery still plugged in, click [Calibrate]."
     },
     "powerCalibrationManagerNote": {
-        "message": "<strong>Note:</strong> Before calibrating the scale make sure that divider and multiplier for voltage and offset for amperage is set properly.<br>Leaving the values at 0 will not apply calibration.</br><strong>Remember to remove propellers before plugging in a battery!</strong>"
+        "message": "<strong>Note:</strong> Before calibrating the scale make sure that divider and multiplier for voltage and offset for amperage is set properly.<br>Leaving the values at 0 will not apply calibration.</br><strong>Remember to secure wings before plugging in a battery!</strong>"
     },
     "powerCalibrationManagerWarning": {
         "message": "<span class=\"message-negative\">Warning:</span> The battery <span class=\"message-negative\">is not plugged in</span> or voltage and amperage meter sources are <span class=\"message-negative\">not set properly.</span> Make sure that the voltage and/or amperage are reading a value above 0. Otherwise you will not be able to calibrate using this tool."
@@ -4802,10 +4933,10 @@
     },
 
     "osdDescribeFontVersion1": {
-        "message": "Font version: 1 (Betaflight 4.0 or older)"
+        "message": "Font version: 1 (OrniFlight 4.0 or older)"
     },
     "osdDescribeFontVersion2": {
-        "message": "Font version: 2 (Betaflight 4.1 or newer)"
+        "message": "Font version: 2 (OrniFlight 4.1 or newer)"
     },
     "osdDescribeFontVersionCUSTOM": {
         "message": "Font version: user provided"
@@ -5021,7 +5152,7 @@
     },
 
     "vtxHelp": {
-        "message": "Here you can configure the values for your Video Transmitter (VTX). You can view and change the transmission values, including the VTX Tables, if the flight controller and the VTX support it.<br>To set up your VTX use the following steps:<br>1. Go to <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://github.com/betaflight/betaflight/wiki/VTX-tables\">this</a> page;<br>2. Find the appropriate VTX configuration file for your country and your VTX model and download it;<br>3. Click '$t(vtxButtonLoadFile.message)' below, select the VTX configuration file, load it;<br>4. Verify that the settings are correct;<br>5. Click '$t(vtxButtonSave.message)' to store the VTX settings on the flight controller.",
+        "message": "Here you can configure the values for your Video Transmitter (VTX). You can view and change the transmission values, including the VTX Tables, if the flight controller and the VTX support it.<br>To set up your VTX use the following steps:<br>1. Go to <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://github.com/dantiel/orniflight/wiki/VTX-tables\">this</a> page;<br>2. Find the appropriate VTX configuration file for your country and your VTX model and download it;<br>3. Click '$t(vtxButtonLoadFile.message)' below, select the VTX configuration file, load it;<br>4. Verify that the settings are correct;<br>5. Click '$t(vtxButtonSave.message)' to store the VTX settings on the flight controller.",
         "description": "Introduction message in the VTX tab"
     },
     "vtxMessageNotSupported": {
@@ -5185,7 +5316,7 @@
         "description": "Help for the number of power levels field of the VTX Table element in the VTX tab"
     },
     "vtxTablePowerLevelsTableHelp": {
-        "message": "This table represents the different values of power that can be used for the VTX. They are divided into two: <br><b>- $t(vtxTablePowerLevelsValue.message):</b> each power level requires a value that is defined by the hardware manufacturer. Ask your manufacturer for the correct value or consult the Betaflight wiki of VTX Tables to grab some samples. <br><b>- $t(vtxTablePowerLevelsLabel.message):</b> you can put here the label you want for each power level value. It can be numbers (25, 200, 600, 1.2), letters (OFF, MIN, MAX) or a mix of them. <br><br>You must configure <b>only</b> the power levels that are legal at your country.",
+        "message": "This table represents the different values of power that can be used for the VTX. They are divided into two: <br><b>- $t(vtxTablePowerLevelsValue.message):</b> each power level requires a value that is defined by the hardware manufacturer. Ask your manufacturer for the correct value or consult the OrniFlight wiki of VTX Tables to grab some samples. <br><b>- $t(vtxTablePowerLevelsLabel.message):</b> you can put here the label you want for each power level value. It can be numbers (25, 200, 600, 1.2), letters (OFF, MIN, MAX) or a mix of them. <br><br>You must configure <b>only</b> the power levels that are legal at your country.",
         "description": "Help for the table of power levels (value-label) that appears in the VTX tab"
     },
     "vtxTablePowerLevelsValue": {
@@ -5221,7 +5352,7 @@
         "description": "Text of one of the titles of the VTX Table element in the VTX tab"
     },
     "vtxTableBandsChannelsTableHelp": {
-        "message": "This table represents all the frequencies that can be used for your VTX. You can have several bands and for each band you must configure:<br><b>- $t(vtxTableBandTitleName.message):</b> Name that you want to assign to this band, like BOSCAM_A, FATSHARK or RACEBAND.<br><b>- $t(vtxTableBandTitleLetter.message):</b> Short letter that references the band.<br><b>- $t(vtxTableBandTitleFactory.message):</b> This indicates if it is a factory band. If enabled Betaflight sends to the VTX a band and channel number. The VTX will then use its built-in frequency table and the frequencies configured here are only to show the value in the OSD and other places. If it is not enabled, then Betaflight will send to the VTX the real frequency configured here.<br><b>- Frequencies:</b> Frequencies for this band.<br><br>Remember that not all frequencies are legal at your country. You must put a value of <b>zero</b> to each frequency index that you are not allowed to use to disable it.",
+        "message": "This table represents all the frequencies that can be used for your VTX. You can have several bands and for each band you must configure:<br><b>- $t(vtxTableBandTitleName.message):</b> Name that you want to assign to this band, like BOSCAM_A, FATSHARK or RACEBAND.<br><b>- $t(vtxTableBandTitleLetter.message):</b> Short letter that references the band.<br><b>- $t(vtxTableBandTitleFactory.message):</b> This indicates if it is a factory band. If enabled the firmware sends to the VTX a band and channel number. The VTX will then use its built-in frequency table and the frequencies configured here are only to show the value in the OSD and other places. If it is not enabled, then the firmware will send to the VTX the real frequency configured here.<br><b>- Frequencies:</b> Frequencies for this band.<br><br>Remember that not all frequencies are legal at your country. You must put a value of <b>zero</b> to each frequency index that you are not allowed to use to disable it.",
         "description": "Help for the table of bands-channels that appears in the VTX tab"
     },
 
@@ -5397,10 +5528,10 @@
         "message": "Measurement"
     },
     "pidTuningDeltaTip": {
-        "message": "<b>Derivative from Error</b> provides more direct stick response and is mostly prefered for Racing.<br><br><b>Derivative from Measurement</b> provides smoother stick response what is more usefull for freestyling"
+        "message": "<b>Derivative from Error</b> provides more direct stick response.<br><br><b>Derivative from Measurement</b> provides smoother stick response for graceful flight."
     },
     "pidTuningPidControllerTip": {
-        "message": "<b>Legacy vs Betaflight (float):</b> PID scaling and PID logic is exactly the same. Not necessarily retune needed. Legacy is old betaflight evolved rewrite, which is basic PID controller based on integer math. Betaflight PID controller uses floating point math and has many new features specifically designed for multirotor applications <br> <b>Float vs Integer:</b> PID scaling and PID logic is exactly the same. No retune needed. F1 boards have no onboard FPU and floating point math increases CPU load and integer math will improve performance, but float math might gain slightly more precision."
+        "message": "<b>Legacy vs OrniFlight (float):</b> PID scaling and PID logic is exactly the same. Not necessarily retune needed. Legacy is the original PID controller based on integer math. OrniFlight PID controller uses floating point math and has many new features specifically designed for ornithopter applications. <br> <b>Float vs Integer:</b> PID scaling and PID logic is exactly the same. No retune needed. F1 boards have no onboard FPU and floating point math increases CPU load and integer math will improve performance, but float math might gain slightly more precision."
     },
     "pidTuningFilterTip": {
         "message": "<b>Gyro Soft Filter:</b> Lowpass filter for gyro. Use lower value for more filtering.<br><b>D Term Filter:</b> Lowpass filter for Dterm. Can affect D tuning. Use lower value for more filtering. <br><b>Yaw Filter:</b> Filters yaw output. It can help on setups with noisy yaw axis."

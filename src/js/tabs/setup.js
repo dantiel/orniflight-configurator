@@ -296,13 +296,15 @@ TABS.setup.initialize = function (callback) {
         }
 
         function get_fast_data() {
-            MSP.send_message(MSPCodes.MSP_ATTITUDE, false, false, function () {
-	            roll_e.text(i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[0]]));
-	            pitch_e.text(i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[1]]));
-                heading_e.text(i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[2]]));
+            MSP.send_message(MSPCodes.MSP_RC, false, false, function () {
+                MSP.send_message(MSPCodes.MSP_ATTITUDE, false, false, function () {
+                    roll_e.text(i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[0]]));
+                    pitch_e.text(i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[1]]));
+                    heading_e.text(i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[2]]));
 
-                self.renderModel();
-                self.updateInstruments();
+                    self.renderModel();
+                    self.updateInstruments();
+                });
             });
         }
 
@@ -326,7 +328,7 @@ TABS.setup.initializeInstruments = function() {
 };
 
 TABS.setup.initModel = function () {
-    this.model = new Model($('.model-and-info #canvas_wrapper'), $('.model-and-info #canvas'));
+    this.model = new Model($('.model-and-info #canvas_wrapper'), $('.model-and-info #canvas'), $('.model-and-info #wave-canvas'));
 
     $(window).on('resize', $.proxy(this.model.resize, this.model));
 };
@@ -337,6 +339,33 @@ TABS.setup.renderModel = function () {
         z = (SENSOR_DATA.kinematics[0] * -1.0) * 0.017453292519943295;
 
     this.model.rotateTo(x, y, z);
+
+    // Pass flap state: throttle (CH3), yaw (CH4), ONDAS params
+    if (typeof ADVANCED_TUNING !== 'undefined' && typeof RC !== 'undefined' && RC.channels) {
+        var throttle = (RC.channels.length > 2) ? RC.channels[2] : 1280;
+        var yaw = (RC.channels.length > 3) ? RC.channels[3] : 1500;
+        var freq = ADVANCED_TUNING.flapBaseFrequency || 6;
+        var amp = ADVANCED_TUNING.flapBaseAmplitude || 30;
+        var ferocityD = (ADVANCED_TUNING.ferocity_d_gain || 20) * 0.08; // 0–100 → 0–8
+        var ferocityU = (ADVANCED_TUNING.ferocity_p_gain || 10) * 0.08;
+        var phaseFront = ADVANCED_TUNING.flapping_phase_shift_0 || 0;
+        var phaseRear = ADVANCED_TUNING.flapping_phase_shift_1 || 0;
+        var mountFront = ADVANCED_TUNING.servo_mount_angle_0 || 0;
+        var mountRear = ADVANCED_TUNING.servo_mount_angle_1 || 0;
+
+        this.model.setFlapState({
+            throttle: throttle,
+            yaw: yaw,
+            frequency: freq,
+            amplitude: amp,
+            ferocityDown: ferocityD,
+            ferocityUp: ferocityU,
+            phaseShiftFront: phaseFront,
+            phaseShiftRear: phaseRear,
+            mountAngleFront: mountFront,
+            mountAngleRear: mountRear
+        });
+    }
 };
 
 TABS.setup.cleanup = function (callback) {

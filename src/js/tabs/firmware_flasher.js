@@ -2,8 +2,8 @@
 
 TABS.firmware_flasher = {
     releases: null,
-    releaseChecker: new ReleaseChecker('firmware', 'https://api.github.com/repos/betaflight/betaflight/releases'),
-    jenkinsLoader: new JenkinsLoader('https://ci.betaflight.tech'),
+    releaseChecker: new ReleaseChecker('firmware', 'https://api.github.com/repos/dantiel/orniflight/releases'),
+    jenkinsLoader: new JenkinsLoader('https://ci.orniflight.tech'),
     localFirmwareLoaded: false,
     selectedBoard: undefined,
     intel_hex: undefined, // standard intel hex in string format
@@ -27,7 +27,7 @@ TABS.firmware_flasher.initialize = function (callback) {
     self.intel_hex = undefined;
     self.parsed_hex = undefined;
 
-    var unifiedSource = 'https://api.github.com/repos/betaflight/unified-targets/contents/configs/default';
+    var unifiedSource = 'https://api.github.com/repos/dantiel/orniflight/contents/configs/default';
 
 
         /**
@@ -82,7 +82,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             $('div.release_info .date').text(summary.date);
             $('div.release_info .file').text(summary.file).prop('href', summary.url);
 
-            var formattedNotes = summary.notes.replace(/#(\d+)/g, '[#$1](https://github.com/betaflight/betaflight/pull/$1)');
+            var formattedNotes = summary.notes.replace(/#(\d+)/g, '[#$1](https://github.com/dantiel/orniflight/pull/$1)');
             formattedNotes = marked(formattedNotes);
             $('div.release_info .notes').html(formattedNotes);
             $('div.release_info .notes').find('a').each(function() {
@@ -171,7 +171,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             var unsortedTargets = [];
             releaseData.forEach(function(release) {
                 release.assets.forEach(function(asset) {
-                    var targetFromFilenameExpression = /betaflight_([\d.]+)?_?(\w+)(\-.*)?\.(.*)/;
+                    var targetFromFilenameExpression = /orniflight_([\d.]+)?_?(\w+)(\-.*)?\.(.*)/;
                     var match = targetFromFilenameExpression.exec(asset.name);
                     if ((!showDevReleases && release.prerelease) || !match) {
                         return;
@@ -191,7 +191,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                 var matchVersionFromTag = versionFromTagExpression.exec(release.tag_name);
                 var version = matchVersionFromTag[1];
                 release.assets.forEach(function(asset) {
-                    var targetFromFilenameExpression = /betaflight_([\d.]+)?_?(\w+)(\-.*)?\.(.*)/;
+                    var targetFromFilenameExpression = /orniflight_([\d.]+)?_?(\w+)(\-.*)?\.(.*)/;
                     var match = targetFromFilenameExpression.exec(asset.name);
                     if ((!showDevReleases && release.prerelease) || !match) {
                         return;
@@ -344,7 +344,7 @@ TABS.firmware_flasher.initialize = function (callback) {
         var buildTypes = [
             {
                 tag: 'firmwareFlasherOptionLabelBuildTypeRelease',
-                loader: () => self.releaseChecker.loadReleaseData(releaseData => processBoardOptions(releaseData, false))
+                loader: () => self.releaseChecker.loadReleaseData(releaseData => processBoardOptions(releaseData, true))
             },
             {
                 tag: 'firmwareFlasherOptionLabelBuildTypeReleaseCandidate',
@@ -623,7 +623,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                     inComment = true;
                 }
                 if (!inComment && input.charCodeAt(i) > 255) {
-                    // Note: we're not showing this error in betaflight-configurator
+                    // Note: we're not showing this error in orniflight-configurator
                     throw new Error('commands are limited to characters 0-255, comments have no limitation');
                 }
                 if (input.charCodeAt(i) > 255) {
@@ -1002,7 +1002,7 @@ TABS.firmware_flasher.initialize = function (callback) {
 
         chrome.storage.local.get('show_development_releases', function (result) {
             $('input.show_development_releases')
-            .prop('checked', result.show_development_releases)
+            .prop('checked', result.show_development_releases !== undefined ? result.show_development_releases : true)
             .change(function () {
                 chrome.storage.local.set({'show_development_releases': $(this).is(':checked')});
             }).change();

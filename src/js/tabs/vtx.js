@@ -783,7 +783,7 @@ TABS.vtx.initialize = function (callback) {
 
         let vtxConfig = {};
 
-        vtxConfig.description = "Betaflight VTX Config file";
+        vtxConfig.description = "OrniFlight VTX Config file";
         vtxConfig.version = "1.0";
 
         vtxConfig.vtx_table = {};

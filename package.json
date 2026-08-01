@@ -1,9 +1,9 @@
 {
   "name": "orniflight-configurator",
   "description": "Crossplatform configuration tool for OrniFlight flight control system.",
-  "version": "10.7.0",
+  "version": "1.0.0",
   "main": "main_nwjs.html",
-  "bg-script": "js/eventPage.js",
+  "chromium-args": "--no-sandbox --disable-features=NetworkService --ignore-certificate-errors",
   "default_locale": "en",
   "scripts": {
     "start": "gulp debug",
@@ -11,7 +11,7 @@
     "test": "karma start test/karma.conf.js"
   },
   "window": {
-    "show": false,
+    "show": true,
     "icon": "images/of_icon_128.png"
   },
   "repository": {
@@ -36,7 +36,7 @@
   "author": "The OrniFlight open source project.",
   "license": "GPL-3.0",
   "engines": {
-    "node": "10.x"
+    "node": ">=18"
   },
   "dependencies": {
     "bluebird": "^3.5.5",
@@ -57,7 +57,6 @@
     "chai": "^4.2.0",
     "command-exists": "^1.2.8",
     "del": "^5.0.0",
-    "follow-redirects": "^1.6.1",
     "fs-extra": "^8.1.0",
     "gulp": "^4.0.2",
     "gulp-concat": "~2.6.1",
@@ -74,14 +73,14 @@
     "karma-sinon-chai": "^2.0.2",
     "makensis": "^0.18.1",
     "mocha": "^6.1.4",
-    "nw-builder": "^3.5.7",
+    "nw-builder": "^4.18.0",
     "os": "^0.1.1",
     "rpm-builder": "^1.0.0",
     "sinon": "^7.2.3",
     "sinon-chai": "^3.3.0",
-    "targz": "^1.0.1",
     "temp": "^0.9.0",
     "vinyl-source-stream": "^2.0.0",
+    "yargs": "^7.1.2",
     "yarn": "^1.17.3"
   },
   "optionalDependencies": {

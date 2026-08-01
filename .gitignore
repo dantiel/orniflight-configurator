@@ -27,3 +27,7 @@ nbproject/
 # Eclipse
 .project
 .settings/
+.aethercodex
+.tm-ai/
+.tm_properties
+hermetic.manifest.md

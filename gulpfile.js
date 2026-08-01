@@ -7,17 +7,15 @@ delete pkg.optionalDependencies['gulp-appdmg'];
 const child_process = require('child_process');
 const fs = require('fs');
 const fse = require('fs-extra');
-const https = require('follow-redirects').https;
+const https = require('https');
 const path = require('path');
 
 const zip = require('gulp-zip');
 const del = require('del');
-const NwBuilder = require('nw-builder');
 const makensis = require('makensis');
 const deb = require('gulp-debian');
 const buildRpm = require('rpm-builder');
 const commandExistsSync = require('command-exists').sync;
-const targz = require('targz');
 
 const gulp = require('gulp');
 const concat = require('gulp-concat');
@@ -39,15 +37,13 @@ const LINUX_INSTALL_DIR = '/opt/betaflight';
 var gitChangeSetId;
 
 var nwBuilderOptions = {
-    version: '0.36.4',
+    version: '0.100.0',
     files: './dist/**/*',
     macIcns: './src/images/of_icon.icns',
     macPlist: { 'CFBundleDisplayName': 'OrniFlight Configurator'},
     winIco: './src/images/of_icon.ico',
     zip: false
 };
-
-var nwArmVersion = '0.27.6';
 
 //-----------------
 //Pre tasks operations
@@ -98,8 +94,11 @@ gulp.task('default', debugBuild);
 // #
 // # gulp <task> [<platform>]+        Run only for platform(s) (with <platform> one of --linux64, --linux32, --armv7, --osx64, --win32, --win64, or --chromeos)
 // #
+var gForceArm64 = false; // Set by --force-arm64 flag; overrides auto-detection
+var gForceX64 = false;   // Set by --force-x64 flag; forces x64 even on Apple Silicon
+
 function getInputPlatforms() {
-    var supportedPlatforms = ['linux64', 'linux32', 'armv7', 'osx64', 'win32','win64', 'chromeos'];
+    var supportedPlatforms = ['linux64', 'linux32', 'armv7', 'osx64', 'osx-arm64', 'win32','win64', 'chromeos'];
     var platforms = [];
     var regEx = /--(\w+)/;
     console.log(process.argv);
@@ -110,6 +109,10 @@ function getInputPlatforms() {
         } else if (arg == 'nowinicon') {
             console.log('ignoring winIco')
             delete nwBuilderOptions['winIco'];
+        } else if (arg == 'force-arm64') {
+            gForceArm64 = true;
+        } else if (arg == 'force-x64') {
+            gForceX64 = true;
         } else {
             console.log('Unknown platform: ' + arg);
             process.exit();
@@ -136,13 +139,21 @@ function getInputPlatforms() {
     return platforms;
 }
 
-// Gets the default platform to be used
+// Gets the default platform to be used.
+// On macOS, always defaults to osx64 (x86_64). Use --force-arm64 for native ARM64 builds.
 function getDefaultPlatform() {
     var defaultPlatform;
     switch (os.platform()) {
     case 'darwin':
-        defaultPlatform = 'osx64';
-
+        // Apple Silicon Macs default to ARM64 native, Intel Macs to x64
+        var isAppleSilicon = os.cpus().length > 0 && os.cpus()[0].model.indexOf('Apple') !== -1;
+        if (gForceX64) {
+            defaultPlatform = 'osx64';
+        } else if (gForceArm64 || isAppleSilicon) {
+            defaultPlatform = 'osx-arm64';
+        } else {
+            defaultPlatform = 'osx64';
+        }
         break;
     case 'linux':
         defaultPlatform = 'linux64';
@@ -176,6 +187,7 @@ function removeItem(platforms, item) {
 function getRunDebugAppCommand(arch) {
     switch (arch) {
     case 'osx64':
+    case 'osx-arm64':
         return 'open ' + path.join(DEBUG_DIR, pkg.name, arch, pkg.name + '.app');
 
         break;
@@ -256,7 +268,8 @@ function dist_yarn() {
     return gulp.src(['./dist/package.json', './dist/yarn.lock'])
         .pipe(gulp.dest('./dist'))
         .pipe(yarn({
-            production: true
+            production: true,
+            ignoreEngines: true
         }));
 }
 
@@ -326,11 +339,7 @@ function post_build(arch, folder, done) {
                    .pipe(gulp.dest(launcherDir));
     }
 
-    if (arch === 'armv7') {
-        console.log('Moving ARMv7 build from "linux32" to "armv7" directory...');
-        fse.moveSync(path.join(folder, pkg.name, 'linux32'), path.join(folder, pkg.name, 'armv7'));
-    }
-
+    // NW.js 0.114.0 provides official linux-arm64 builds — no directory renaming needed
     return done();
 }
 
@@ -342,126 +351,238 @@ function debug(done) {
     buildNWAppsWrapper(platforms, 'sdk', DEBUG_DIR, done);
 }
 
-function injectARMCache(flavor, callback) {
-    var flavorPostfix = `-${flavor}`;
-    var flavorDownloadPostfix = flavor !== 'normal' ? `-${flavor}` : '';
-    clean_cache().then(function() {
-        if (!fs.existsSync('./cache')) {
-            fs.mkdirSync('./cache');
-        }
-        fs.closeSync(fs.openSync('./cache/_ARMv7_IS_CACHED', 'w'));
-        var versionFolder = `./cache/${nwBuilderOptions.version}${flavorPostfix}`;
-        if (!fs.existsSync(versionFolder)) {
-            fs.mkdirSync(versionFolder);
-        }
-        if (!fs.existsSync(versionFolder + '/linux32')) {
-            fs.mkdirSync(`${versionFolder}/linux32`);
-        }
-        var downloadedArchivePath = `${versionFolder}/nwjs${flavorPostfix}-v${nwArmVersion}-linux-arm.tar.gz`;
-        var downloadUrl = `https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/v${nwArmVersion}/nwjs${flavorDownloadPostfix}-v${nwArmVersion}-linux-arm.tar.gz`;
-        if (fs.existsSync(downloadedArchivePath)) {
-            console.log('Prebuilt ARMv7 binaries found in /tmp');
-            downloadDone(flavorDownloadPostfix, downloadedArchivePath, versionFolder);
-        } else {
-            console.log(`Downloading prebuilt ARMv7 binaries from "${downloadUrl}"...`);
-            process.stdout.write('> Starting download...\r');
-            var armBuildBinary = fs.createWriteStream(downloadedArchivePath);
-            var request = https.get(downloadUrl, function(res) {
-                var totalBytes = res.headers['content-length'];
-                var downloadedBytes = 0;
-                res.pipe(armBuildBinary);
-                res.on('data', function (chunk) {
-                    downloadedBytes += chunk.length;
-                    process.stdout.write(`> ${parseInt((downloadedBytes * 100) / totalBytes)}% done             \r`);
-                });
-                armBuildBinary.on('finish', function() {
-                    process.stdout.write('> 100% done             \n');
-                    armBuildBinary.close(function() {
-                        downloadDone(flavorDownloadPostfix, downloadedArchivePath, versionFolder);
-                    });
-                });
-            });
-        }
-    });
+// NW.js 0.114.0 uses official linux-arm64 builds — no third-party ARM binaries needed.
+// The injectARMCache function and all ARM cache injection logic is removed.
 
-    function downloadDone(flavorDownloadPostfix, downloadedArchivePath, versionFolder) {
-        console.log('Injecting prebuilt ARMv7 binaries into Linux32 cache...');
-        targz.decompress({
-            src: downloadedArchivePath,
-            dest: versionFolder,
-        }, function(err) {
-            if (err) {
-                console.log(err);
-                clean_debug();
-                process.exit(1);
-            } else {
-                fs.rename(
-                    `${versionFolder}/nwjs${flavorDownloadPostfix}-v${nwArmVersion}-linux-arm`,
-                    `${versionFolder}/linux32`,
-                    (err) => {
-                        if (err) {
-                            console.log(err);
-                            clean_debug();
-                            process.exit(1);
-                        }
-                        callback();
-                    }
-                );
-            }
-        });
+/**
+ * Map old platform strings to nw-builder v4 {platform, arch} pairs.
+ * Also returns the NW.js download URL components.
+ */
+function mapPlatformToV4(oldPlatform) {
+    switch (oldPlatform) {
+    case 'osx64':
+        return { platform: 'osx', arch: 'x64' };
+    case 'osx-arm64':
+        return { platform: 'osx', arch: 'arm64' };
+    case 'linux64':
+        return { platform: 'linux', arch: 'x64' };
+    case 'linux32':
+        return { platform: 'linux', arch: 'ia32' };
+    case 'armv7':
+        return { platform: 'linux', arch: 'arm64' };
+    case 'win32':
+        return { platform: 'win', arch: 'ia32' };
+    case 'win64':
+        return { platform: 'win', arch: 'x64' };
+    default:
+        console.warn('Unknown platform: ' + oldPlatform + ' — defaulting to linux/x64');
+        return { platform: 'linux', arch: 'x64' };
     }
 }
 
-function buildNWAppsWrapper(platforms, flavor, dir, done) {
-    function buildNWAppsCallback() {
-        buildNWApps(platforms, flavor, dir, done);
+/**
+ * Get the NW.js download URL for a given version, flavor, platform, and arch.
+ */
+function getNwjsDownloadUrl(version, flavor, platform, arch) {
+    var ext = (platform === 'linux') ? 'tar.gz' : 'zip';
+    var flavorSuffix = (flavor === 'sdk') ? '-sdk' : '';
+    return 'https://dl.nwjs.io/v' + version +
+        '/nwjs' + flavorSuffix + '-v' + version +
+        '-' + platform + '-' + arch + '.' + ext;
+}
+
+/**
+ * Assemble the NW.js application manually — no nw-builder dependency needed.
+ * This bypasses the nw-builder v4 ESM/Node 18 requirement.
+ */
+function assembleNWApp(platform, arch, flavor, outDir, done) {
+    var version = nwBuilderOptions.version;
+    var flavorSuffix = (flavor === 'sdk') ? '-sdk' : '';
+    var cacheKey = 'nwjs' + flavorSuffix + '-v' + version + '-' + platform + '-' + arch;
+    var cacheDir = path.join('./cache', cacheKey);
+
+    console.log('Assembling NW.js app: ' + platform + '/' + arch + ' → ' + outDir);
+
+    // Step 1: Ensure NW.js runtime is cached
+    ensureNwjsCached(version, flavor, platform, arch, cacheDir, function(err) {
+        if (err) {
+            console.error('Failed to cache NW.js: ' + err);
+            done(err);
+            return;
+        }
+
+        // Step 2: Copy NW.js runtime to output
+        fse.copySync(cacheDir, outDir);
+
+        // Step 3: Inject app.nw (dist/ contents)
+        if (platform === 'osx') {
+            var appNwDir = path.join(outDir, 'nwjs.app', 'Contents', 'Resources', 'app.nw');
+            fse.copySync('./dist/', appNwDir);
+
+            // Customize Info.plist
+            var plistPath = path.join(outDir, 'nwjs.app', 'Contents', 'Info.plist');
+            customizeMacPlist(plistPath);
+
+            // Rename .app
+            var oldApp = path.join(outDir, 'nwjs.app');
+            var newApp = path.join(outDir, pkg.name + '.app');
+            if (fs.existsSync(newApp)) {
+                fse.removeSync(newApp);
+            }
+            fs.renameSync(oldApp, newApp);
+
+            // Copy icon
+            if (nwBuilderOptions.macIcns && fs.existsSync(nwBuilderOptions.macIcns)) {
+                var iconDest = path.join(newApp, 'Contents', 'Resources', 'app.icns');
+                fse.copySync(nwBuilderOptions.macIcns, iconDest);
+            }
+        } else if (platform === 'linux') {
+            var appNwDir = path.join(outDir, 'package.nw');
+            fse.copySync('./dist/', appNwDir);
+        } else if (platform === 'win') {
+            var appNwDir = path.join(outDir, 'package.nw');
+            fse.copySync('./dist/', appNwDir);
+        }
+
+        console.log('  ✓ Assembled: ' + outDir);
+        done();
+    });
+}
+
+/**
+ * Download and cache NW.js runtime if not already cached.
+ */
+function ensureNwjsCached(version, flavor, platform, arch, cacheDir, done) {
+    if (fs.existsSync(cacheDir)) {
+        console.log('  NW.js runtime cached: ' + cacheDir);
+        done();
+        return;
     }
 
-    if (platforms.indexOf('armv7') !== -1) {
-        if (platforms.indexOf('linux32') !== -1) {
-            console.log('Cannot build ARMv7 and Linux32 versions at the same time!');
-            clean_debug();
-            process.exit(1);
-        }
-        removeItem(platforms, 'armv7');
-        platforms.push('linux32');
+    console.log('  Downloading NW.js ' + version + ' ' + platform + '/' + arch + '...');
 
-        if (!fs.existsSync('./cache/_ARMv7_IS_CACHED', 'w')) {
-            console.log('Purging cache because it needs to be overwritten...');
-            clean_cache().then(() => {
-                injectARMCache(flavor, buildNWAppsCallback);
-            })
+    var url = getNwjsDownloadUrl(version, flavor, platform, arch);
+    var downloadDir = './cache/_dl/';
+    if (!fs.existsSync(downloadDir)) {
+        fs.mkdirSync(downloadDir, { recursive: true });
+    }
+
+    var ext = (platform === 'win') ? 'zip' : 'tar.gz';
+    var archivePath = path.join(downloadDir, 'nwjs-' + platform + '-' + arch + '.' + ext);
+
+    // Download
+    var file = fs.createWriteStream(archivePath);
+    https.get(url, function(response) {
+        // Follow redirects
+        if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
+            https.get(response.headers.location, function(redirectRes) {
+                redirectRes.pipe(file);
+                file.on('finish', function() {
+                    file.close(function() {
+                        extractAndCache(archivePath, cacheDir, platform, done);
+                    });
+                });
+            });
         } else {
-            buildNWAppsCallback();
+            response.pipe(file);
+            file.on('finish', function() {
+                file.close(function() {
+                    extractAndCache(archivePath, cacheDir, platform, done);
+                });
+            });
         }
+    }).on('error', function(err) {
+        done(err);
+    });
+}
+
+function extractAndCache(archivePath, cacheDir, platform, done) {
+    console.log('  Extracting to: ' + cacheDir);
+
+    var tmpExtract = cacheDir + '_tmp/';
+    if (fs.existsSync(tmpExtract)) {
+        fse.removeSync(tmpExtract);
+    }
+    fs.mkdirSync(tmpExtract, { recursive: true });
+
+    if (archivePath.endsWith('.tar.gz')) {
+        // Use tar command
+        child_process.exec('tar -xzf "' + archivePath + '" -C "' + tmpExtract + '"', function(err) {
+            if (err) { done(err); return; }
+            finalizeExtract(tmpExtract, cacheDir, done);
+        });
+    } else if (archivePath.endsWith('.zip')) {
+        child_process.exec('unzip -qo "' + archivePath + '" -d "' + tmpExtract + '"', function(err) {
+            if (err) { done(err); return; }
+            finalizeExtract(tmpExtract, cacheDir, done);
+        });
     } else {
-        if (platforms.indexOf('linux32') !== -1 && fs.existsSync('./cache/_ARMv7_IS_CACHED')) {
-            console.log('Purging cache because it was previously overwritten...');
-            clean_cache().then(buildNWAppsCallback);
-        } else {
-            buildNWAppsCallback();
-        }
+        done(new Error('Unknown archive format: ' + ext));
     }
+}
+
+function finalizeExtract(tmpExtract, cacheDir, done) {
+    // NW.js extracts to a single subdirectory — move contents up
+    var entries = fs.readdirSync(tmpExtract);
+    var srcDir = path.join(tmpExtract, entries[0]);
+    if (fs.existsSync(cacheDir)) {
+        fse.removeSync(cacheDir);
+    }
+    fs.renameSync(srcDir, cacheDir);
+    fse.removeSync(tmpExtract);
+    console.log('  Cached: ' + cacheDir);
+    done();
+}
+
+function customizeMacPlist(plistPath) {
+    if (!fs.existsSync(plistPath)) return;
+    var content = fs.readFileSync(plistPath, 'utf8');
+    // Replace nwjs-specific entries with OrniFlight branding
+    content = content.replace(/<key>CFBundleDisplayName<\/key>\s*\n\s*<string>[^<]*<\/string>/,
+        '<key>CFBundleDisplayName</key>\n\t<string>OrniFlight Configurator</string>');
+    content = content.replace(/<key>CFBundleName<\/key>\s*\n\s*<string>[^<]*<\/string>/,
+        '<key>CFBundleName</key>\n\t<string>OrniFlight Configurator</string>');
+    content = content.replace(/<key>CFBundleIdentifier<\/key>\s*\n\s*<string>[^<]*<\/string>/,
+        '<key>CFBundleIdentifier</key>\n\t<string>com.orniflight.configurator</string>');
+    fs.writeFileSync(plistPath, content);
+}
+
+function buildNWAppsWrapper(platforms, flavor, dir, done) {
+    buildNWApps(platforms, flavor, dir, done);
 }
 
 function buildNWApps(platforms, flavor, dir, done) {
     if (platforms.length > 0) {
-        var builder = new NwBuilder(Object.assign({
-            buildDir: dir,
-            platforms: platforms,
-            flavor: flavor
-        }, nwBuilderOptions));
-        builder.on('log', console.log);
-        builder.build(function (err) {
-            if (err) {
-                console.log('Error building NW apps: ' + err);
-                clean_debug();
-                process.exit(1);
+        var pending = platforms.length;
+        var hasError = false;
+
+        platforms.forEach(function(p) {
+            var v4 = mapPlatformToV4(p);
+            var outDir = path.join(dir, pkg.name, p);
+
+            // Clean existing output
+            if (fs.existsSync(outDir)) {
+                fse.removeSync(outDir);
             }
-            done();
+            fs.mkdirSync(outDir, { recursive: true });
+
+            console.log('Building NW app: ' + p + ' → ' + v4.platform + '/' + v4.arch);
+            assembleNWApp(v4.platform, v4.arch, flavor, outDir, function(err) {
+                if (err && !hasError) {
+                    hasError = true;
+                    console.log('Error building NW apps: ' + err);
+                    clean_debug();
+                    done(err);
+                    return;
+                }
+                pending--;
+                if (pending === 0 && !hasError) {
+                    done();
+                }
+            });
         });
     } else {
-        console.log('No platform suitable for NW Build')
+        console.log('No platform suitable for NW Build');
         done();
     }
 }
@@ -688,6 +809,34 @@ function release_osx64() {
     );
 }
 
+function release_osx_arm64() {
+    var appdmg = require('gulp-appdmg');
+
+    createDirIfNotExists(RELEASE_DIR);
+
+    return gulp.src(['.'])
+        .pipe(appdmg({
+            target: path.join(RELEASE_DIR, getReleaseFilename('macOS-ARM64', 'dmg')),
+            basepath: path.join(APPS_DIR, pkg.name, 'osx-arm64'),
+            specification: {
+                title: 'OrniFlight Configurator',
+                contents: [
+                    { 'x': 448, 'y': 342, 'type': 'link', 'path': '/Applications' },
+                    { 'x': 192, 'y': 344, 'type': 'file', 'path': pkg.name + '.app', 'name': 'OrniFlight Configurator.app' }
+                ],
+                background: path.join(__dirname, 'assets/osx/dmg-background.png'),
+                format: 'UDZO',
+                window: {
+                    size: {
+                        width: 638,
+                        height: 479
+                    }
+                }
+            },
+        })
+    );
+}
+
 // Create the dir directory, with write permissions
 function createDirIfNotExists(dir) {
     fs.mkdir(dir, '0775', function(err) {
@@ -740,8 +889,8 @@ function listReleaseTasks(done) {
         });
     }
 
-    if (platforms.indexOf('osx64') !== -1) {
-        releaseTasks.push(release_osx64);
+    if (platforms.indexOf('osx64') !== -1 || platforms.indexOf('osx-arm64') !== -1) {
+        releaseTasks.push(platforms.indexOf('osx-arm64') !== -1 ? release_osx_arm64 : release_osx64);
     }
 
     if (platforms.indexOf('win32') !== -1) {

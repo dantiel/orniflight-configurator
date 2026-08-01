@@ -205,18 +205,35 @@ function configuration_backup(callback) {
     }
 
     function save() {
-        var chosenFileEntry = null;
-
         var prefix = 'backup';
         var suffix = 'json';
-
         var filename = generateFilename(prefix, suffix);
+        var serialized_config_object = JSON.stringify(configuration, null, '\t');
 
+        if (GUI.Mode === GUI_Modes.NWJS) {
+            // NW.js: use fs + nwsaveas input
+            var fs = require('fs');
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.nwsaveas = filename;
+            input.onchange = function () {
+                if (this.value) {
+                    fs.writeFileSync(this.value, serialized_config_object);
+                    console.log('Backup file path: ' + this.value);
+                    console.log('Write SUCCESSFUL');
+                    if (callback) callback();
+                }
+            };
+            input.click();
+            return;
+        }
+
+        // Chrome App mode
+        var chosenFileEntry = null;
         var accepts = [{
             description: suffix.toUpperCase() + ' files', extensions: [suffix]
         }];
 
-        // create or load the file
         chrome.fileSystem.chooseEntry({type: 'saveFile', suggestedName: filename, accepts: accepts}, function (fileEntry) {
             if (chrome.runtime.lastError) {
                 console.error(chrome.runtime.lastError.message);
@@ -230,21 +247,16 @@ function configuration_backup(callback) {
 
             chosenFileEntry = fileEntry;
 
-            // echo/console log path specified
             chrome.fileSystem.getDisplayPath(chosenFileEntry, function (path) {
                 console.log('Backup file path: ' + path);
             });
 
-            // change file entry from read only to read/write
             chrome.fileSystem.getWritableEntry(chosenFileEntry, function (fileEntryWritable) {
-                // check if file is writable
                 chrome.fileSystem.isWritableEntry(fileEntryWritable, function (isWritable) {
                     if (isWritable) {
                         chosenFileEntry = fileEntryWritable;
 
-                        // crunch the config object
-                        var serialized_config_object = JSON.stringify(configuration, null, '\t');
-                        var blob = new Blob([serialized_config_object], {type: 'text/plain'}); // first parameter for Blob needs to be an array
+                        var blob = new Blob([serialized_config_object], {type: 'text/plain'});
 
                         chosenFileEntry.createWriter(function (writer) {
                             writer.onerror = function (e) {
@@ -254,14 +266,11 @@ function configuration_backup(callback) {
                             var truncated = false;
                             writer.onwriteend = function () {
                                 if (!truncated) {
-                                    // onwriteend will be fired again when truncation is finished
                                     truncated = true;
                                     writer.truncate(blob.size);
-
                                     return;
                                 }
 
-                                analytics.sendEvent(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'Backup');
                                 console.log('Write SUCCESSFUL');
                                 if (callback) callback();
                             };
@@ -271,7 +280,6 @@ function configuration_backup(callback) {
                             console.error(e);
                         });
                     } else {
-                        // Something went wrong or file is set to read only and cannot be changed
                         console.log('File appears to be read only, sorry.');
                     }
                 });
@@ -282,13 +290,61 @@ function configuration_backup(callback) {
 }
     
 function configuration_restore(callback) {
-    var chosenFileEntry = null;
+    function process_configuration(configuration) {
+        if (typeof configuration.generatedBy !== 'undefined' && compareVersions(configuration.generatedBy, CONFIGURATOR.backupFileMinVersionAccepted)) {
+            if (!compareVersions(configuration.generatedBy, "1.14.0") && !migrate(configuration)) {
+                GUI.log(i18n.getMessage('backupFileUnmigratable'));
+                return;
+            }
+            if (configuration.FEATURE_CONFIG && configuration.FEATURE_CONFIG.features && configuration.FEATURE_CONFIG.features._featureMask) {
+                var features = new Features(CONFIG);
+                features.setMask(configuration.FEATURE_CONFIG.features._featureMask);
+                configuration.FEATURE_CONFIG.features = features;
+            }
 
+            analytics.sendEvent(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'Restore');
+            configuration_upload(configuration, callback);
+        } else {
+            GUI.log(i18n.getMessage('backupFileIncompatible'));
+        }
+    }
+
+    if (GUI.Mode === GUI_Modes.NWJS) {
+        // NW.js: use fs + hidden file input
+        var fs = require('fs');
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = function () {
+            if (!this.value) {
+                console.log('No file selected, restore aborted.');
+                return;
+            }
+            var content = fs.readFileSync(this.value, 'utf8');
+            if (content.length > 1048576) {
+                console.log('File limit (1 MB) exceeded, aborting');
+                return;
+            }
+            console.log('Restore file path: ' + this.value);
+            console.log('Read SUCCESSFUL');
+            try {
+                var configuration = JSON.parse(content);
+            } catch (e) {
+                console.log('Data provided != valid JSON string, restore aborted.');
+                return;
+            }
+            process_configuration(configuration);
+        };
+        input.click();
+        return;
+    }
+
+    // Chrome App mode
+    var chosenFileEntry = null;
     var accepts = [{
         description: 'JSON files', extensions: ['json']
     }];
 
-    // load up the file
     chrome.fileSystem.chooseEntry({type: 'openFile', accepts: accepts}, function (fileEntry) {
         if (chrome.runtime.lastError) {
             console.error(chrome.runtime.lastError.message);
@@ -302,18 +358,15 @@ function configuration_restore(callback) {
 
         chosenFileEntry = fileEntry;
 
-        // echo/console log path specified
         chrome.fileSystem.getDisplayPath(chosenFileEntry, function (path) {
             console.log('Restore file path: ' + path);
         });
 
-        // read contents into variable
         chosenFileEntry.file(function (file) {
             var reader = new FileReader();
 
             reader.onprogress = function (e) {
-                if (e.total > 1048576) { // 1 MB
-                    // dont allow reading files bigger then 1 MB
+                if (e.total > 1048576) {
                     console.log('File limit (1 MB) exceeded, aborting');
                     reader.abort();
                 }
@@ -322,35 +375,13 @@ function configuration_restore(callback) {
             reader.onloadend = function (e) {
                 if (e.total != 0 && e.total == e.loaded) {
                     console.log('Read SUCCESSFUL');
-
-                    try { // check if string provided is a valid JSON
+                    try {
                         var configuration = JSON.parse(e.target.result);
                     } catch (e) {
-                        // data provided != valid json object
                         console.log('Data provided != valid JSON string, restore aborted.');
-
                         return;
                     }
-
-
-                    // validate
-                    if (typeof configuration.generatedBy !== 'undefined' && compareVersions(configuration.generatedBy, CONFIGURATOR.backupFileMinVersionAccepted)) {                    
-                        if (!compareVersions(configuration.generatedBy, "1.14.0") && !migrate(configuration)) {
-                            GUI.log(i18n.getMessage('backupFileUnmigratable'));
-                            return;
-                        }
-                        if (configuration.FEATURE_CONFIG.features._featureMask) {
-                            var features = new Features(CONFIG);
-                            features.setMask(configuration.FEATURE_CONFIG.features._featureMask);
-                            configuration.FEATURE_CONFIG.features = features;
-                        }
-
-                        analytics.sendEvent(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'Restore');
-
-                        configuration_upload(configuration, callback);
-                    } else {
-                        GUI.log(i18n.getMessage('backupFileIncompatible'));
-                    }
+                    process_configuration(configuration);
                 }
             };
 

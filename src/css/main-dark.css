@@ -103,6 +103,9 @@ dialog {
 .gui_note {
     background: var(--headerBackgroundColor);
 }
+.gui_note {
+    background: var(--headerBackgroundColor);
+}
 
 .grey {
     background-color: #414443

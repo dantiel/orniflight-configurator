@@ -411,7 +411,16 @@ var FC = {
             dyn_notch_min_hz:           0,
             gyro_rpm_notch_harmonics:   0,
             gyro_rpm_notch_min_hz:      0,
-            ondas_gain:                 0
+            cadence_gain:               0,
+            ferocity_d_gain:            0,
+            ferocity_p_gain:            0,
+            ferocity_roll_gain:         0,
+            ferocity_yaw_gain:          0,
+            warp_gain:                  0,
+            warp_yaw_gain:              0,
+            anchor_gain:                0,
+            resonance_gain:             0,
+            balance_gain:               0
         };
 
         ADVANCED_TUNING = {
@@ -453,6 +462,29 @@ var FC = {
             integratedYawRelax:         0,
             flapBaseFrequency:          0,
             flapBaseAmplitude:          0,
+            cadence_gain:               20,
+            ferocity_d_gain:            20,
+            balance_gain:               10,
+            ferocity_p_gain:            10,
+            ferocity_roll_gain:         0,
+            ferocity_yaw_gain:          0,
+            warp_gain:                  0,
+            warp_yaw_gain:              0,
+            anchor_gain:                0,
+            resonance_gain:             0,
+            // Phase 2 — Wing Pair Geometry (apiVersion ≥ 1.43)
+            servo_mount_angle_0:        0,
+            servo_mount_angle_1:        0,
+            servo_mount_angle_2:        0,
+            servo_mount_angle_3:        0,
+            flapping_phase_shift_0:     0,
+            flapping_phase_shift_1:     0,
+            flapping_phase_shift_2:     0,
+            flapping_phase_shift_3:     0,
+            prescience_gain:            0,
+            espelho_gain:               0,
+            saudade_gain:               0,
+            ssff_gain:                  0,
         };
 
         SENSOR_CONFIG = {
@@ -565,7 +597,16 @@ var FC = {
             dterm_notch_cutoff:             160,
             dterm_notch_hz:                 260,
             yaw_lowpass_hz:                 100,
-            ondas_gain:                     100
+            cadence_gain:                   20,
+            ferocity_d_gain:                20,
+            ferocity_p_gain:                10,
+            ferocity_roll_gain:             0,
+            ferocity_yaw_gain:              0,
+            warp_gain:                      0,
+            warp_yaw_gain:                  0,
+            anchor_gain:                    0,
+            resonance_gain:                 0,
+            balance_gain:                   10
         };
         
 

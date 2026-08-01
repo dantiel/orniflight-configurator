@@ -12,7 +12,6 @@ var BOARD_DEFINITIONS = [
     {name: 'ALIENFLIGHTF3', identifier: 'AFF3', vcp: true},
     {name: 'ALIENFLIGHTF4', identifier: 'AFF4', vcp: true},
     {name: 'ANYFCF7', identifier: 'ANY7', vcp: true},
-    {name: 'BETAFLIGHTF3', identifier: 'BFF3', vcp: true},
     {name: 'BLUEJAYF4', identifier: 'BJF4', vcp: true},
     {name: 'CC3D', identifier: 'CC3D', vcp: true},
     {name: 'CHEBUZZF3', identifier: 'CHF3', vcp: true},

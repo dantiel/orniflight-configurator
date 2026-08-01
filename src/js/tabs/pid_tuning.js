@@ -346,7 +346,36 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.integratedYaw').hide();
         }
 
-        $('.pid_filter input[name="ondasGain"]').val(FILTER_CONFIG.ondas_gain);
+        $('.pid_filter input[name="cadenceGain"]').val(ADVANCED_TUNING.cadence_gain);
+        $('.pid_filter input[name="ferocityDGain"]').val(ADVANCED_TUNING.ferocity_d_gain);
+        $('.pid_filter input[name="balanceGain"]').val(ADVANCED_TUNING.balance_gain);
+        $('.pid_filter input[name="ferocityPGain"]').val(ADVANCED_TUNING.ferocity_p_gain);
+        $('.pid_filter input[name="ferocityRollGain"]').val(ADVANCED_TUNING.ferocity_roll_gain);
+        $('.pid_filter input[name="ferocityYawGain"]').val(ADVANCED_TUNING.ferocity_yaw_gain);
+        $('.pid_filter input[name="warpGain"]').val(ADVANCED_TUNING.warp_gain);
+        $('.pid_filter input[name="warpYawGain"]').val(ADVANCED_TUNING.warp_yaw_gain);
+        $('.pid_filter input[name="anchorGain"]').val(ADVANCED_TUNING.anchor_gain);
+        $('.pid_filter input[name="resonanceGain"]').val(ADVANCED_TUNING.resonance_gain);
+
+        if (semver.gte(CONFIG.apiVersion, "1.43.0")) {
+            $('.pid_filter .wingGeometry').show();
+            $('.pid_filter input[name="servoMountAngle0"]').val(ADVANCED_TUNING.servo_mount_angle_0 || 0);
+            $('.pid_filter input[name="servoMountAngle1"]').val(ADVANCED_TUNING.servo_mount_angle_1 || 0);
+            $('.pid_filter input[name="servoMountAngle2"]').val(ADVANCED_TUNING.servo_mount_angle_2 || 0);
+            $('.pid_filter input[name="servoMountAngle3"]').val(ADVANCED_TUNING.servo_mount_angle_3 || 0);
+            $('.pid_filter input[name="flappingPhaseShift0"]').val(ADVANCED_TUNING.flapping_phase_shift_0 || 0);
+            $('.pid_filter input[name="flappingPhaseShift1"]').val(ADVANCED_TUNING.flapping_phase_shift_1 || 0);
+            $('.pid_filter input[name="flappingPhaseShift2"]').val(ADVANCED_TUNING.flapping_phase_shift_2 || 0);
+            $('.pid_filter input[name="flappingPhaseShift3"]').val(ADVANCED_TUNING.flapping_phase_shift_3 || 0);
+            $('.pid_filter .advancedOndas').show();
+            $('.pid_filter input[name="prescienceGain"]').val(ADVANCED_TUNING.prescience_gain || 0);
+            $('.pid_filter input[name="espelhoGain"]').val(ADVANCED_TUNING.espelho_gain || 0);
+            $('.pid_filter input[name="saudadeGain"]').val(ADVANCED_TUNING.saudade_gain || 0);
+            $('.pid_filter input[name="ssffGain"]').val(ADVANCED_TUNING.ssff_gain || 0);
+        } else {
+            $('.pid_filter .wingGeometry').hide();
+            $('.pid_filter .advancedOndas').hide();
+        }
 
         if (semver.gte(CONFIG.apiVersion, "1.42.0")) {
             $('.smartfeedforward').hide();
@@ -479,13 +508,6 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.pid_filter input[name="dTermNotchCutoff"]').attr('disabled', !checked).change();
         });
 
-        $('input[id="ondasEnabled"]').change(function() {
-            var checked = $(this).is(':checked');
-            var gain = FILTER_CONFIG.ondas_gain > 0 ? FILTER_CONFIG.ondas_gain : FILTER_DEFAULT.ondas_gain;
-
-            $('.pid_filter input[name="ondasGain"]').val(checked ? gain : 0).attr('disabled', !checked)
-                    .attr("min", checked ? 1 : 0).change();
-        });
 
         $('input[id="gyroLowpassEnabled"]').change(function() {
             var checked = $(this).is(':checked');
@@ -622,7 +644,6 @@ TABS.pid_tuning.initialize = function (callback) {
         $('input[id="dtermLowpassDynEnabled"]').prop('checked', FILTER_CONFIG.dterm_lowpass_dyn_min_hz != 0 && FILTER_CONFIG.dterm_lowpass_dyn_min_hz < FILTER_CONFIG.dterm_lowpass_dyn_max_hz).change();
         $('input[id="dtermLowpass2Enabled"]').prop('checked', FILTER_CONFIG.dterm_lowpass2_hz != 0).change();
         $('input[id="yawLowpassEnabled"]').prop('checked', FILTER_CONFIG.yaw_lowpass_hz != 0).change();
-        $('input[id="ondasEnabled"]').prop('checked', FILTER_CONFIG.ondas_gain != 0).change();
     }
 
     function form_to_pid_and_rc() {
@@ -772,7 +793,31 @@ TABS.pid_tuning.initialize = function (callback) {
             FILTER_CONFIG.gyro_rpm_notch_min_hz = parseInt($('.pid_filter input[name="rpmFilterMinHz"]').val());
         }
 
-        FILTER_CONFIG.ondas_gain = parseInt($('.pid_filter input[name="ondasGain"]').val());
+        ADVANCED_TUNING.cadence_gain = parseInt($('.pid_filter input[name="cadenceGain"]').val());
+        ADVANCED_TUNING.ferocity_d_gain = parseInt($('.pid_filter input[name="ferocityDGain"]').val());
+        ADVANCED_TUNING.balance_gain = parseInt($('.pid_filter input[name="balanceGain"]').val());
+        ADVANCED_TUNING.ferocity_p_gain = parseInt($('.pid_filter input[name="ferocityPGain"]').val());
+        ADVANCED_TUNING.ferocity_roll_gain = parseInt($('.pid_filter input[name="ferocityRollGain"]').val());
+        ADVANCED_TUNING.ferocity_yaw_gain = parseInt($('.pid_filter input[name="ferocityYawGain"]').val());
+        ADVANCED_TUNING.warp_gain = parseInt($('.pid_filter input[name="warpGain"]').val());
+        ADVANCED_TUNING.warp_yaw_gain = parseInt($('.pid_filter input[name="warpYawGain"]').val());
+        ADVANCED_TUNING.anchor_gain = parseInt($('.pid_filter input[name="anchorGain"]').val());
+        ADVANCED_TUNING.resonance_gain = parseInt($('.pid_filter input[name="resonanceGain"]').val());
+
+        if (semver.gte(CONFIG.apiVersion, "1.43.0")) {
+            ADVANCED_TUNING.servo_mount_angle_0 = parseInt($('.pid_filter input[name="servoMountAngle0"]').val());
+            ADVANCED_TUNING.servo_mount_angle_1 = parseInt($('.pid_filter input[name="servoMountAngle1"]').val());
+            ADVANCED_TUNING.servo_mount_angle_2 = parseInt($('.pid_filter input[name="servoMountAngle2"]').val());
+            ADVANCED_TUNING.servo_mount_angle_3 = parseInt($('.pid_filter input[name="servoMountAngle3"]').val());
+            ADVANCED_TUNING.flapping_phase_shift_0 = parseInt($('.pid_filter input[name="flappingPhaseShift0"]').val());
+            ADVANCED_TUNING.flapping_phase_shift_1 = parseInt($('.pid_filter input[name="flappingPhaseShift1"]').val());
+            ADVANCED_TUNING.flapping_phase_shift_2 = parseInt($('.pid_filter input[name="flappingPhaseShift2"]').val());
+            ADVANCED_TUNING.flapping_phase_shift_3 = parseInt($('.pid_filter input[name="flappingPhaseShift3"]').val());
+            ADVANCED_TUNING.prescience_gain = parseInt($('.pid_filter input[name="prescienceGain"]').val());
+            ADVANCED_TUNING.espelho_gain = parseInt($('.pid_filter input[name="espelhoGain"]').val());
+            ADVANCED_TUNING.saudade_gain = parseInt($('.pid_filter input[name="saudadeGain"]').val());
+            ADVANCED_TUNING.ssff_gain = parseInt($('.pid_filter input[name="ssffGain"]').val());
+        }
     }
 
     function showAllPids() {
@@ -1182,7 +1227,7 @@ TABS.pid_tuning.initialize = function (callback) {
             } else {
                 pidControllerList = [
                     {name: "Legacy"},
-                    {name: "Betaflight"}
+                    {name: "OrniFlight"}
                 ]
             }
 
@@ -2060,8 +2105,7 @@ TABS.pid_tuning.updateRatesLabels = function() {
 };
 
 TABS.pid_tuning.updateFilterWarning = function() {
-    var ondasEnabled = $('input[id="ondasEnabled"]').is(':checked');
-    var gyroDynamicLowpassEnabled = $('input[id="gyroLowpassDynEnabled"]').is(':checked');
+    var gyroDynamicLowpassEnabled
     var gyroLowpass1Enabled = $('input[id="gyroLowpassEnabled"]').is(':checked');
     var dtermDynamicLowpassEnabled = $('input[id="dtermLowpassDynEnabled"]').is(':checked');
     var dtermLowpass1Enabled = $('input[id="dtermLowpassEnabled"]').is(':checked');

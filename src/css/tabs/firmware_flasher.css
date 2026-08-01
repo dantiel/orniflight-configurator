@@ -20,6 +20,7 @@
 
 .tab-firmware_flasher .spacer_box_title {
     float: none;
+    color: black;
 }
 
 .tab-firmware_flasher .info {

@@ -3,11 +3,11 @@
 function MspHelper () {
   var self = this;
 
-  // 0 based index, must be identical to 'baudRates' in 'src/main/io/serial.c' in betaflight
+  // 0 based index, must be identical to 'baudRates' in 'src/main/io/serial.c' in firmware
   self.BAUD_RATES = ['AUTO', '9600', '19200', '38400', '57600', '115200',
     '230400', '250000', '400000', '460800', '500000', '921600', '1000000',
     '1500000', '2000000', '2470000'];
-  // needs to be identical to 'serialPortFunction_e' in 'src/main/io/serial.h' in betaflight
+  // needs to be identical to 'serialPortFunction_e' in 'src/main/io/serial.h' in firmware
   self.SERIAL_PORT_FUNCTIONS = {
     'MSP': 0,
     'GPS': 1,
@@ -510,6 +510,10 @@ MspHelper.prototype.process_data = function(dataHandler) {
                     }
                     
                     SERVO_CONFIG.ornithopter_glide_deg = data.readU8() - 128;
+                    // Signed: firmware sends u8=val+128
+                    SERVO_CONFIG.cadence_gain = data.readU8() - 128;
+                    SERVO_CONFIG.ferocity_d_gain = data.readU8() - 128;
+                    SERVO_CONFIG.balance_gain = data.readU8() - 128;
                     
                     // }
                     
@@ -1034,7 +1038,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                             FILTER_CONFIG.gyro_lowpass_dyn_max_hz = data.readU16();
                             FILTER_CONFIG.dterm_lowpass_dyn_min_hz = data.readU16();
                             FILTER_CONFIG.dterm_lowpass_dyn_max_hz = data.readU16();
-                            FILTER_CONFIG.ondas_gain = data.readU8();
+                            FILTER_CONFIG.cadence_gain = data.readU8();
                             console.log("FILTER_CONFIG",FILTER_CONFIG);
                             
                             if (semver.gte(CONFIG.apiVersion, "1.42.0")) {
@@ -1110,7 +1114,37 @@ MspHelper.prototype.process_data = function(dataHandler) {
                                         
                                         if(semver.gte(CONFIG.apiVersion, "1.42.0")) {
                                             ADVANCED_TUNING.itermRelaxCutoff = data.readU8();
-                                            
+                                            // Signed: firmware sends u8=val+128, wire byte → JS int
+                                            ADVANCED_TUNING.cadence_gain = data.readU8() - 128;
+                                            ADVANCED_TUNING.ferocity_d_gain = data.readU8() - 128;
+                                            ADVANCED_TUNING.balance_gain = data.readU8() - 128;
+                                            // Unsigned 0–100: direct wire passthrough
+                                            ADVANCED_TUNING.ferocity_p_gain = data.readU8();
+                                            ADVANCED_TUNING.ferocity_roll_gain = data.readU8();
+                                            ADVANCED_TUNING.ferocity_yaw_gain = data.readU8();
+                                            // Signed: u8=val+128
+                                            ADVANCED_TUNING.warp_gain = data.readU8() - 128;
+                                            ADVANCED_TUNING.warp_yaw_gain = data.readU8() - 128;
+                                            // Unsigned 0–100
+                                            ADVANCED_TUNING.anchor_gain = data.readU8();
+                                            ADVANCED_TUNING.resonance_gain = data.readU8();
+
+                                            if (semver.gte(CONFIG.apiVersion, "1.43.0")) {
+                                                // Phase 2 — Wing Pair Geometry (signed, wire=val+128)
+                                                ADVANCED_TUNING.servo_mount_angle_0 = data.readU8() - 128;
+                                                ADVANCED_TUNING.servo_mount_angle_1 = data.readU8() - 128;
+                                                ADVANCED_TUNING.servo_mount_angle_2 = data.readU8() - 128;
+                                                ADVANCED_TUNING.servo_mount_angle_3 = data.readU8() - 128;
+                                                ADVANCED_TUNING.flapping_phase_shift_0 = data.readU8() - 128;
+                                                ADVANCED_TUNING.flapping_phase_shift_1 = data.readU8() - 128;
+                                                ADVANCED_TUNING.flapping_phase_shift_2 = data.readU8() - 128;
+                                                ADVANCED_TUNING.flapping_phase_shift_3 = data.readU8() - 128;
+                                                // Phase 2 — Advanced ONDAS Gains (unsigned 0–100, direct wire)
+                                                ADVANCED_TUNING.prescience_gain = data.readU8();
+                                                ADVANCED_TUNING.espelho_gain = data.readU8();
+                                                ADVANCED_TUNING.saudade_gain = data.readU8();
+                                                ADVANCED_TUNING.ssff_gain = data.readU8();
+                                            }
                                         }
                                     }
                                 }
@@ -1143,7 +1177,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                     ledCount = data.byteLength / 4;
                 }
                 if (semver.gte(CONFIG.apiVersion, "1.41.0")) {
-                    // According to betaflight/src/main/msp/msp.c
+                    // According to firmware's msp.c
                     // API 1.41 - add indicator for advanced profile support and the current profile selection
                     // 0 = basic ledstrip available
                     // 1 = advanced ledstrip available
@@ -1949,7 +1983,7 @@ MspHelper.prototype.crunch = function(code) {
                           .push8(FILTER_CONFIG.gyro_rpm_notch_harmonics)
                           .push8(FILTER_CONFIG.gyro_rpm_notch_min_hz)
                 }
-                    buffer.push8(FILTER_CONFIG.ondas_gain);
+                    buffer.push8(FILTER_CONFIG.cadence_gain);
             }
             break;
         case MSPCodes.MSP_SET_PID_ADVANCED:
@@ -2010,6 +2044,37 @@ MspHelper.prototype.crunch = function(code) {
                                     console.log("ADVANCED_TUNING",ADVANCED_TUNING);
                                     if(semver.gte(CONFIG.apiVersion, "1.42.0")) {
                                         buffer.push8(ADVANCED_TUNING.itermRelaxCutoff);
+                                        // Signed → wire=val+128
+                                        buffer.push8(ADVANCED_TUNING.cadence_gain + 128);
+                                        buffer.push8(ADVANCED_TUNING.ferocity_d_gain + 128);
+                                        buffer.push8(ADVANCED_TUNING.balance_gain + 128);
+                                        // Unsigned 0–100 → direct
+                                        buffer.push8(ADVANCED_TUNING.ferocity_p_gain);
+                                        buffer.push8(ADVANCED_TUNING.ferocity_roll_gain);
+                                        buffer.push8(ADVANCED_TUNING.ferocity_yaw_gain);
+                                        // Signed → wire=val+128
+                                        buffer.push8(ADVANCED_TUNING.warp_gain + 128);
+                                        buffer.push8(ADVANCED_TUNING.warp_yaw_gain + 128);
+                                        // Unsigned 0–100 → direct
+                                        buffer.push8(ADVANCED_TUNING.anchor_gain);
+                                        buffer.push8(ADVANCED_TUNING.resonance_gain);
+
+                                        if (semver.gte(CONFIG.apiVersion, "1.43.0")) {
+                                            // Phase 2 — Wing Pair Geometry (signed → wire=val+128)
+                                            buffer.push8((ADVANCED_TUNING.servo_mount_angle_0 || 0) + 128);
+                                            buffer.push8((ADVANCED_TUNING.servo_mount_angle_1 || 0) + 128);
+                                            buffer.push8((ADVANCED_TUNING.servo_mount_angle_2 || 0) + 128);
+                                            buffer.push8((ADVANCED_TUNING.servo_mount_angle_3 || 0) + 128);
+                                            buffer.push8((ADVANCED_TUNING.flapping_phase_shift_0 || 0) + 128);
+                                            buffer.push8((ADVANCED_TUNING.flapping_phase_shift_1 || 0) + 128);
+                                            buffer.push8((ADVANCED_TUNING.flapping_phase_shift_2 || 0) + 128);
+                                            buffer.push8((ADVANCED_TUNING.flapping_phase_shift_3 || 0) + 128);
+                                            // Phase 2 — Advanced ONDAS Gains (unsigned 0–100, direct wire)
+                                            buffer.push8(ADVANCED_TUNING.prescience_gain || 0);
+                                            buffer.push8(ADVANCED_TUNING.espelho_gain || 0);
+                                            buffer.push8(ADVANCED_TUNING.saudade_gain || 0);
+                                            buffer.push8(ADVANCED_TUNING.ssff_gain || 0);
+                                        }
                                     }
                                 }
                             }
@@ -2269,10 +2334,13 @@ MspHelper.prototype.sendServoConfigurations = function(onCompleteCallback) {
         } else {
             var servoConfiguration = SERVO_CONFIG[servoIndex];
             // send other servo config as a smaller package
-            if (SERVO_CONFIG.ornithopter_glide_deg && !SERVO_CONFIG.ornithopter_glide_deg_sent) {
-                buffer.push(SERVO_CONFIG.ornithopter_glide_deg + 128);
+            if (SERVO_CONFIG.ornithopter_glide_deg != null && !SERVO_CONFIG.ornithopter_glide_deg_sent) {
+                buffer.push8(SERVO_CONFIG.ornithopter_glide_deg + 128);
+                // Signed → wire=val+128
+                buffer.push8(SERVO_CONFIG.cadence_gain + 128);
+                buffer.push8(SERVO_CONFIG.ferocity_d_gain + 128);
+                buffer.push8(SERVO_CONFIG.balance_gain + 128);
                 SERVO_CONFIG.ornithopter_glide_deg_sent = true;
-                console.log("added glide deg" , SERVO_CONFIG.ornithopter_glide_deg, buffer);
             } else {
                 // send one at a time, with index
                 buffer.push8(servoIndex)

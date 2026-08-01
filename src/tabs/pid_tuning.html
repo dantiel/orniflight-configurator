@@ -927,31 +927,300 @@
                             <tr>
                                 <th colspan="2">
                                     <div class="pid_mode">
-                                        <div i18n="pidTuningFlappingFiltersGroup" />
-                                        <div class="helpicon cf_tip" i18n_title="pidTuningFlappingFilterHelp" />
+                                        <div i18n="pidTuningOndasGroup" />
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningOndasHelp" />
                                     </div>
                                 </th>
                             </tr>
 
 
 
-                            <tr class="ondasGain">
+                            <tr class="cadenceGain">
                                 <td>
-                                    <span class="groupSwitchValue">
-                                        <span class="inputSwitch"><input type="checkbox" id="ondasEnabled" class="toggle" /></span>
-                                        <span class="inputValue"><input type="number" name="ondasGain" step="1" min="1" max="100"/></span>
-                                    </span>
+                                    <span class="inputValue"><input type="number" name="cadenceGain" step="1" min="-100" max="100"/></span>
                                 </td>
                                 <td>
                                     <div>
                                         <label>
-                                            <strong><span i18n="pidTuningOndasGain"></span></strong>
+                                            <strong><span i18n="pidTuningCadenceGain"></span></strong>
                                         </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningCadenceGainHelp"></div>
                                     </div>
                                 </td>
                             </tr>
-                            
-                            
+
+                            <tr class="ferocityDGain">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="ferocityDGain" step="1" min="-100" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningFerocityDGain"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningFerocityDGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="balanceGain">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="balanceGain" step="1" min="-100" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningBalanceGain"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningBalanceGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="ferocityPGain">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="ferocityPGain" step="1" min="0" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningFerocityPGain"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningFerocityPGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="ferocityRollGain">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="ferocityRollGain" step="1" min="0" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningFerocityRollGain"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningFerocityRollGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="ferocityYawGain">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="ferocityYawGain" step="1" min="0" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningFerocityYawGain"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningFerocityYawGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="warpGain">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="warpGain" step="1" min="-100" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningWarpGain"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningWarpGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="warpYawGain">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="warpYawGain" step="1" min="-100" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningWarpYawGain"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningWarpYawGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="anchorGain">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="anchorGain" step="1" min="0" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningAnchorGain"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningAnchorGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="resonanceGain">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="resonanceGain" step="1" min="0" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label>
+                                            <strong><span i18n="pidTuningResonanceGain"></span></strong>
+                                        </label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningResonanceGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Phase 2: Wing Pair Geometry -->
+                            <tr class="wingGeometry">
+                                <th colspan="2">
+                                    <div class="pid_mode">
+                                        <div i18n="pidTuningWingGeometryGroup" />
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningWingGeometryHelp" />
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr class="wingGeometry">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="servoMountAngle0" step="1" min="-30" max="30"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningServoMountAngle0"></span></strong></label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningServoMountAngleHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="wingGeometry">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="servoMountAngle1" step="1" min="-30" max="30"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningServoMountAngle1"></span></strong></label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="wingGeometry">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="servoMountAngle2" step="1" min="-30" max="30"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningServoMountAngle2"></span></strong></label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="wingGeometry">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="servoMountAngle3" step="1" min="-30" max="30"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningServoMountAngle3"></span></strong></label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="wingGeometry">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="flappingPhaseShift0" step="1" min="-180" max="180"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningFlappingPhaseShift0"></span></strong></label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningFlappingPhaseShiftHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="wingGeometry">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="flappingPhaseShift1" step="1" min="-180" max="180"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningFlappingPhaseShift1"></span></strong></label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="wingGeometry">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="flappingPhaseShift2" step="1" min="-180" max="180"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningFlappingPhaseShift2"></span></strong></label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="wingGeometry">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="flappingPhaseShift3" step="1" min="-180" max="180"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningFlappingPhaseShift3"></span></strong></label>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Phase 2: Advanced ONDAS Gains -->
+                            <tr class="advancedOndas">
+                                <th colspan="2">
+                                    <div class="pid_mode">
+                                        <div i18n="pidTuningAdvancedOndasGroup" />
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningAdvancedOndasHelp" />
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr class="advancedOndas">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="prescienceGain" step="1" min="0" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningPrescienceGain"></span></strong></label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningPrescienceGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="advancedOndas">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="espelhoGain" step="1" min="0" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningEspelhoGain"></span></strong></label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningEspelhoGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="advancedOndas">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="saudadeGain" step="1" min="0" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningSaudadeGain"></span></strong></label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningSaudadeGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="advancedOndas">
+                                <td>
+                                    <span class="inputValue"><input type="number" name="ssffGain" step="1" min="0" max="100"/></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label><strong><span i18n="pidTuningSsffGain"></span></strong></label>
+                                        <div class="helpicon cf_tip" i18n_title="pidTuningSsffGainHelp"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
                             <tr>
                                 <th colspan="2">
                                     <div class="pid_mode">

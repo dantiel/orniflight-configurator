@@ -340,7 +340,7 @@ GUI_control.prototype.content_ready = function (callback) {
         // Build link to in-use CF version documentation
         var documentationButton = $('div#content #button-documentation');
         documentationButton.html("Wiki");
-        documentationButton.attr("href","https://github.com/betaflight/betaflight/wiki");
+        documentationButton.attr("href","https://github.com/dantiel/orniflight/wiki");
     }
 
     // loading tooltip
