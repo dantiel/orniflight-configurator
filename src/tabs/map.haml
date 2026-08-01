@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %title Asynchronous Loading
+    %meta{content: "initial-scale=1.0, user-scalable=no", name: "viewport"}
+    %meta{charset: "utf-8"}
+    :css
+      html, body, #map-canvas {
+              height: 100%;
+              margin: 0px;
+              padding: 0px;
+            }
+    %link{href: "/js/libraries/openlayers/ol.css", rel: "stylesheet", type: "text/css"}
+    %script{src: "/js/libraries/openlayers/ol.js"}
+    %script{src: "/js/tabs/map.js"}
+  %body
+    #map-canvas

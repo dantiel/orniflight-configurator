@@ -1,0 +1,381 @@
+.title{i18n: "defaultChangelogHead"}
+%span 2026.07.30 - 1.0.0 - OrniFlight
+%ul
+  %li Rebrand: stripped all Betaflight references — OrniFlight 1.0
+  %li
+    ONDAS: 3-channel renamed (cadence, ferocity, balance) + 6 new params (ferocity_p, ferocity_roll, ferocity_yaw, warp, warp_yaw, anchor, resonance)
+  %li Firmware Flasher: online loading from dantiel/orniflight releases
+  %li NW.js 0.114.0 native ARM64, macOS 26 compatible
+  %li Single-window launch, menu click fix
+%hr
+%span 2024.06.28 - 10.7.0 - OrniFlight
+%ul
+  %li
+    Features:
+    %ul
+      %li New UI-Design
+  %li
+    Fixes:
+    %ul
+      %li fixed the flashing progress bar
+      %li fixed the PID tab layout
+      %li various other UI fixes
+  %li
+    New GUI support for the following firmware features:
+    %ul
+      %li ornithopter glide degree
+      %li flap pid mixing
+      %li base flap amplitude
+      %li base flap frequency
+%hr
+%span 2019.04.13 - 10.5.1 - BetaFlight
+%ul
+  %li
+    Fixes:
+    %ul
+      %li fixed flashing on MacOS
+      %li updated Spanish translation
+%span 2019.09.15 - 10.6.0 - BetaFlight
+%ul
+  %li
+    Features:
+    %ul
+      %li added client-side autocomplete to CLI
+      %li added voltage and amperage scale calibration based on meter readings
+      %li added dark mode
+      %li changed the OSD elements to be listed in alphabetical order
+      %li added 'Video Transmitter' tab to configure a VTX
+      %li added support for flashing Unified Targets with custom board configurations
+      %li added sliders for PID / filter tuning
+  %li
+    Fixes:
+    %ul
+      %li fixed the flashing progress bar
+      %li fixed the PID tab layout
+      %li various other UI fixes
+  %li
+    New GUI support for the following firmware features:
+    %ul
+      %li added visualisation of rate limit settings to the PID tuning graph
+      %li improved the arming disabled flags display
+      %li added iterm_relax cutoff
+      %li added debug modes
+      %li added custom gyro alignment
+      %li added Dshot telemetry information display to the motors tab
+      %li added RPM based filtering
+      %li new OSD display / statistics elements
+  %li
+    New Languages:
+    %ul
+      %li Galego (Galician)
+      %li Hrvatski (Croatian)
+%span 2019.04.13 - 10.5.1 - BetaFlight
+%ul
+  %li
+    Fixes:
+    %ul
+      %li fixed flashing on MacOS
+      %li updated Spanish translation
+%span 2019.04.10 - 10.5.0 - BetaFlight
+%ul
+  %li
+    Fixes:
+    %ul
+      %li fixed header bar wrapping on small screens
+      %li fixed the PID tab layout
+      %li various other UI fixes
+  %li
+    New GUI support for the following firmware features:
+    %ul
+      %li OSD profile configuration / selection
+      %li extended logic (AND, coupling of modes) for Modes tab
+      %li GPS rescue
+      %li D min
+      %li integrated yaw
+      %li dynamic gyro and D Term low pass filters
+      %li multi gyro configuration
+      %li throttle limit
+      %li new OSD display / statistics elements
+  %li
+    Improvements:
+    %ul
+      %li direct access to firmware flasher from the header bar
+      %li switched GPS tab from Google Maps to OpenStreetMap
+      %li
+        'Reset Output' and 'Copy To Clipboard' buttons and coloured error messages in the CLI tab
+      %li check selected device before rebooting into mass storage device mode
+      %li improved drag / drop for OSD elements
+  %li
+    New Languages:
+    %ul
+      %li Svenska (Swedish)
+      %li Русский язык (Russian)
+      %li Bahasa Indonesia (Indonesian)
+%span 2018.08.15 - 10.4.1 - BetaFlight
+%ul
+  %li fixed bug in Chrome web app version
+%span 2018.08.14 - 10.4.0 - BetaFlight
+%ul
+  %li fixed backup / restore
+  %li fixed problems with some elements in OSD
+  %li fixed problems with wrong settings displayed when Dshot is selected
+  %li fixed display of GPS altitude
+  %li fixed Adjustments tab
+  %li various other UI fixes
+  %li feed forward PID control
+  %li acro trainer
+  %li throttle boost
+  %li absolute control
+  %li anti gravity
+  %li RC smoothing
+  %li added support downloading / flashing development / maintenance builds
+  %li added reopening of last active tab on reconnect
+  %li added support for hiding unused modes in modes tab
+  %li added 'Vision' font to OSD
+  %li improved support for custom boot logos
+  %li added statistics collection
+  %li added file type descriptions for open / save dialogs
+  %li
+    added setting of the flight controller's real time clock when connected to the configurator
+%span 2018.07.27 - 10.3.1 - BetaFlight
+%ul
+  %li
+    Fixed problem with configurator crashing on startup when running on systems with German or Portugese language settings
+  %li
+    Fixed bug causing the gyro lowpass filter to be always stored as disabled when using older firmware versions
+%span 2018.06.23 - 10.3.0 - BetaFlight
+%ul
+  %li added support for customised OSD boot logo
+  %li fixed MSP_RX controls
+  %li added current / consumption information into the 'Motors' tab
+  %li added translations for Japanese and Portugese
+  %li
+    added support for moving the artificial horizon / crosshairs to OSD, and other OSD improvements
+  %li added local caching for downloaded firmware files
+  %li added support for tab completion for commands in the CLI
+  %li
+    added support for downloading / installing development builds / builds for special version branches (e.g. AKK/RDQ support) from the CI server
+  %li changed the installation to be uncompressed to achieve faster startup
+%span 2018.02.28 - 10.2.0 - BetaFlight
+%ul
+  %li added support for 6 rateprofiles
+  %li removed setting to disallow disarming on throttle above low
+  %li added disabling of runaway takeoff prevention
+  %li added peripheral device entry 'Benewake LIDAR'
+  %li added Dshot beacon configuration
+  %li added markdown processing for GitHub release notes
+  %li made language user selectable in the application
+  %li added translations for Chinese, Italian, and Latvian
+  %li added installers for RedHat linux
+  %li
+    added markdown processing for GitHub release notes. Lots of fixes to the standalone applications
+%span 2018.01.16 - 10.1.0 - BetaFlight
+%ul
+  %li Lots of fixes to the standalone applications
+  %li Fixed CLI hanging on exit
+  %li Fixed stick position indicator in the rates curve
+  %li Fixed restoring of window size / position on restart
+  %li Added support for OSD temperature readout
+  %li Added translations for Catalan, German, English, Spanish, French, and Korean
+  %li Added installers for Windows and (debian) linux
+  %li Changed external links to open in a new window
+  %li Changed the number of 'arming disabled' reasons to match the number of beeps
+%span 2017.12.06 - 10.0.0 - BetaFlight
+%ul
+  %li Fixed beeper configuration
+  %li Fixed filter configuration enabling / disabling
+  %li Added support for serial RX / SPI RX protocols
+  %li Added support for OSD warnings and other OSD elements
+  %li Added standalone application support
+  %li Added support for automatically assigning modes based on stick movement
+  %li Added support for firmware version display in top bar
+  %li Documentation updates
+%span 2017.08.06 - 3.2.1 - BetaFlight
+%ul
+  %li Fix full chip erase
+  %li Fixed mac OS block size limitation
+  %li Fix for device setting via onboard logging tab
+  %li Add copy button for PID and rate profiles
+  %li Fix for switching between rate and PID profiles
+%span 2017.08.01 - 3.2.0 - BetaFlight
+%ul
+  %li Fixed inconsistent version numbering.
+  %li Fixed blackbox compatibility with RC2
+  %li Fixed version display in configurator
+%span 2017.07.29 - 3.1.3 - BetaFlight
+%ul
+  %li Fixed incompatibility issues with BF 3.1.x
+%span 2017.07.28 - 3.1.1 - BetaFlight
+%ul
+  %li Changed donation page to english
+%span 2016.03.09 - 3.1.0 - BetaFlight
+%ul
+  %li Version consistency
+%span 2016.03.09 - 1.9.4 - BetaFlight
+%ul
+  %li Fix broken backup/restore
+  %li changed suggested filename for backup to include craft name,
+%span 2016.02.23 - 1.9.3 - BetaFlight
+%ul
+  %li Fix broken serial rx selection
+  %li Renew support links
+  %li Added feature SDCARD
+%span 2016.02.22 - 1.9.2 - BetaFlight
+%ul
+  %li Added FPV angle mix
+  %li Fix for CRC errors for bb downlaods
+  %li New Fonts aded
+  %li Future TCP/IP connection support
+%span 2016.01.30 - 1.9.1 - BetaFlight
+%ul
+  %li Increase filter range
+  %li Add new Fonts
+  %li Add IBUS telemetry
+  %li Hide DSHOT1200 (it is still available)
+  %li Denom Fixes
+%span 2016.01.21 - 1.9.0 - BetaFlight
+%ul
+  %li Remove throttle percentage for PWM
+  %li Some cleanups
+  %li Fix saving level parameters
+%span 2016.01.16 - 1.8.9 - BetaFlight
+%ul
+  %li Added Tramp Vtx support
+%span 2016.01.15 - 1.8.8 - BetaFlight
+%ul
+  %li Added level sensitivity
+  %li Added level limit
+%span 2016.01.11 - 1.8.7 - BetaFlight
+%ul
+  %li Added DSHOT1200
+%span 2016.01.09 - 1.8.6 - BetaFlight
+%ul
+  %li Added new 3.1 parameters
+  %li Fixed VBAT saving bug for pre 3.1 versions
+%span 2016.10.25 - 1.8.5 - BetaFlight
+%ul
+  %li Simplified RX selection in config tab
+  %li Saving logs as BFL extension
+%span 2016.10.25 - 1.8.4 - BetaFlight
+%ul
+  %li Added DSHOT300
+  %li Support for more UARTS
+%span 2016.10.13 - 1.8.3 - BetaFlight
+%ul
+  %li Added DSHOT600 and DSHOT150
+%span 2016.10.12 - 1.8.2 - BetaFlight
+%ul
+  %li More OSD parameters conform 3.0.1
+  %li Changed naming convention for PID relaxation parameter
+  %li Added second notch
+%span 2016.09.15 - 1.8.1 - BetaFlight
+%ul
+  %li Support for jumbo frames for faster flash download
+  %li Many small visual fixes
+  %li Improved rate tool visualisation
+%span 2016.09.07 - 1.8.0 - BetaFlight
+%ul
+  %li
+    Pterm setpoint is now only P weight for more direct stick feel on super expo curve. Supported from RC14
+  %li RC deadband is now added to rate tool
+  %li Minor bugfixes for older versions
+  %li Move Rc interpolation to Receiver tab
+%span 2016.09.07 - 1.7.9 - BetaFlight
+%ul
+  %li Fix representation of rc expo above rc rate of 2.0
+%span 2016.09.06 - 1.7.8 - BetaFlight
+%ul
+  %li Change rates to super rates
+  %li Fix curve representation for 3.0.0
+  %li Move max deg/sec to pid columns
+%span 2016.08.25 - 1.7.7 - BetaFlight
+%ul
+  %li Fix dterm setpoint range
+%span 2016.08.24 - 1.7.6 - BetaFlight
+%ul
+  %li Fix Vbat bug
+  %li Increase D setpoint weight range
+%span 2016.08.23 - 1.7.5 - BetaFlight
+%ul
+  %li Added separate Filter Tab
+%span 2016.08.21 - 1.7.4 - BetaFlight
+%ul
+  %li Fix Airmode Threshold bug
+%span 2016.08.20 - 1.7.3 - BetaFlight
+%ul
+  %li Prepared new filters
+  %li Fixed Auto update of configurator
+  %li Cleanups
+%span 2016.08.09 - 1.7.2 - BetaFlight
+%ul
+  %li Bugfix in deactivation of super expo
+  %li Replaced yaw D by yaw jump prevention strength
+  %li Made RC interpolation dynamic
+  %li Fixed configurator from breaking 3D deadband
+  %li Added yaw RC rate as adjustment
+%span 2016.08.05 - 1.7.1 - BetaFlight
+%ul
+  %li Bugfix in setting wrong airmode threshold
+  %li Support for 3.0.0 firmware
+  %li Added new PID parameters
+%span 2016.08.02 - 1.7.0 - BetaFlight
+%ul
+  %li Support for 2.9.1 patch
+  %li Support for 3.0.0 development firmware
+  %li Many cleanups
+  %li Added CPU percentage to status bar
+  %li Moved VBAT PID compensation to PID tab
+  %li Hide unused tabs
+  %li Represent real blackbox log rate instead of denom
+%span 2016.07.18 - 1.6.4 - BetaFlight
+%ul
+  %li Many Cleanups
+  %li Backup restore fixes
+  %li Added Vbat Compensation
+  %li Preparations for 3.0.0 development firmware
+%span 2016.07.07 - 1.6.3 - BetaFlight
+%ul
+  %li Fixed Rate Scaling for 3D model
+  %li Moved Super Expo Feature to PID tab
+  %li Some cleanups and fixes
+%span 2016.07.05 - 1.6.2 - BetaFlight
+%ul
+  %li Added rate numbers to rate calculator
+  %li More user friendly firmware flasher
+  %li Added 3D model to RX tab
+%span 2016.07.04 - 1.6.1 - BetaFlight
+%ul
+  %li Fixed saving level PIDs
+%span 2016.07.04 - 1.6.0 - BetaFlight
+%ul
+  %li Added Rate Tool
+  %li Add extra pwm protocol for 3.0
+  %li Many Cleanups
+  %li Added more tips
+%span 2016.06.27 - 1.5 - BetaFlight
+%ul
+  %li Fix some saving issues
+%span 2016.06.26 - 1.4 - BetaFlight
+%ul
+  %li Fix saving bug in 1.3 for 2.9 firmware
+  %li Added tuning tips
+  %li Added AIRMODE feature
+  %li Added SUPEREXPO_RATES feature
+%span 2016.06.26 - 1.3 - BetaFlight
+%ul
+  %li Backwards compatible with old Betaflight versions
+  %li Added more advanced tuning parameters
+  %li Added disabling/enabling sensors
+  %li Made graph to reflect the changes better(Still not optimal)
+%span 2016.06.21 - 1.2 - BetaFlight
+%ul
+  %li Added gyro sync and pid denom configuration instead of looptime.
+  %li Added rc_rate_yaw in PID tuning tab.
+  %li Added ESC PWM Configuration.
+%span 2016.06.20 - 1.1 - BetaFlight
+%ul
+  %li Cosmetic changes
+%span 2016.06.20 - 1.0 - BetaFlight
+%ul
+  %li Initial Release Configurator.
+  %li Rebranded from Cleanflight.

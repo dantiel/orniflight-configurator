@@ -5,6 +5,7 @@ var pkg = require('./package.json');
 delete pkg.optionalDependencies['gulp-appdmg'];
 
 const child_process = require('child_process');
+const { execSync } = child_process;
 const fs = require('fs');
 const fse = require('fs-extra');
 const https = require('https');
@@ -71,7 +72,7 @@ const getChangesetId = gulp.series(getHash, writeChangesetId);
 gulp.task('get-changeset-id', getChangesetId);
 
 // dist_yarn MUST be done after dist_src
-var distBuild = gulp.series(dist_src, dist_changelog, dist_yarn, dist_locale, dist_libraries, dist_resources, getChangesetId);
+var distBuild = gulp.series(dist_src, dist_scss, dist_coffee, dist_changelog, dist_haml, dist_yarn, dist_locale, dist_libraries, dist_resources, getChangesetId);
 var distRebuild = gulp.series(clean_dist, distBuild);
 gulp.task('dist', distRebuild);
 
@@ -241,6 +242,10 @@ function clean_cache() {
 function dist_src() {
     var distSources = [
         './src/**/*',
+        '!./src/**/*.haml',
+        '!./src/**/*.scss',
+        '!./src/**/*.sass',
+        '!./src/**/*.coffee',
         '!./src/css/dropdown-lists/LICENSE',
         '!./src/css/font-awesome/css/font-awesome.css',
         '!./src/css/opensans_webfontkit/*.{txt,html}',
@@ -258,9 +263,112 @@ function dist_src() {
         .pipe(gulp.dest(DIST_DIR));
 }
 
-function dist_changelog() {
-    return gulp.src('changelog.html')
-        .pipe(gulp.dest(DIST_DIR+"tabs/"));
+// Compile Sass → CSS
+function dist_scss(done) {
+    const glob = require('glob');
+    // Compile .sass (primary) + remaining .scss (vendor files)
+    const sassFiles = glob.sync('src/**/*.sass');
+    const remainingScss = glob.sync('src/**/*.scss');
+    const allStyleFiles = [...sassFiles, ...remainingScss];
+    console.log('Compiling ' + sassFiles.length + ' Sass + ' + remainingScss.length + ' SCSS files...');
+
+    allStyleFiles.forEach(styleFile => {
+        const relPath = path.relative('src', styleFile);
+        const outPath = path.join(DIST_DIR, relPath.replace(/\.(sass|scss)$/, '.css'));
+        const outDir = path.dirname(outPath);
+
+        if (!fs.existsSync(outDir)) {
+            fs.mkdirSync(outDir, { recursive: true });
+        }
+
+        try {
+            execSync('sass --no-source-map --style=compressed "' + styleFile + '" "' + outPath + '"', { stdio: 'pipe' });
+        } catch (e) {
+            console.error('Sass error in ' + styleFile + ':');
+            console.error(e.stderr ? e.stderr.toString() : e.message);
+            throw e;
+        }
+    });
+
+    console.log('  ✓ ' + allStyleFiles.length + ' stylesheets compiled');
+    done();
+}
+
+// Compile CoffeeScript → JavaScript
+function dist_coffee(done) {
+    const glob = require('glob');
+    const coffeeFiles = glob.sync('src/**/*.coffee');
+    console.log('Compiling ' + coffeeFiles.length + ' CoffeeScript files...');
+
+    coffeeFiles.forEach(coffeeFile => {
+        const relPath = path.relative('src', coffeeFile);
+        const outPath = path.join(DIST_DIR, relPath.replace(/\.coffee$/, '.js'));
+        const outDir = path.dirname(outPath);
+
+        if (!fs.existsSync(outDir)) {
+            fs.mkdirSync(outDir, { recursive: true });
+        }
+
+        try {
+            // Compile to temp location, then move to dist
+            const tmpDir = path.join(os.tmpdir(), 'orni_coffee_' + Date.now());
+            if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+            execSync('coffee -c -o "' + tmpDir + '" "' + coffeeFile + '"', { stdio: 'pipe' });
+            const tmpJs = path.join(tmpDir, path.basename(coffeeFile, '.coffee') + '.js');
+            if (fs.existsSync(tmpJs)) {
+                fs.renameSync(tmpJs, outPath);
+            }
+            fs.rmdirSync(tmpDir, { recursive: true });
+        } catch (e) {
+            console.error('CoffeeScript error in ' + coffeeFile + ':');
+            console.error(e.stderr ? e.stderr.toString() : e.message);
+            throw e;
+        }
+    });
+
+    console.log('  ✓ ' + coffeeFiles.length + ' CoffeeScript files compiled');
+    done();
+}
+
+function dist_changelog(done) {
+    // Compile changelog.haml → changelog.html in dist/tabs/
+    const outDir = DIST_DIR + 'tabs/';
+    if (!fs.existsSync(outDir)) {
+        fs.mkdirSync(outDir, { recursive: true });
+    }
+    execSync('ruby tools/haml_compile.rb changelog.haml "' + outDir + 'changelog.html"', { stdio: 'pipe' });
+    console.log('  ✓ changelog.haml compiled');
+    done();
+}
+
+// Compile HAML templates to HTML in dist/
+function dist_haml(done) {
+    const glob = require('glob');
+    const path = require('path');
+
+    const hamlFiles = glob.sync('src/**/*.haml');
+    console.log(`Compiling ${hamlFiles.length} HAML templates...`);
+
+    hamlFiles.forEach(hamlFile => {
+        const relPath = path.relative('src', hamlFile);
+        const outPath = path.join(DIST_DIR, relPath.replace(/\.haml$/, '.html'));
+        const outDir = path.dirname(outPath);
+
+        if (!fs.existsSync(outDir)) {
+            fs.mkdirSync(outDir, { recursive: true });
+        }
+
+        try {
+            execSync('ruby tools/haml_compile.rb "' + hamlFile + '" "' + outPath + '"', { stdio: 'pipe' });
+        } catch (e) {
+            console.error('HAML error in ' + hamlFile + ':');
+            console.error(e.stderr ? e.stderr.toString() : e.message);
+            throw e;
+        }
+    });
+
+    console.log('  ✓ ' + hamlFiles.length + ' HAML templates compiled');
+    done();
 }
 
 // This function relies on files from the dist_src function

@@ -1,0 +1,98 @@
+.tab-motors
+  .content_wrapper
+    .tab_title{i18n: "tabMotorTesting"} Motors
+    .cf_doc_version_bt
+      %a#button-documentation{href: "https://github.com/dantiel/orniflight/releases", rel: "noopener noreferrer", target: "_blank"}
+    .gui_box.grey{style: "margin-bottom: 15px;"}
+      .wrapper.modelAndGraph
+        .mixerPreview
+          %img{src: "./resources/motor_order/custom.svg"}
+        %svg#graph
+          %g.grid.x{transform: "translate(40, 120)"}
+          %g.grid.y{transform: "translate(40, 10)"}
+          %g.data{transform: "translate(41, 10)"}
+          %g.axis.x{transform: "translate(40, 120)"}
+          %g.axis.y{transform: "translate(40, 10)"}
+        .plot_control
+          .table
+            .sensor.row
+              .left-cell.motor-button
+                %a.reset_max{href: "#", i18n: "motorsResetMaximumButton", i18n_title: "motorsResetMaximum"}
+              .right-cell
+                %select{name: "sensor_choice"}
+                  %option{i18n: "motorsSensorGyroSelect", selected: "selected", value: "gyro"}
+                  %option{i18n: "motorsSensorAccelSelect", value: "accel"}
+            .row-container
+              .row
+                .left-cell
+                  %div{i18n: "sensorsRefresh"}
+                .rate.right-cell
+                  %select{name: "rate"}
+                    %option{value: "10"} 10 ms
+                    %option{value: "20"} 20 ms
+                    %option{value: "30"} 30 ms
+                    %option{value: "40"} 40 ms
+                    %option{value: "50"} 50 ms
+                    %option{value: "100"} 100 ms
+                    %option{value: "250"} 250 ms
+                    %option{value: "500"} 500 ms
+                    %option{value: "1000"} 1000 ms
+              .row
+                .left-cell
+                  %div{i18n: "sensorsScale"}
+                .scale.right-cell
+                  %select{name: "scale"}
+              .row
+                .left-cell
+                  X:
+                .x.value.right-cell
+                  0
+              .row
+                .left-cell
+                  Y:
+                .y.value.right-cell
+                  0
+              .row
+                .left-cell
+                  Z:
+                .z.value.right-cell
+                  0
+              .row
+                .left-cell
+                  RMS:
+                .rms.value.right-cell
+                  0
+        .power_info
+          %span.power_text{i18n: "motorsVoltage"}
+          %span.motors-bat-voltage.power_value
+          %span.power_text{i18n: "motorsADrawing"}
+          %span.motors-bat-mah-drawing.power_value
+          %span.power_text{i18n: "motorsmAhDrawn"}
+          %span.motors-bat-mah-drawn.power_value
+    .gui_box.motorblock
+      .spacer
+        .left.motors
+          .title2{i18n: "motorsText"}
+          %ul.titles
+            %li{i18n_title: "motorNumber1"} 1
+            %li{i18n_title: "motorNumber2"} 2
+            %li{i18n_title: "motorNumber3"} 3
+            %li{i18n_title: "motorNumber4"} 4
+            %li{i18n_title: "motorNumber5"} 5
+            %li{i18n_title: "motorNumber6"} 6
+            %li{i18n_title: "motorNumber7"} 7
+            %li{i18n_title: "motorNumber8"} 8
+          .bar-wrapper
+        .right.servos
+          .title2{i18n: "servosText"}
+          %ul.titles
+            %li{i18n_title: "servoNumber8"} 8
+            %li{i18n_title: "servoNumber7"} 7
+            %li{i18n_title: "servoNumber6"} 6
+            %li{i18n_title: "servoNumber5"} 5
+            %li{i18n_title: "servoNumber4"} 4
+            %li{i18n_title: "servoNumber3"} 3
+            %li{i18n_title: "servoNumber2"} 2
+            %li{i18n_title: "servoNumber1"} 1
+          .bar-wrapper
+        .clear-both

@@ -1,0 +1,1054 @@
+'use strict'
+TABS.configuration =
+    DSHOT_PROTOCOL_MIN_VALUE: 5
+    SHOW_OLD_BATTERY_CONFIG: false
+    analyticsChanges: {}
+
+TABS.configuration.initialize = (callback, scrollPosition) ->
+    self = this
+
+    load_config = ->
+        MSP.send_message MSPCodes.MSP_FEATURE_CONFIG, false, false, load_beeper_config
+        return
+
+    load_beeper_config = ->
+        next_callback = load_serial_config
+        if semver.gte(CONFIG.apiVersion, '1.36.0')
+            MSP.send_message MSPCodes.MSP_BEEPER_CONFIG, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_serial_config = ->
+        MSP.send_message MSPCodes.MSP_CF_SERIAL_CONFIG, false, false, load_board_alignment_config
+        return
+
+    load_board_alignment_config = ->
+        MSP.send_message MSPCodes.MSP_BOARD_ALIGNMENT_CONFIG, false, false, load_rc_map
+        return
+
+    load_rc_map = ->
+        MSP.send_message MSPCodes.MSP_RX_MAP, false, false, load_mixer_config
+        return
+
+    load_mixer_config = ->
+        MSP.send_message MSPCodes.MSP_MIXER_CONFIG, false, false, load_rssi_config
+        return
+
+    load_rssi_config = ->
+        MSP.send_message MSPCodes.MSP_RSSI_CONFIG, false, false, load_motor_config
+        return
+
+    load_motor_config = ->
+        next_callback = load_compass_config
+        if semver.gte(CONFIG.apiVersion, '1.33.0')
+            MSP.send_message MSPCodes.MSP_MOTOR_CONFIG, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_compass_config = ->
+        next_callback = load_gps_config
+        if semver.gte(CONFIG.apiVersion, '1.33.0')
+            MSP.send_message MSPCodes.MSP_COMPASS_CONFIG, false, false, load_gps_config
+        else
+            next_callback()
+        return
+
+    load_gps_config = ->
+        next_callback = load_acc_trim
+        if semver.gte(CONFIG.apiVersion, '1.33.0')
+            MSP.send_message MSPCodes.MSP_GPS_CONFIG, false, false, load_acc_trim
+        else
+            next_callback()
+        return
+
+    load_acc_trim = ->
+        MSP.send_message MSPCodes.MSP_ACC_TRIM, false, false, load_misc
+        return
+
+    load_misc = ->
+        next_callback = load_arming_config
+        if semver.lt(CONFIG.apiVersion, '1.33.0')
+            MSP.send_message MSPCodes.MSP_MISC, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_arming_config = ->
+        next_callback = load_3d
+        if semver.gte(CONFIG.apiVersion, '1.8.0')
+            MSP.send_message MSPCodes.MSP_ARMING_CONFIG, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_3d = ->
+        next_callback = load_rc_deadband
+        if semver.gte(CONFIG.apiVersion, '1.14.0')
+            MSP.send_message MSPCodes.MSP_MOTOR_3D_CONFIG, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_rc_deadband = ->
+        next_callback = esc_protocol
+        if semver.gte(CONFIG.apiVersion, '1.17.0')
+            MSP.send_message MSPCodes.MSP_RC_DEADBAND, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    esc_protocol = ->
+        next_callback = sensor_config
+        if semver.gte(CONFIG.apiVersion, '1.16.0')
+            MSP.send_message MSPCodes.MSP_ADVANCED_CONFIG, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    sensor_config = ->
+        next_callback = load_sensor_alignment
+        if semver.gte(CONFIG.apiVersion, '1.16.0')
+            MSP.send_message MSPCodes.MSP_SENSOR_CONFIG, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_sensor_alignment = ->
+        next_callback = load_name
+        if semver.gte(CONFIG.apiVersion, '1.15.0')
+            MSP.send_message MSPCodes.MSP_SENSOR_ALIGNMENT, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_name = ->
+        next_callback = load_rx_config
+        if self.SHOW_OLD_BATTERY_CONFIG
+            next_callback = load_battery
+        if semver.gte(CONFIG.apiVersion, '1.20.0')
+            MSP.send_message MSPCodes.MSP_NAME, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_battery = ->
+        next_callback = load_current
+        if semver.gte(CONFIG.flightControllerVersion, '3.1.0')
+            MSP.send_message MSPCodes.MSP_VOLTAGE_METER_CONFIG, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_current = ->
+        next_callback = load_rx_config
+        if semver.gte(CONFIG.flightControllerVersion, '3.1.0')
+            MSP.send_message MSPCodes.MSP_CURRENT_METER_CONFIG, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_rx_config = ->
+        next_callback = load_html
+        if semver.gte(CONFIG.apiVersion, '1.31.0')
+            MSP.send_message MSPCodes.MSP_RX_CONFIG, false, false, next_callback
+        else
+            next_callback()
+        return
+
+    load_html = ->
+        $('#content').load './tabs/configuration.html', process_html
+        return
+
+    process_html = ->
+        `var i`
+        `var i`
+        `var i`
+        `var i`
+        `var i`
+        `var i`
+        `var i`
+        `var i`
+
+        refreshMixerPreview = ->
+            mixer = MIXER_CONFIG.mixer
+            reverse = ''
+            if semver.gte(CONFIG.apiVersion, '1.36.0')
+                reverse = if MIXER_CONFIG.reverseMotorDir then '_reversed' else ''
+            entry = mixerList[mixer] or mixerList[27] or image: 'ornithopter'
+            $('.mixerPreview img').attr 'src', './resources/motor_order/' + entry.image + reverse + '.svg'
+            return
+
+        addDenomOption = (element, denom, baseFreq) ->
+            element.append '<option value="' + denom + '">' + (baseFreq / denom * 100).toFixed(0) / 100 + ' kHz</option>'
+            return
+
+        checkUpdateVbatControls = ->
+            if FEATURE_CONFIG.features.isEnabled('VBAT')
+                $('.vbatmonitoring').show()
+                if semver.gte(CONFIG.flightControllerVersion, '3.1.0')
+                    $('select.batterymetertype').show()
+                    if MISC.batterymetertype != 0
+                        $('.vbatCalibration').hide()
+                else
+                    $('select.batterymetertype').hide()
+            else
+                $('.vbatmonitoring').hide()
+            return
+
+        checkUpdateCurrentControls = ->
+            if FEATURE_CONFIG.features.isEnabled('CURRENT_METER')
+                $('.currentMonitoring').show()
+                switch BF_CONFIG.currentmetertype
+                    when 0
+                        $('.currentCalibration').hide()
+                        $('.currentOutput').hide()
+                    when 3
+                        $('.currentCalibration').hide()
+                if BF_CONFIG.currentmetertype != 1 and BF_CONFIG.currentmetertype != 2
+                    $('.currentCalibration').hide()
+            else
+                $('.currentMonitoring').hide()
+            return
+
+        # UI hooks
+
+        checkShowDisarmDelay = ->
+            if FEATURE_CONFIG.features.isEnabled('MOTOR_STOP')
+                $('div.disarmdelay').show()
+            else
+                $('div.disarmdelay').hide()
+            return
+
+        checkShowSerialRxBox = ->
+            if FEATURE_CONFIG.features.isEnabled('RX_SERIAL')
+                $('div.serialRXBox').show()
+            else
+                $('div.serialRXBox').hide()
+            return
+
+        checkShowSpiRxBox = ->
+            if FEATURE_CONFIG.features.isEnabled('RX_SPI')
+                $('div.spiRxBox').show()
+            else
+                $('div.spiRxBox').hide()
+            return
+
+        checkUpdateGpsControls = ->
+            if FEATURE_CONFIG.features.isEnabled('GPS')
+                $('.gpsSettings').show()
+            else
+                $('.gpsSettings').hide()
+            return
+
+        checkUpdate3dControls = ->
+            if FEATURE_CONFIG.features.isEnabled('3D')
+                $('._3dSettings').show()
+            else
+                $('._3dSettings').hide()
+            return
+
+        self.analyticsChanges = {}
+        mixer_list_e = $('select.mixerList')
+        mixerList.forEach (mixerEntry, mixerIndex) ->
+            if mixerEntry and mixerEntry.name
+                mixer_list_e.append '<option value="' + mixerIndex + '">' + mixerEntry.name + '</option>'
+            return
+        reverseMotorSwitch_e = $('#reverseMotorSwitch')
+        reverseMotor_e = $('.reverseMotor')
+        reverseMotorSwitch_e.change ->
+            MIXER_CONFIG.reverseMotorDir = if $(this).prop('checked') then 1 else 0
+            refreshMixerPreview()
+            return
+        reverseMotorSwitch_e.prop('checked', MIXER_CONFIG.reverseMotorDir != 0).change()
+        mixer_list_e.change ->
+            mixerValue = parseInt($(this).val())
+            newValue = undefined
+            if mixerValue != MIXER_CONFIG.mixer
+                newValue = $(this).find('option:selected').text()
+            self.analyticsChanges['Mixer'] = newValue
+            MIXER_CONFIG.mixer = mixerValue
+            refreshMixerPreview()
+            return
+        # select current mixer configuration
+        mixer_list_e.val(MIXER_CONFIG.mixer).change()
+        features_e = $('.tab-configuration .features')
+        FEATURE_CONFIG.features.generateElements features_e
+        # Dshot Beeper
+        dshotBeeper_e = $('.tab-configuration .dshotbeeper')
+        dshotBeacon_e = $('.tab-configuration .dshotbeacon')
+        dshotBeeperSwitch = $('#dshotBeeperSwitch')
+        dshotBeeperBeaconTone = $('select.dshotBeeperBeaconTone')
+        dshotBeaconCondition_e = $('tbody.dshotBeaconConditions')
+        dshotBeaconSwitch_e = $('tr.dshotBeaconSwitch')
+        if semver.gte(CONFIG.apiVersion, '1.37.0')
+            i = 1
+            while i <= 5
+                dshotBeeperBeaconTone.append '<option value="' + i + '">' + i + '</option>'
+                i++
+            dshotBeeper_e.show()
+        else
+            dshotBeeper_e.hide()
+        dshotBeeperBeaconTone.change ->
+            BEEPER_CONFIG.dshotBeaconTone = dshotBeeperBeaconTone.val()
+            return
+        dshotBeeperBeaconTone.val BEEPER_CONFIG.dshotBeaconTone
+        template = $('.beepers .beeper-template')
+        if semver.gte(CONFIG.apiVersion, '1.39.0')
+            dshotBeaconSwitch_e.hide()
+            BEEPER_CONFIG.dshotBeaconConditions.generateElements template, dshotBeaconCondition_e
+            $('input.condition', dshotBeaconCondition_e).change ->
+                element = $(this)
+                BEEPER_CONFIG.dshotBeaconConditions.updateData element
+                return
+        else
+            dshotBeaconCondition_e.hide()
+            dshotBeeperSwitch.change ->
+                if $(this).is(':checked')
+                    dshotBeacon_e.show()
+                    if dshotBeeperBeaconTone.val() == 0
+                        dshotBeeperBeaconTone.val(1).change()
+                else
+                    dshotBeeperBeaconTone.val(0).change()
+                    dshotBeacon_e.hide()
+                return
+            dshotBeeperSwitch.prop('checked', BEEPER_CONFIG.dshotBeaconTone != 0).change()
+        # Analog Beeper
+        destination = $('.beepers .beeper-configuration')
+        beeper_e = $('.tab-configuration .beepers')
+        if semver.gte(CONFIG.apiVersion, '1.36.0')
+            BEEPER_CONFIG.beepers.generateElements template, destination
+        else
+            beeper_e.hide()
+            reverseMotor_e.hide()
+        # translate to user-selected language
+        i18n.localizePage()
+        alignments = [
+            'CW 0°'
+            'CW 90°'
+            'CW 180°'
+            'CW 270°'
+            'CW 0° flip'
+            'CW 90° flip'
+            'CW 180° flip'
+            'CW 270° flip'
+        ]
+        if semver.gte(CONFIG.apiVersion, '1.42.0')
+            alignments.push 'Custom'
+        gyro_align_content_e = $('.tab-configuration .gyro_align_content')
+        legacy_gyro_alignment_e = $('.tab-configuration .legacy_gyro_alignment')
+        legacy_accel_alignment_e = $('.tab-configuration .legacy_accel_alignment')
+        orientation_gyro_e = $('select.gyroalign')
+        orientation_acc_e = $('select.accalign')
+        orientation_mag_e = $('select.magalign')
+        orientation_gyro_to_use_e = $('select.gyro_to_use')
+        orientation_gyro_1_align_e = $('select.gyro_1_align')
+        orientation_gyro_2_align_e = $('select.gyro_2_align')
+        gyro_align_content_e.hide()
+        # default value
+        if semver.lt(CONFIG.apiVersion, '1.15.0')
+            $('.tab-configuration .sensoralignment').hide()
+        else
+            i = 0
+            while i < alignments.length
+                orientation_gyro_e.append '<option value="' + i + 1 + '">' + alignments[i] + '</option>'
+                orientation_acc_e.append '<option value="' + i + 1 + '">' + alignments[i] + '</option>'
+                orientation_mag_e.append '<option value="' + i + 1 + '">' + alignments[i] + '</option>'
+                i++
+            orientation_gyro_e.val SENSOR_ALIGNMENT.align_gyro
+            orientation_acc_e.val SENSOR_ALIGNMENT.align_acc
+            orientation_mag_e.val SENSOR_ALIGNMENT.align_mag
+            orientation_gyro_e.change ->
+                value = parseInt($(this).val())
+                newValue = undefined
+                if value != SENSOR_ALIGNMENT.align_gyro
+                    newValue = $(this).find('option:selected').text()
+                self.analyticsChanges['GyroAlignment'] = newValue
+                SENSOR_ALIGNMENT.align_gyro = value
+                return
+            orientation_acc_e.change ->
+                value = parseInt($(this).val())
+                newValue = undefined
+                if value != SENSOR_ALIGNMENT.align_acc
+                    newValue = $(this).find('option:selected').text()
+                self.analyticsChanges['AccAlignment'] = newValue
+                SENSOR_ALIGNMENT.align_acc = value
+                return
+            orientation_mag_e.change ->
+                value = parseInt($(this).val())
+                newValue = undefined
+                if value != SENSOR_ALIGNMENT.align_mag
+                    newValue = $(this).find('option:selected').text()
+                self.analyticsChanges['MagAlignment'] = newValue
+                SENSOR_ALIGNMENT.align_mag = value
+                return
+            # Multi gyro config
+            if semver.gte(CONFIG.apiVersion, '1.41.0')
+                gyro_align_content_e.show()
+                legacy_gyro_alignment_e.hide()
+                legacy_accel_alignment_e.hide()
+                GYRO_DETECTION_FLAGS = 
+                    DETECTED_GYRO_1: 1 << 0
+                    DETECTED_GYRO_2: 1 << 1
+                    DETECTED_DUAL_GYROS: 1 << 7
+                detected_gyro_1 = (SENSOR_ALIGNMENT.gyro_detection_flags & GYRO_DETECTION_FLAGS.DETECTED_GYRO_1) != 0
+                detected_gyro_2 = (SENSOR_ALIGNMENT.gyro_detection_flags & GYRO_DETECTION_FLAGS.DETECTED_GYRO_2) != 0
+                detected_dual_gyros = (SENSOR_ALIGNMENT.gyro_detection_flags & GYRO_DETECTION_FLAGS.DETECTED_DUAL_GYROS) != 0
+                if detected_gyro_1
+                    orientation_gyro_to_use_e.append '<option value="0">' + i18n.getMessage('configurationSensorGyroToUseFirst') + '</option>'
+                if detected_gyro_2
+                    orientation_gyro_to_use_e.append '<option value="1">' + i18n.getMessage('configurationSensorGyroToUseSecond') + '</option>'
+                if detected_dual_gyros
+                    orientation_gyro_to_use_e.append '<option value="2">' + i18n.getMessage('configurationSensorGyroToUseBoth') + '</option>'
+                i = 0
+                while i < alignments.length
+                    orientation_gyro_1_align_e.append '<option value="' + i + 1 + '">' + alignments[i] + '</option>'
+                    orientation_gyro_2_align_e.append '<option value="' + i + 1 + '">' + alignments[i] + '</option>'
+                    i++
+                orientation_gyro_to_use_e.val SENSOR_ALIGNMENT.gyro_to_use
+                orientation_gyro_1_align_e.val SENSOR_ALIGNMENT.gyro_1_align
+                orientation_gyro_2_align_e.val SENSOR_ALIGNMENT.gyro_2_align
+                $('.gyro_alignment_inputs_first').toggle detected_gyro_1
+                $('.gyro_alignment_inputs_second').toggle detected_gyro_2
+                $('.gyro_alignment_inputs_selection').toggle detected_gyro_1 or detected_gyro_2
+                $('.gyro_alignment_inputs_notfound').toggle !detected_gyro_1 and !detected_gyro_2
+                orientation_gyro_1_align_e.change ->
+                    value = parseInt($(this).val())
+                    newValue = undefined
+                    if value != SENSOR_ALIGNMENT.gyro_1_align
+                        newValue = $(this).find('option:selected').text()
+                    self.analyticsChanges['Gyro1Alignment'] = newValue
+                    SENSOR_ALIGNMENT.gyro_1_align = value
+                    return
+                orientation_gyro_2_align_e.change ->
+                    value = parseInt($(this).val())
+                    newValue = undefined
+                    if value != SENSOR_ALIGNMENT.gyro_2_align
+                        newValue = $(this).find('option:selected').text()
+                    self.analyticsChanges['Gyro2Alignment'] = newValue
+                    SENSOR_ALIGNMENT.gyro_2_align = value
+                    return
+        # ESC protocols
+        escprotocols = [
+            'PWM'
+            'ONESHOT125'
+            'ONESHOT42'
+            'MULTISHOT'
+        ]
+        if semver.gte(CONFIG.apiVersion, '1.20.0')
+            escprotocols.push 'BRUSHED'
+        if semver.gte(CONFIG.apiVersion, '1.31.0')
+            escprotocols.push 'DSHOT150'
+            escprotocols.push 'DSHOT300'
+            escprotocols.push 'DSHOT600'
+            if semver.lt(CONFIG.apiVersion, '1.42.0')
+                escprotocols.push 'DSHOT1200'
+            if semver.gte(CONFIG.apiVersion, '1.36.0')
+                escprotocols.push 'PROSHOT1000'
+        esc_protocol_e = $('select.escprotocol')
+        i = 0
+        while i < escprotocols.length
+            esc_protocol_e.append '<option value="' + i + 1 + '">' + escprotocols[i] + '</option>'
+            i++
+        $('input[id=\'unsyncedPWMSwitch\']').change ->
+            if $(this).is(':checked')
+                $('div.unsyncedpwmfreq').show()
+            else
+                $('div.unsyncedpwmfreq').hide()
+            return
+        $('input[id="unsyncedPWMSwitch"]').prop('checked', PID_ADVANCED_CONFIG.use_unsyncedPwm != 0).change()
+        $('input[name="unsyncedpwmfreq"]').val PID_ADVANCED_CONFIG.motor_pwm_rate
+        $('input[name="digitalIdlePercent"]').val PID_ADVANCED_CONFIG.digitalIdlePercent
+        if semver.gte(CONFIG.apiVersion, '1.42.0')
+            dshotBidirectional_e = $('input[id="dshotBidir"]')
+            dshotBidirectional_e.prop('checked', MOTOR_CONFIG.use_dshot_telemetry).change()
+            dshotBidirectional_e.change ->
+                value = $(this).prop('checked')
+                newValue = undefined
+                if value != MOTOR_CONFIG.use_dshot_telemetry
+                    newValue = if value then 'On' else 'Off'
+                self.analyticsChanges['BidirectionalDshot'] = newValue
+                MOTOR_CONFIG.use_dshot_telemetry = value
+                return
+            $('input[name="motorPoles"]').val MOTOR_CONFIG.motor_poles
+        $('#escProtocolTooltip').toggle semver.lt(CONFIG.apiVersion, '1.42.0')
+        $('#escProtocolTooltipNoDSHOT1200').toggle semver.gte(CONFIG.apiVersion, '1.42.0')
+        esc_protocol_e.val PID_ADVANCED_CONFIG.fast_pwm_protocol + 1
+        esc_protocol_e.change(->
+            escProtocolValue = parseInt($(this).val()) - 1
+            newValue = undefined
+            if escProtocolValue != PID_ADVANCED_CONFIG.fast_pwm_protocol
+                newValue = $(this).find('option:selected').text()
+            self.analyticsChanges['EscProtocol'] = newValue
+            #hide not used setting for DSHOT protocol
+            digitalProtocol = escProtocolValue >= self.DSHOT_PROTOCOL_MIN_VALUE
+            $('div.minthrottle').toggle !digitalProtocol
+            $('div.maxthrottle').toggle !digitalProtocol
+            $('div.mincommand').toggle !digitalProtocol
+            $('div.checkboxPwm').toggle !digitalProtocol
+            $('div.unsyncedpwmfreq').toggle !digitalProtocol
+            $('div.digitalIdlePercent').toggle digitalProtocol
+            $('div.checkboxDshotBidir').toggle semver.gte(CONFIG.apiVersion, '1.42.0') and digitalProtocol
+            $('div.motorPoles').toggle semver.gte(CONFIG.apiVersion, '1.42.0')
+            #trigger change unsyncedPWMSwitch to show/hide Motor PWM freq input
+            $('input[id=\'unsyncedPWMSwitch\']').change()
+            return
+        ).change()
+        # Gyro and PID update
+        gyroUse32kHz_e = $('input[id="gyroUse32kHz"]')
+        gyro_select_e = $('select.gyroSyncDenom')
+        pid_select_e = $('select.pidProcessDenom')
+
+        updateGyroDenom = (gyroBaseFreq) ->
+            originalGyroDenom = gyro_select_e.val()
+            gyro_select_e.empty()
+            denom = 1
+            while denom <= 8
+                addDenomOption gyro_select_e, denom, gyroBaseFreq
+                denom++
+            if semver.gte(CONFIG.apiVersion, '1.25.0')
+                while denom <= 32
+                    addDenomOption gyro_select_e, denom, gyroBaseFreq
+                    denom++
+            gyro_select_e.val originalGyroDenom
+            gyro_select_e.change()
+            return
+
+        if semver.gte(CONFIG.apiVersion, '1.25.0') and semver.lt(CONFIG.apiVersion, '1.41.0')
+            gyroUse32kHz_e.prop 'checked', PID_ADVANCED_CONFIG.gyroUse32kHz != 0
+            gyroUse32kHz_e.change(->
+                gyroBaseFreq = undefined
+                if $(this).is(':checked')
+                    gyroBaseFreq = 32
+                else
+                    gyroBaseFreq = 8
+                updateGyroDenom gyroBaseFreq
+                return
+            ).change()
+        else
+            $('div.gyroUse32kHz').hide()
+            updateGyroDenom 8
+        if semver.gte(CONFIG.apiVersion, '1.41.0')
+            $('.systemconfigNote').html i18n.getMessage('configurationLoopTimeNo32KhzHelp')
+        else
+            $('.systemconfigNote').html i18n.getMessage('configurationLoopTimeHelp')
+        gyro_select_e.val PID_ADVANCED_CONFIG.gyro_sync_denom
+        gyro_select_e.change(->
+            originalPidDenom = pid_select_e.val()
+            pidBaseFreq = 8
+            if semver.gte(CONFIG.apiVersion, '1.25.0') and semver.lt(CONFIG.apiVersion, '1.41.0') and gyroUse32kHz_e.is(':checked')
+                pidBaseFreq = 32
+            pidBaseFreq = pidBaseFreq / parseInt($(this).val())
+            pid_select_e.empty()
+            denom = 1
+            while denom <= 8
+                addDenomOption pid_select_e, denom, pidBaseFreq
+                denom++
+            if semver.gte(CONFIG.apiVersion, '1.24.0')
+                while denom <= 16
+                    addDenomOption pid_select_e, denom, pidBaseFreq
+                    denom++
+            pid_select_e.val originalPidDenom
+            return
+        ).change()
+        pid_select_e.val PID_ADVANCED_CONFIG.pid_process_denom
+        $('input[id="accHardwareSwitch"]').prop 'checked', SENSOR_CONFIG.acc_hardware != 1
+        $('input[id="baroHardwareSwitch"]').prop 'checked', SENSOR_CONFIG.baro_hardware != 1
+        $('input[id="magHardwareSwitch"]').prop 'checked', SENSOR_CONFIG.mag_hardware != 1
+        # Only show these sections for supported FW
+        if semver.lt(CONFIG.apiVersion, '1.16.0')
+            $('.selectProtocol').hide()
+            $('.checkboxPwm').hide()
+            $('.selectPidProcessDenom').hide()
+        if semver.lt(CONFIG.apiVersion, '1.16.0')
+            $('.hardwareSelection').hide()
+        $('input[name="craftName"]').val CONFIG.name
+        if semver.gte(CONFIG.apiVersion, '1.31.0')
+            $('input[name="fpvCamAngleDegrees"]').val RX_CONFIG.fpvCamAngleDegrees
+            if semver.gte(CONFIG.apiVersion, '1.41.0')
+                $('input[name="fpvCamAngleDegrees"]').attr 'max', 90
+        else
+            $('div.fpvCamAngleDegrees').hide()
+        if semver.lt(CONFIG.apiVersion, '1.20.0')
+            $('.miscSettings').hide()
+        # generate GPS
+        gpsProtocols = [
+            'NMEA'
+            'UBLOX'
+        ]
+        if semver.gte(CONFIG.apiVersion, '1.41.0')
+            gpsProtocols.push 'MSP'
+        gpsBaudRates = [
+            '115200'
+            '57600'
+            '38400'
+            '19200'
+            '9600'
+        ]
+        gpsSbas = [
+            'Auto-detect'
+            'European EGNOS'
+            'North American WAAS'
+            'Japanese MSAS'
+            'Indian GAGAN'
+        ]
+        gps_protocol_e = $('select.gps_protocol')
+        i = 0
+        while i < gpsProtocols.length
+            gps_protocol_e.append '<option value="' + i + '">' + gpsProtocols[i] + '</option>'
+            i++
+        gps_protocol_e.change ->
+            GPS_CONFIG.provider = parseInt($(this).val())
+            return
+        gps_protocol_e.val GPS_CONFIG.provider
+        $('input[name="gps_auto_baud"]').prop 'checked', GPS_CONFIG.auto_baud == 1
+        $('input[name="gps_auto_config"]').prop 'checked', GPS_CONFIG.auto_config == 1
+        if semver.gte(CONFIG.apiVersion, '1.34.0')
+            $('.select.gps_auto_baud').show()
+            $('.select.gps_auto_config').show()
+        else
+            $('.select.gps_auto_baud').hide()
+            $('.select.gps_auto_config').hide()
+        gps_baudrate_e = $('select.gps_baudrate')
+        i = 0
+        while i < gpsBaudRates.length
+            gps_baudrate_e.append '<option value="' + gpsBaudRates[i] + '">' + gpsBaudRates[i] + '</option>'
+            i++
+        if semver.lt(CONFIG.apiVersion, '1.6.0')
+            gps_baudrate_e.change ->
+                SERIAL_CONFIG.gpsBaudRate = parseInt($(this).val())
+                return
+            gps_baudrate_e.val SERIAL_CONFIG.gpsBaudRate
+        else
+            gps_baudrate_e.prop 'disabled', true
+            gps_baudrate_e.parent().hide()
+        gps_ubx_sbas_e = $('select.gps_ubx_sbas')
+        i = 0
+        while i < gpsSbas.length
+            gps_ubx_sbas_e.append '<option value="' + i + '">' + gpsSbas[i] + '</option>'
+            i++
+        gps_ubx_sbas_e.change ->
+            GPS_CONFIG.ublox_sbas = parseInt($(this).val())
+            return
+        gps_ubx_sbas_e.val GPS_CONFIG.ublox_sbas
+        # generate serial RX
+        serialRXtypes = [
+            'SPEKTRUM1024'
+            'SPEKTRUM2048'
+            'SBUS'
+            'SUMD'
+            'SUMH'
+            'XBUS_MODE_B'
+            'XBUS_MODE_B_RJ01'
+        ]
+        if semver.gte(CONFIG.apiVersion, '1.15.0')
+            serialRXtypes.push 'IBUS'
+        if CONFIG.flightControllerIdentifier == 'ORNI' and semver.gte(CONFIG.flightControllerVersion, '2.6.0') or CONFIG.flightControllerIdentifier == 'CLFL' and semver.gte(CONFIG.apiVersion, '1.31.0')
+            serialRXtypes.push 'JETIEXBUS'
+        if semver.gte(CONFIG.apiVersion, '1.31.0')
+            serialRXtypes.push 'CRSF'
+        if semver.gte(CONFIG.apiVersion, '1.24.0')
+            serialRXtypes.push 'SPEKTRUM2048/SRXL'
+        if semver.gte(CONFIG.apiVersion, '1.35.0')
+            serialRXtypes.push 'TARGET_CUSTOM'
+        if semver.gte(CONFIG.apiVersion, '1.37.0')
+            serialRXtypes.push 'FrSky FPort'
+        if semver.gte(CONFIG.apiVersion, '1.42.0')
+            serialRXtypes.push 'SPEKTRUM SRXL2'
+        serialRX_e = $('select.serialRX')
+        i = 0
+        while i < serialRXtypes.length
+            serialRX_e.append '<option value="' + i + '">' + serialRXtypes[i] + '</option>'
+            i++
+        serialRX_e.change ->
+            serialRxValue = parseInt($(this).val())
+            newValue = undefined
+            if serialRxValue != RX_CONFIG.serialrx_provider
+                newValue = $(this).find('option:selected').text()
+            self.analyticsChanges['SerialRx'] = newValue
+            RX_CONFIG.serialrx_provider = serialRxValue
+            return
+        # select current serial RX type
+        serialRX_e.val RX_CONFIG.serialrx_provider
+        if semver.gte(CONFIG.apiVersion, '1.31.0')
+            spiRxTypes = [
+                'NRF24_V202_250K'
+                'NRF24_V202_1M'
+                'NRF24_SYMA_X'
+                'NRF24_SYMA_X5C'
+                'NRF24_CX10'
+                'CX10A'
+                'NRF24_H8_3D'
+                'NRF24_INAV'
+                'FRSKY_D'
+            ]
+            if semver.gte(CONFIG.apiVersion, '1.37.0')
+                spiRxTypes.push 'FRSKY_X', 'A7105_FLYSKY', 'A7105_FLYSKY_2A', 'NRF24_KN'
+            if semver.gte(CONFIG.apiVersion, '1.41.0')
+                spiRxTypes.push 'SFHSS', 'SPEKTRUM', 'FRSKY_X_LBT'
+            spiRx_e = $('select.spiRx')
+            i = 0
+            while i < spiRxTypes.length
+                spiRx_e.append '<option value="' + i + '">' + spiRxTypes[i] + '</option>'
+                i++
+            spiRx_e.change ->
+                RX_CONFIG.rxSpiProtocol = parseInt($(this).val())
+                return
+            # select current serial RX type
+            spiRx_e.val RX_CONFIG.rxSpiProtocol
+        # for some odd reason chrome 38+ changes scroll according to the touched select element
+        # i am guessing this is a bug, since this wasn't happening on 37
+        # code below is a temporary fix, which we will be able to remove in the future (hopefully)
+        $('#content').scrollTop if scrollPosition then scrollPosition else 0
+        # fill board alignment
+        $('input[name="board_align_roll"]').val BOARD_ALIGNMENT_CONFIG.roll
+        $('input[name="board_align_pitch"]').val BOARD_ALIGNMENT_CONFIG.pitch
+        $('input[name="board_align_yaw"]').val BOARD_ALIGNMENT_CONFIG.yaw
+        # fill accel trims
+        $('input[name="roll"]').val CONFIG.accelerometerTrims[1]
+        $('input[name="pitch"]').val CONFIG.accelerometerTrims[0]
+        # fill magnetometer
+        $('input[name="mag_declination"]').val COMPASS_CONFIG.mag_declination.toFixed(2)
+        #fill motor disarm params and FC loop time
+        if semver.gte(CONFIG.apiVersion, '1.8.0')
+            $('input[name="autodisarmdelay"]').val ARMING_CONFIG.auto_disarm_delay
+            $('input[id="disarmkillswitch"]').prop 'checked', ARMING_CONFIG.disarm_kill_switch != 0
+            $('div.disarm').show()
+            $('div.cycles').show()
+        if semver.gte(CONFIG.apiVersion, '1.37.0') or !isExpertModeEnabled()
+            $('input[id="disarmkillswitch"]').prop 'checked', true
+            $('div.disarm').hide()
+        $('._smallAngle').hide()
+        if semver.gte(CONFIG.apiVersion, '1.37.0')
+            $('input[id="configurationSmallAngle"]').val ARMING_CONFIG.small_angle
+            if SENSOR_CONFIG.acc_hardware != 1
+                $('._smallAngle').show()
+        # fill throttle
+        $('input[name="minthrottle"]').val MOTOR_CONFIG.minthrottle
+        $('input[name="maxthrottle"]').val MOTOR_CONFIG.maxthrottle
+        $('input[name="mincommand"]').val MOTOR_CONFIG.mincommand
+        # fill battery
+        if self.SHOW_OLD_BATTERY_CONFIG
+            if semver.gte(CONFIG.flightControllerVersion, '3.1.0')
+                batteryMeterTypes = [
+                    'Onboard ADC'
+                    'ESC Sensor'
+                ]
+                batteryMeterType_e = $('select.batterymetertype')
+                i = 0
+                while i < batteryMeterTypes.length
+                    batteryMeterType_e.append '<option value="' + i + '">' + batteryMeterTypes[i] + '</option>'
+                    i++
+                batteryMeterType_e.change ->
+                    MISC.batterymetertype = parseInt($(this).val())
+                    checkUpdateVbatControls()
+                    return
+                batteryMeterType_e.val(MISC.batterymetertype).change()
+            else
+                $('div.batterymetertype').hide()
+            if semver.gte(CONFIG.apiVersion, '1.41.0')
+                $('input[name="mincellvoltage"]').prop 'step', '0.01'
+                $('input[name="maxcellvoltage"]').prop 'step', '0.01'
+                $('input[name="warningcellvoltage"]').prop 'step', '0.01'
+            $('input[name="mincellvoltage"]').val MISC.vbatmincellvoltage
+            $('input[name="maxcellvoltage"]').val MISC.vbatmaxcellvoltage
+            $('input[name="warningcellvoltage"]').val MISC.vbatwarningcellvoltage
+            $('input[name="voltagescale"]').val MISC.vbatscale
+            # fill current
+            currentMeterTypes = [
+                'None'
+                'Onboard ADC'
+                'Virtual'
+            ]
+            if semver.gte(CONFIG.flightControllerVersion, '3.1.0')
+                currentMeterTypes.push 'ESC Sensor'
+            currentMeterType_e = $('select.currentmetertype')
+            i = 0
+            while i < currentMeterTypes.length
+                currentMeterType_e.append '<option value="' + i + '">' + currentMeterTypes[i] + '</option>'
+                i++
+            currentMeterType_e.change ->
+                BF_CONFIG.currentmetertype = parseInt($(this).val())
+                checkUpdateCurrentControls()
+                return
+            currentMeterType_e.val(BF_CONFIG.currentmetertype).change()
+            $('input[name="currentscale"]').val BF_CONFIG.currentscale
+            $('input[name="currentoffset"]').val BF_CONFIG.currentoffset
+            $('input[name="multiwiicurrentoutput"]').prop 'checked', MISC.multiwiicurrentoutput != 0
+        else
+            $('.oldBatteryConfig').hide()
+        #fill 3D
+        if semver.lt(CONFIG.apiVersion, '1.14.0')
+            $('.tab-configuration ._3d').hide()
+        else
+            $('input[name="3ddeadbandlow"]').val MOTOR_3D_CONFIG.deadband3d_low
+            $('input[name="3ddeadbandhigh"]').val MOTOR_3D_CONFIG.deadband3d_high
+            $('input[name="3dneutral"]').val MOTOR_3D_CONFIG.neutral
+        $('input.feature', features_e).change ->
+            element = $(this)
+            FEATURE_CONFIG.features.updateData element
+            updateTabList FEATURE_CONFIG.features
+            switch element.attr('name')
+                when 'MOTOR_STOP'
+                    checkShowDisarmDelay()
+                when 'VBAT'
+                    if self.SHOW_OLD_BATTERY_CONFIG
+                        checkUpdateVbatControls()
+                when 'CURRENT_METER'
+                    if self.SHOW_OLD_BATTERY_CONFIG
+                        checkUpdateCurrentControls()
+                when 'GPS'
+                    checkUpdateGpsControls()
+                when '3D'
+                    checkUpdate3dControls()
+                else
+                    break
+            return
+        $('input[id="accHardwareSwitch"]').change ->
+            if semver.gte(CONFIG.apiVersion, '1.37.0')
+                checked = $(this).is(':checked')
+                if checked
+                    $('._smallAngle').show()
+                else
+                    $('._smallAngle').hide()
+            return
+        $(features_e).filter('select').change ->
+            element = $(this)
+            FEATURE_CONFIG.features.updateData element
+            updateTabList FEATURE_CONFIG.features
+            switch element.attr('name')
+                when 'rxMode'
+                    checkShowSerialRxBox()
+                    checkShowSpiRxBox()
+                else
+                    break
+            return
+        $('input.condition', beeper_e).change ->
+            element = $(this)
+            BEEPER_CONFIG.beepers.updateData element
+            return
+        checkShowDisarmDelay()
+        checkShowSerialRxBox()
+        checkShowSpiRxBox()
+        checkUpdateGpsControls()
+        checkUpdate3dControls()
+        if self.SHOW_OLD_BATTERY_CONFIG
+            checkUpdateVbatControls()
+            checkUpdateCurrentControls()
+        $('a.save').click ->
+            # gather data that doesn't have automatic change event bound
+
+            save_serial_config = ->
+                next_callback = save_feature_config
+                MSP.send_message MSPCodes.MSP_SET_CF_SERIAL_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_CF_SERIAL_CONFIG), false, next_callback
+                return
+
+            save_feature_config = ->
+                next_callback = save_beeper_config
+                MSP.send_message MSPCodes.MSP_SET_FEATURE_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_FEATURE_CONFIG), false, next_callback
+                return
+
+            save_beeper_config = ->
+                next_callback = save_misc
+                if semver.gte(CONFIG.apiVersion, '1.36.0')
+                    MSP.send_message MSPCodes.MSP_SET_BEEPER_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_BEEPER_CONFIG), false, next_callback
+                else
+                    next_callback()
+                return
+
+            save_misc = ->
+                next_callback = save_mixer_config
+                if semver.lt(CONFIG.apiVersion, '1.33.0')
+                    MSP.send_message MSPCodes.MSP_SET_MISC, mspHelper.crunch(MSPCodes.MSP_SET_MISC), false, next_callback
+                else
+                    next_callback()
+                return
+
+            save_mixer_config = ->
+                next_callback = save_board_alignment_config
+                MSP.send_message MSPCodes.MSP_SET_MIXER_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_MIXER_CONFIG), false, next_callback
+                return
+
+            save_board_alignment_config = ->
+                next_callback = save_motor_config
+                MSP.send_message MSPCodes.MSP_SET_BOARD_ALIGNMENT_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_BOARD_ALIGNMENT_CONFIG), false, next_callback
+                return
+
+            save_motor_config = ->
+                next_callback = save_gps_config
+                if semver.gte(CONFIG.apiVersion, '1.33.0')
+                    MSP.send_message MSPCodes.MSP_SET_MOTOR_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_MOTOR_CONFIG), false, next_callback
+                else
+                    next_callback()
+                return
+
+            save_gps_config = ->
+                if semver.gte(CONFIG.apiVersion, '1.34.0')
+                    GPS_CONFIG.auto_baud = if $('input[name="gps_auto_baud"]').is(':checked') then 1 else 0
+                    GPS_CONFIG.auto_config = if $('input[name="gps_auto_config"]').is(':checked') then 1 else 0
+                next_callback = save_compass_config
+                if semver.gte(CONFIG.apiVersion, '1.33.0')
+                    MSP.send_message MSPCodes.MSP_SET_GPS_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_GPS_CONFIG), false, next_callback
+                else
+                    next_callback()
+                return
+
+            save_compass_config = ->
+                next_callback = save_motor_3d_config
+                if semver.gte(CONFIG.apiVersion, '1.33.0')
+                    MSP.send_message MSPCodes.MSP_SET_COMPASS_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_COMPASS_CONFIG), false, next_callback
+                else
+                    next_callback()
+                return
+
+            save_motor_3d_config = ->
+                next_callback = save_rc_deadband
+                MSP.send_message MSPCodes.MSP_SET_MOTOR_3D_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_MOTOR_3D_CONFIG), false, next_callback
+                return
+
+            save_rc_deadband = ->
+                next_callback = save_sensor_alignment
+                MSP.send_message MSPCodes.MSP_SET_RC_DEADBAND, mspHelper.crunch(MSPCodes.MSP_SET_RC_DEADBAND), false, next_callback
+                return
+
+            save_sensor_alignment = ->
+                next_callback = save_esc_protocol
+                MSP.send_message MSPCodes.MSP_SET_SENSOR_ALIGNMENT, mspHelper.crunch(MSPCodes.MSP_SET_SENSOR_ALIGNMENT), false, next_callback
+                return
+
+            save_esc_protocol = ->
+                next_callback = save_acc_trim
+                MSP.send_message MSPCodes.MSP_SET_ADVANCED_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_ADVANCED_CONFIG), false, next_callback
+                return
+
+            save_acc_trim = ->
+                next_callback = save_arming_config
+                MSP.send_message MSPCodes.MSP_SET_ACC_TRIM, mspHelper.crunch(MSPCodes.MSP_SET_ACC_TRIM), false, next_callback
+                return
+
+            save_arming_config = ->
+                MSP.send_message MSPCodes.MSP_SET_ARMING_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_ARMING_CONFIG), false, save_sensor_config
+                return
+
+            save_sensor_config = ->
+                SENSOR_CONFIG.acc_hardware = if $('input[id="accHardwareSwitch"]').is(':checked') then 0 else 1
+                SENSOR_CONFIG.baro_hardware = if $('input[id="baroHardwareSwitch"]').is(':checked') then 0 else 1
+                SENSOR_CONFIG.mag_hardware = if $('input[id="magHardwareSwitch"]').is(':checked') then 0 else 1
+                next_callback = save_name
+                MSP.send_message MSPCodes.MSP_SET_SENSOR_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_SENSOR_CONFIG), false, next_callback
+                return
+
+            save_name = ->
+                next_callback = save_rx_config
+                if self.SHOW_OLD_BATTERY_CONFIG
+                    next_callback = save_battery
+                CONFIG.name = $.trim($('input[name="craftName"]').val())
+                MSP.send_message MSPCodes.MSP_SET_NAME, mspHelper.crunch(MSPCodes.MSP_SET_NAME), false, next_callback
+                return
+
+            save_battery = ->
+                next_callback = save_current
+                if semver.gte(CONFIG.flightControllerVersion, '3.1.0')
+                    MSP.send_message MSPCodes.MSP_SET_VOLTAGE_METER_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_VOLTAGE_METER_CONFIG), false, next_callback
+                else
+                    next_callback()
+                return
+
+            save_current = ->
+                next_callback = save_rx_config
+                if semver.gte(CONFIG.flightControllerVersion, '3.1.0')
+                    MSP.send_message MSPCodes.MSP_SET_CURRENT_METER_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_CURRENT_METER_CONFIG), false, next_callback
+                else
+                    next_callback()
+                return
+
+            save_rx_config = ->
+                next_callback = save_to_eeprom
+                if semver.gte(CONFIG.apiVersion, '1.20.0')
+                    MSP.send_message MSPCodes.MSP_SET_RX_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_RX_CONFIG), false, next_callback
+                else
+                    next_callback()
+                return
+
+            save_to_eeprom = ->
+                MSP.send_message MSPCodes.MSP_EEPROM_WRITE, false, false, reboot
+                return
+
+            reboot = ->
+                GUI.log i18n.getMessage('configurationEepromSaved')
+                GUI.tab_switch_cleanup ->
+                    MSP.send_message MSPCodes.MSP_SET_REBOOT, false, false
+                    reinitialiseConnection self
+                    return
+                return
+
+            BOARD_ALIGNMENT_CONFIG.roll = parseInt($('input[name="board_align_roll"]').val())
+            BOARD_ALIGNMENT_CONFIG.pitch = parseInt($('input[name="board_align_pitch"]').val())
+            BOARD_ALIGNMENT_CONFIG.yaw = parseInt($('input[name="board_align_yaw"]').val())
+            CONFIG.accelerometerTrims[1] = parseInt($('input[name="roll"]').val())
+            CONFIG.accelerometerTrims[0] = parseInt($('input[name="pitch"]').val())
+            COMPASS_CONFIG.mag_declination = parseFloat($('input[name="mag_declination"]').val())
+            # motor disarm
+            if semver.gte(CONFIG.apiVersion, '1.8.0')
+                ARMING_CONFIG.auto_disarm_delay = parseInt($('input[name="autodisarmdelay"]').val())
+                ARMING_CONFIG.disarm_kill_switch = if $('input[id="disarmkillswitch"]').is(':checked') then 1 else 0
+            if semver.gte(CONFIG.apiVersion, '1.37.0')
+                ARMING_CONFIG.small_angle = parseInt($('input[id="configurationSmallAngle"]').val())
+            MOTOR_CONFIG.minthrottle = parseInt($('input[name="minthrottle"]').val())
+            MOTOR_CONFIG.maxthrottle = parseInt($('input[name="maxthrottle"]').val())
+            MOTOR_CONFIG.mincommand = parseInt($('input[name="mincommand"]').val())
+            if semver.gte(CONFIG.apiVersion, '1.42.0')
+                MOTOR_CONFIG.motor_poles = parseInt($('input[name="motorPoles"]').val())
+            if self.SHOW_OLD_BATTERY_CONFIG
+                MISC.vbatmincellvoltage = parseFloat($('input[name="mincellvoltage"]').val())
+                MISC.vbatmaxcellvoltage = parseFloat($('input[name="maxcellvoltage"]').val())
+                MISC.vbatwarningcellvoltage = parseFloat($('input[name="warningcellvoltage"]').val())
+                MISC.vbatscale = parseInt($('input[name="voltagescale"]').val())
+                BF_CONFIG.currentscale = parseInt($('input[name="currentscale"]').val())
+                BF_CONFIG.currentoffset = parseInt($('input[name="currentoffset"]').val())
+                MISC.multiwiicurrentoutput = if $('input[name="multiwiicurrentoutput"]').is(':checked') then 1 else 0
+            if semver.gte(CONFIG.apiVersion, '1.14.0')
+                MOTOR_3D_CONFIG.deadband3d_low = parseInt($('input[name="3ddeadbandlow"]').val())
+                MOTOR_3D_CONFIG.deadband3d_high = parseInt($('input[name="3ddeadbandhigh"]').val())
+                MOTOR_3D_CONFIG.neutral = parseInt($('input[name="3dneutral"]').val())
+            if semver.gte(CONFIG.apiVersion, '1.41.0')
+                SENSOR_ALIGNMENT.gyro_to_use = parseInt(orientation_gyro_to_use_e.val())
+            PID_ADVANCED_CONFIG.fast_pwm_protocol = parseInt(esc_protocol_e.val() - 1)
+            PID_ADVANCED_CONFIG.use_unsyncedPwm = if $('input[id="unsyncedPWMSwitch"]').is(':checked') then 1 else 0
+            PID_ADVANCED_CONFIG.motor_pwm_rate = parseInt($('input[name="unsyncedpwmfreq"]').val())
+            PID_ADVANCED_CONFIG.gyro_sync_denom = parseInt(gyro_select_e.val())
+            PID_ADVANCED_CONFIG.pid_process_denom = parseInt(pid_select_e.val())
+            PID_ADVANCED_CONFIG.digitalIdlePercent = parseFloat($('input[name="digitalIdlePercent"]').val())
+            if semver.gte(CONFIG.apiVersion, '1.25.0') and semver.lt(CONFIG.apiVersion, '1.41.0')
+                PID_ADVANCED_CONFIG.gyroUse32kHz = if $('input[id="gyroUse32kHz"]').is(':checked') then 1 else 0
+            if semver.gte(CONFIG.apiVersion, '1.31.0')
+                RX_CONFIG.fpvCamAngleDegrees = parseInt($('input[name="fpvCamAngleDegrees"]').val())
+            analytics.sendChangeEvents analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, self.analyticsChanges
+            self.analyticsChanges = {}
+            save_serial_config()
+            return
+        # status data pulled via separate timer with static speed
+        GUI.interval_add 'status_pull', (->
+            MSP.send_message MSPCodes.MSP_STATUS
+            return
+        ), 250, true
+        GUI.content_ready callback
+        return
+
+    if GUI.active_tab != 'configuration'
+        GUI.active_tab = 'configuration'
+        GUI.configuration_loaded = true
+    if semver.lt(CONFIG.apiVersion, '1.36.0')
+        #Show old battery configuration for pre-BF-3.2
+        self.SHOW_OLD_BATTERY_CONFIG = true
+    else
+        self.SHOW_OLD_BATTERY_CONFIG = false
+    load_config()
+    return
+
+TABS.configuration.cleanup = (callback) ->
+    if callback
+        callback()
+    return
+

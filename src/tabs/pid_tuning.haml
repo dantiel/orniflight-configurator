@@ -1,0 +1,1189 @@
+.tab-pid_tuning.toolbar_fixed_bottom
+  .content_wrapper
+    .tab_title{i18n: "tabPidTuning"}
+    .cf_doc_version_bt
+      %a#button-documentation{href: "https://github.com/dantiel/orniflight/releases", rel: "noopener noreferrer", target: "_blank"}
+    .cf_column
+      .profile.single-field
+        .helpicon.cf_tip.topspacer{i18n_title: "pidTuningProfileTip"}
+        .head{i18n: "pidTuningProfile"}
+        .bottomarea
+          %select{name: "profile"}
+            / list generated here
+      .rate_profile.single-field
+        .helpicon.cf_tip.topspacer{i18n_title: "pidTuningRateProfileTip"}
+        .head{i18n: "pidTuningRateProfile"}
+        .bottomarea
+          %select{name: "rate_profile"}
+            / list generated here
+      .controller.single-field
+        .helpicon.cf_tip.topspacer{i18n_title: "pidTuningPidControllerTip"}
+        .head{i18n: "pidTuningControllerHead"}
+        .bottomarea
+          %select{name: "controller"}
+            / list generated here
+      .cf_column.right
+        .default_btn.show.showAllPids
+          %a#showAllPids{href: "#", i18n: "pidTuningShowAllPids"}
+        .default_btn.resetbt
+          %a#resetProfile{href: "#", i18n: "pidTuningResetProfile"}
+        .default_btn.copyrateprofilebtn
+          %a#copyRateProfile{href: "#", i18n: "pidTuningCopyRateProfile"}
+        .default_btn.copyprofilebtn
+          %a#copyProfile{href: "#", i18n: "pidTuningCopyProfile"}
+    .tab_container
+      %table
+        %tr
+          %td.pid.active
+            %a{href: "#", i18n: "pidTuningSubTabPid"}
+          %td.rates
+            %a{href: "#", i18n: "pidTuningSubTabRates"}
+          %td.filter
+            %a{href: "#", i18n: "pidTuningSubTabFilter"}
+    .tabboarder
+    .tabarea
+      %form#pid-tuning{name: "pid-tuning"}
+        .subtab-pid
+          .clear-both
+          .cf_column
+            .note.dMinDisabledNote
+              %p{i18n: "pidTuningDMinDisabledNote"}
+            .note.slidersWarning
+              %p{i18n: "pidTuningSliderWarning"}
+            .gui_box.grey
+              %table#pid_main.pid_tuning
+                %tr.pid_titlebar
+                  %th.name
+                  %th.proportional
+                    .name-helpicon-flex
+                      %div{i18n: "pidTuningProportional"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningProportionalHelp"}
+                  %th.integral
+                    .name-helpicon-flex
+                      %div{i18n: "pidTuningIntegral"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningIntegralHelp"}
+                  %th.derivative
+                    .name-helpicon-flex
+                      %div{i18n: "pidTuningDerivative"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningDerivativeHelp"}
+                  %th.dmin
+                    .name-helpicon-flex
+                      %div{i18n: "pidTuningDMin"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningDMinHelp"}
+                  %th.feedforward
+                    .name-helpicon-flex
+                      %div{i18n: "pidTuningFeedforward"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningFeedforwardHelp"}
+                %tr.pid_titlebar2
+                  %th{colspan: "6"}
+                    .pid_mode
+                      %div{i18n: "pidTuningBasic", style: "float:left;"}
+                %tr.ROLL
+                  / 0
+                  %td.pid_roll
+                  %td.pid_data
+                    %input{max: "200", min: "0", name: "p", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "200", min: "0", name: "i", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "200", min: "0", name: "d", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "100", min: "0", name: "dMinRoll", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "2000", min: "0", name: "f", step: "1", type: "number"}
+                %tr.PITCH
+                  / 1
+                  %td.pid_pitch
+                  %td.pid_data
+                    %input{max: "200", min: "0", name: "p", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "200", min: "0", name: "i", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "200", min: "0", name: "d", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "100", min: "0", name: "dMinPitch", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "2000", min: "0", name: "f", step: "1", type: "number"}
+                %tr.YAW
+                  / 2
+                  %td.pid_yaw
+                  %td.pid_data
+                    %input{max: "200", min: "0", name: "p", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "200", min: "0", name: "i", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "200", min: "0", name: "d", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "100", min: "0", name: "dMinYaw", step: "1", type: "number"}
+                  %td.pid_data
+                    %input{max: "2000", min: "0", name: "f", step: "1", type: "number"}
+                %tr.YAW_JUMP_PREVENTION
+                  %td{colspan: "3"}
+                    %div
+                      %div{i18n: "pidTuningYawJumpPrevention", style: "float:left;"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningYawJumpPreventionHelp"}
+                  %td.pid_data
+                    %input{max: "255", min: "0", name: "d", step: "1", type: "number"}
+                  %td{colspan: "4"}
+            .gui_box.topspacer.slidersDisabled
+              %table.note-button
+                %td{i18n: "pidTuningSlidersDisabled"}
+                %td
+                  %a.buttonPidTuningSliders.regular-button{href: "#", i18n: "pidTuningSliderEnableButton"}
+            .gui_box.topspacer.nonExpertModeSlidersNote
+              %p{i18n: "pidTuningSlidersNonExpertMode"}
+            / TUNING SLIDERS
+            .gui_box.grey.topspacer.tuningPIDSliders
+              %table.pid_titlebar
+                %tr
+                  %th
+                  %th
+                  %th{i18n: "pidTuningSliderLow"}
+                  %th{i18n: "pidTuningSliderDefault"}
+                  %th{i18n: "pidTuningSliderHigh"}
+                  %th
+                    .helpicon.cf_tip{i18n_title: "pidTuningPidSlidersHelp"}
+              %table.sliderLabels
+                %tr
+                  %td
+                    %span{i18n: "pidTuningMasterSlider"}
+                  %td
+                    %output{name: "tuningMasterSlider-number", type: "number"}
+                  %td{colspan: "3"}
+                    %input#tuningMasterSlider.tuningSlider{max: "1.5", min: "0.5", step: "0.05", type: "range"}
+                  %td
+                    .helpicon.cf_tip{i18n_title: "pidTuningMasterSliderHelp"}
+                %tr
+                  %td
+                    %span{i18n: "pidTuningPDRatioSlider"}
+                  %td
+                    %output{name: "tuningPDRatioSlider-number", type: "number"}
+                  %td{colspan: "3"}
+                    %input#tuningPDRatioSlider.tuningSlider{max: "1.5", min: "0.5", step: "0.05", type: "range"}
+                  %td
+                    .helpicon.cf_tip{i18n_title: "pidTuningPDRatioSliderHelp"}
+                %tr
+                  %td
+                    %span{i18n: "pidTuningPDGainSlider"}
+                  %td
+                    %output{name: "tuningPDGainSlider-number", type: "number"}
+                  %td{colspan: "3"}
+                    %input#tuningPDGainSlider.tuningSlider{max: "1.5", min: "0.5", step: "0.05", type: "range"}
+                  %td
+                    .helpicon.cf_tip{i18n_title: "pidTuningPDGainSliderHelp"}
+                %tr
+                  %td
+                    %span{i18n: "pidTuningResponseSlider"}
+                  %td
+                    %output{name: "tuningResponseSlider-number", type: "number"}
+                  %td{colspan: "3"}
+                    %input#tuningResponseSlider.tuningSlider{max: "1.5", min: "0.5", step: "0.05", type: "range"}
+                  %td
+                    .helpicon.cf_tip{i18n_title: "pidTuningResponseSliderHelp"}
+            / BARO, MAG, GPS
+            #pid_baro_mag_gps.pid_optional.needed_by_ALT.needed_by_VEL.needed_by_MAG.needed_by_Pos.needed_by_PosR.needed_by_NavR.gui_box.grey.topspacer.pid_tuning
+              %table.pid_titlebar.needed_by_ALT.needed_by_VEL.needed_by_MAG
+                %tr.needed_by_ALT.needed_by_VEL.needed_by_MAG
+                  %th.name
+                  %th.proportional{i18n: "pidTuningProportional"}
+                  %th.integral{i18n: "pidTuningIntegral"}
+                  %th.derivative{i18n: "pidTuningDerivative"}
+              %table#pid_baro.pid_tuning.needed_by_ALT.needed_by_VEL
+                %tr.needed_by_ALT.needed_by_VEL
+                  %th{colspan: "4"}
+                    .pid_mode{i18n: "pidTuningAltitude"}
+                %tr.ALT
+                  / 3
+                  %td
+                  %td
+                    %input{max: "255", min: "0", name: "p", step: "1", type: "number"}
+                  %td
+                    %input{max: "255", min: "0", name: "i", step: "1", type: "number"}
+                  %td
+                    %input{max: "255", min: "0", name: "d", step: "1", type: "number"}
+                %tr.VEL
+                  / 9
+                  %td
+                  %td
+                    %input{max: "255", min: "0", name: "p", step: "1", type: "number"}
+                  %td
+                    %input{max: "255", min: "0", name: "i", step: "1", type: "number"}
+                  %td
+                    %input{max: "255", min: "0", name: "d", step: "1", type: "number"}
+              %table#pid_mag.pid_tuning.needed_by_MAG
+                %tr.needed_by_MAG
+                  %th{colspan: "4"}
+                    .pid_mode{i18n: "pidTuningMag"}
+                %tr.MAG
+                  / 8
+                  %td
+                  %td
+                    %input{max: "255", min: "0", name: "p", step: "1", type: "number"}
+                  %td
+                  %td
+              %table#pid_gps.pid_tuning.needed_by_Pos.needed_by_PosR.needed_by_NavR
+                %tr.needed_by_Pos.needed_by_PosR.needed_by_NavR
+                  %th{colspan: "4"}
+                    .pid_mode{i18n: "pidTuningGps"}
+                %tr.Pos
+                  / 4
+                  %td
+                  %td
+                    %input{max: "255", min: "0", name: "p", step: "1", type: "number"}
+                  / <td><input type="number" name="i" step="1" min="0" max="255" /></td>
+                  %td
+                  %td
+                %tr.PosR
+                  / 5
+                  %td
+                  %td
+                    %input{max: "255", min: "0", name: "p", step: "1", type: "number"}
+                  %td
+                    %input{max: "255", min: "0", name: "i", step: "1", type: "number"}
+                  %td
+                    %input{max: "255", min: "0", name: "d", step: "1", type: "number"}
+                %tr.NavR
+                  / 6
+                  %td
+                  %td
+                    %input{max: "255", min: "0", name: "p", step: "1", type: "number"}
+                  %td
+                    %input{max: "255", min: "0", name: "i", step: "1", type: "number"}
+                  %td
+                    %input{max: "255", min: "0", name: "d", step: "1", type: "number"}
+            #pid_accel.pid_optional.needed_by_LEVEL.gui_box.grey.topspacer.pid_tuning
+              %table#pid_level.pid_tuning.needed_by_LEVEL
+                %tr.needed_by_LEVEL
+                  %th{colspan: "3"}
+                    .pid_mode
+                      %div{i18n: "pidTuningLevel", style: "float:left;"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningLevelHelp"}
+              %table.pid_titlebar.needed_by_LEVEL
+                %tr.needed_by_LEVEL
+                  %th.third
+                  %th.third{i18n: "pidTuningStrength", style: "width: 33%;"}
+                  %th.third{i18n: "pidTuningTransition", style: "width: 33%;"}
+              %table.needed_by_LEVEL
+                %tr.LEVEL
+                  / 7
+                  %td.third{i18n: "pidTuningAngle"}
+                  %td.third
+                    %input{max: "255", min: "0", name: "p", step: "1", type: "number"}
+                  %td.third
+                %tr.LEVEL
+                  / 7
+                  %td.third{i18n: "pidTuningHorizon"}
+                  %td.third
+                    %input{max: "255", min: "0", name: "i", step: "1", type: "number"}
+                  %td.third
+                    %input{max: "255", min: "0", name: "d", step: "1", type: "number"}
+              %table.needed_by_LEVEL.pid_titlebar.pid_sensitivity
+                %tr.needed_by_LEVEL
+                  %th.third
+                  %th.third{i18n: "pidTuningLevelAngleLimit", style: "width: 33%;"}
+                  %th.third.levelSensitivityHeader{i18n: "pidTuningLevelSensitivity", style: "width: 33%;"}
+              %table#pid_sensitivity.needed_by_LEVEL.pid_tuning.pid_sensitivity
+                %tr.needed_by_LEVEL
+                  %td.third
+                  %td.third
+                    %input{max: "200", min: "10", name: "angleLimit", step: "1", type: "number"}
+                  %td.third
+                    %input{max: "120", min: "10", name: "sensitivity", step: "1", type: "number"}
+          .cf_column
+            / Pid controller advanced settings
+            .gui_box.grey.pidTuningFeatures.spacer_left
+              %table.pid_titlebar.new_rates
+                %tr
+                  %th{i18n: "pidTuningNonProfilePidSettings"}
+              %table.pidTuningFeatures.new_rates
+                %tbody.features.pidTuning
+                  / table generated here
+            .gui_box.grey.pidControllerAdvancedSettings.spacer_left
+              %table.pid_titlebar.new_rates
+                %tr
+                  %th{i18n: "pidTuningPidSettings"}
+              %table.compensation
+                %tr.delta
+                  %td
+                    %select#delta-select
+                      %option{i18n: "pidTuningDeltaError", value: "0"}
+                      %option{i18n: "pidTuningDeltaMeasurement", value: "1"}
+                  %td
+                    %div
+                      %label{for: "delta-select"}
+                        %span{i18n: "pidTuningDelta"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningDeltaTip"}
+                %tr.dtermSetpoint
+                  %td
+                    %input{max: "20", min: "0.00", name: "dtermSetpoint-number", step: "0.01", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDtermSetpoint"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningDtermSetpointHelp"}
+                %tr.dtermSetpointTransition
+                  %td
+                    %input{max: "1.00", min: "0.01", name: "dtermSetpointTransition-number", step: "0.01", type: "number"}
+                  %td{colspan: "1"}
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDtermSetpointTransition"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningDtermSetpointTransitionHelp"}
+                %tr.dtermSetpointTransitionWarning
+                  %td{colspan: "3"}
+                    %span{i18n: "pidTuningDtermSetpointTransitionWarning"}
+                %tr.flapBaseFrequency
+                  %td
+                    %input{max: "1000", min: "1", name: "flapBaseFrequency-number", step: "1", type: "number"}
+                  %td{colspan: "1"}
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningFlapBaseFrequency"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningFlapBaseFrequencyHelp"}
+                %tr.flapBaseAmplitude
+                  %td
+                    %input{max: "100", min: "-100", name: "flapBaseAmplitude-number", step: "1", type: "number"}
+                  %td{colspan: "1"}
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningFlapBaseAmplitude"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningFlapBaseAmplitudeHelp"}
+                %tr.feedforwardTransition
+                  %td
+                    %input{max: "1.00", min: "0.00", name: "feedforwardTransition-number", step: "0.01", type: "number"}
+                  %td{colspan: "1"}
+                    %div
+                      %label
+                        %span{i18n: "pidTuningFeedforwardTransition"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningFeedforwardTransitionHelp"}
+                %tr.acroTrainerAngleLimit
+                  %td
+                    %input{max: "80", min: "10", name: "acroTrainerAngleLimit-number", step: "1", type: "number"}
+                  %td{colspan: "1"}
+                    %div
+                      %label
+                        %span{i18n: "pidTuningAcroTrainerAngleLimit"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningAcroTrainerAngleLimitHelp"}
+                %tr.throttleBoost
+                  %td
+                    %input{max: "100", min: "0", name: "throttleBoost-number", step: "1", type: "number"}
+                  %td{colspan: "1"}
+                    %div
+                      %label
+                        %span{i18n: "pidTuningThrottleBoost"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningThrottleBoostHelp"}
+                %tr.absoluteControlGain
+                  %td
+                    %input{max: "20", min: "0", name: "absoluteControlGain-number", step: "1", type: "number"}
+                  %td{colspan: "1"}
+                    %div
+                      %label
+                        %span{i18n: "pidTuningAbsoluteControlGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningAbsoluteControlGainHelp"}
+                %tr.itermrotation
+                  %td
+                    %input#itermrotation.toggle{type: "checkbox"}
+                  %td{colspan: "2"}
+                    %span{i18n: "pidTuningItermRotation"}
+                    .helpicon.cf_tip{i18n_title: "pidTuningItermRotationHelp"}
+                %tr
+                  %td
+                    %input#vbatpidcompensation.toggle{type: "checkbox"}
+                  %td{colspan: "2"}
+                    %span{i18n: "pidTuningVbatPidCompensation"}
+                    .helpicon.cf_tip{i18n_title: "pidTuningVbatPidCompensationHelp"}
+                %tr.smartfeedforward
+                  %td
+                    %input#smartfeedforward.toggle{type: "checkbox"}
+                  %td{colspan: "2"}
+                    %span{i18n: "pidTuningSmartFeedforward"}
+                    .helpicon.cf_tip{i18n_title: "pidTuningSmartFeedforwardHelp"}
+                %tr.integratedYaw
+                  %td
+                    %input#useIntegratedYaw.toggle{type: "checkbox"}
+                  %td{colspan: "2"}
+                    .helpicon.cf_tip{i18n_title: "pidTuningIntegratedYawHelp"}
+                    %span{i18n: "pidTuningIntegratedYaw"}
+                      %span#pidTuningIntegratedYawCaution.spacer_left{i18n: "pidTuningIntegratedYawCaution"}
+                %tr.itermrelax
+                  %td
+                    %input#itermrelax.toggle{type: "checkbox"}
+                  %td{colspan: "2"}
+                    .helpicon.cf_tip{i18n_title: "pidTuningItermRelaxHelp"}
+                    %span{i18n: "pidTuningItermRelax"}
+                      %span.suboption
+                        %select#itermrelaxAxes
+                          %option{i18n: "pidTuningItermRelaxAxesOptionRP", value: "1"}
+                          %option{i18n: "pidTuningItermRelaxAxesOptionRPY", value: "2"}
+                          %option{i18n: "pidTuningItermRelaxAxesOptionRPInc", value: "3"}
+                          %option{i18n: "pidTuningItermRelaxAxesOptionRPYInc", value: "4"}
+                        %label{for: "itermrelaxAxes"}
+                          %span{i18n: "pidTuningItermRelaxAxes"}
+                      %span.suboption
+                        %select#itermrelaxType
+                          %option{i18n: "pidTuningItermRelaxTypeOptionGyro", value: "0"}
+                          %option{i18n: "pidTuningItermRelaxTypeOptionSetpoint", value: "1"}
+                        %label{for: "itermrelaxType"}
+                          %span{i18n: "pidTuningItermRelaxType"}
+                      %span.itermRelaxCutoff.suboption
+                        %input{max: "100", min: "1", name: "itermRelaxCutoff", step: "1", type: "number"}
+                        %label{for: "itermRelaxCutoff"}
+                          %span{i18n: "pidTuningItermRelaxCutoff"}
+                %tr.dminGroup
+                  %td
+                    %input#dMinSwitch.toggle{type: "checkbox"}
+                  %td{colspan: "3"}
+                    .helpicon.cf_tip{i18n_title: "pidTuningDMinFeatureHelp"}
+                    %span{i18n: "pidTuningDMin"}
+                      %span.suboption
+                        %input{max: "100", min: "0", name: "dMinGain", step: "1", type: "number"}
+                        %label{for: "dMinGain"}
+                          %span{i18n: "pidTuningDMinGain"}
+                      %span.suboption
+                        %input{max: "200", min: "0", name: "dMinAdvance", step: "1", type: "number"}
+                        %label{for: "dMinAdvance"}
+                          %span{i18n: "pidTuningDMinAdvance"}
+                %tr.antigravity
+                  %td
+                    %input#antiGravitySwitch.toggle{type: "checkbox"}
+                  %td{colspan: "3"}
+                    .helpicon.cf_tip{i18n_title: "pidTuningAntiGravityHelp"}
+                    %span{i18n: "pidTuningAntiGravity"}
+                      %span.suboption.antiGravityMode
+                        %select#antiGravityMode
+                          %option{i18n: "pidTuningAntiGravityModeOptionSmooth", value: "0"}
+                          %option{i18n: "pidTuningAntiGravityModeOptionStep", value: "1"}
+                        %label{for: "antiGravityMode"}
+                          %span{i18n: "pidTuningAntiGravityMode"}
+                      %span.suboption
+                        %input{max: "30", min: "1.1", name: "itermAcceleratorGain", step: "0.1", type: "number"}
+                        %label{for: "antiGravityGain"}
+                          %span{i18n: "pidTuningAntiGravityGain"}
+                      %span.suboption.antiGravityThres
+                        %input{max: "1000", min: "20", name: "itermThrottleThreshold", step: "10", type: "number"}
+                        %label{for: "antiGravityThres"}
+                          %span{i18n: "pidTuningAntiGravityThres"}
+        / RATES SUBTAB
+        .subtab-rates{style: "display: none;"}
+          .clear-both
+          .cf_column
+            .gui_box.grey.rateSetup
+              %table#rateSetup.pid_tuning
+                %tr.pid_titlebar
+                  %th.name
+                  %th.rc_rate{i18n: "pidTuningRcRate"}
+                  %th.rate{i18n: "pidTuningRate"}
+                  %th.rc_expo{i18n: "pidTuningRcExpo"}
+                  %th.new_rates.maxVel{i18n: "pidTuningMaxVel"}
+                %tr.pid_titlebar2
+                  %th{colspan: "5"}
+                    .pid_mode
+                      %div{i18n: "pidTuningRateSetup", style: "float:left;"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningRatesTuningHelp"}
+                %tr.ROLL
+                  %td.pid_roll
+                  %td.rc_rate
+                    %input{max: "2.55", min: "0.01", name: "rc_rate", step: "0.01", type: "number"}
+                  %td.roll_rate
+                    %input{max: "1.00", min: "0", name: "roll_rate", step: "0.01", type: "number"}
+                  %td.roll_pitch_rate{rowspan: "2"}
+                    %input{max: "1.00", min: "0", name: "roll_pitch_rate", step: "0.01", type: "number"}
+                  %td.inputBackground{rowspan: "2"}
+                    %input{max: "1", min: "0", name: "rc_expo", step: "0.01", type: "number"}
+                    .bracket
+                  %td.new_rates.maxAngularVelRoll
+                %tr.PITCH
+                  %td.pid_pitch
+                  %td
+                    %input{max: "2.55", min: "0.01", name: "rc_rate_pitch", step: "0.01", type: "number"}
+                  %td.pitch_rate
+                    %input{max: "1.00", min: "0", name: "pitch_rate", step: "0.01", type: "number"}
+                  %td
+                    %input{max: "1", min: "0", name: "rc_pitch_expo", step: "0.01", type: "number"}
+                  %td.new_rates.maxAngularVelPitch
+                %tr.YAW
+                  %td.pid_yaw
+                  %td{rowspan: "1"}
+                    %input{max: "2.55", min: "0.01", name: "rc_rate_yaw", step: "0.01", type: "number"}
+                  %td
+                    %input{max: "2.55", min: "0", name: "yaw_rate", step: "0.01", type: "number"}
+                  %td
+                    %input{max: "1", min: "0", name: "rc_yaw_expo", step: "0.01", type: "number"}
+                  %td.new_rates.maxAngularVelYaw
+            .gui_box.rc_curve
+              .rc_curve_bg
+                %table.cf.rc_curve
+                  %thead
+                    %tr
+                      %th{colspan: "2"}
+                        %div
+                          %div{i18n: "pidTuningRatesCurve", style: "float:left;"}
+                          .helpicon.cf_tip{i18n_title: "pidTuningRatesTip"}
+                  %tbody
+                    %tr
+                      %td{colspan: "2"}
+                        .rate_curve{style: "position:relative;"}
+                          %canvas#rate_curve_layer0{height: "120px", style: "position:absolute; top: 0; left: 0; z-index: 0; height:100%; width:100%;"}
+                          %canvas#rate_curve_layer1{height: "120px", style: "position:absolute; top: 0; left: 0; z-index: 1; height:100%; width:100%;"}
+          .cf_column
+            .gui_box.tpa.spacer_left
+              %table.cf
+                %thead
+                  %tr
+                    %th{i18n: "pidTuningTPA"}
+                    %th.tpa-breakpoint{i18n: "pidTuningTPABreakPoint"}
+                %tbody
+                  %tr
+                    %td.leftzero
+                      %input{max: "1.00", min: "0", name: "tpa", step: "0.01", type: "number"}
+                    %td.tpa-breakpoint
+                      %input{max: "2000", min: "1000", name: "tpa-breakpoint", step: "10", type: "number"}
+            .gui_box.throttle_limit.spacer_left
+              %table.cf
+                %thead
+                  %tr
+                    %th
+                      %div
+                        %div{i18n: "pidTuningThrottleLimitType", style: "float:left;"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningThrottleLimitTypeTip"}
+                    %th
+                      %div
+                        %div{i18n: "pidTuningThrottleLimitPercent", style: "float:left;"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningThrottleLimitPercentTip"}
+                %tbody
+                  %tr
+                    %td
+                      %select#throttleLimitType
+                        %option{i18n: "pidTuningThrottleLimitTypeOff", value: "0"}
+                        %option{i18n: "pidTuningThrottleLimitTypeScale", value: "1"}
+                        %option{i18n: "pidTuningThrottleLimitTypeClip", value: "2"}
+                    %td
+                      %input{max: "100", min: "25", name: "throttleLimitPercent", step: "1", type: "number"}
+            .gui_box.throttle.spacer_left
+              %table.cf
+                %thead
+                  %tr
+                    %th{i18n: "receiverThrottleMid"}
+                    %th{i18n: "receiverThrottleExpo"}
+                %tbody
+                  %tr
+                    %td
+                      %input{max: "1", min: "0", name: "mid", step: "0.01", type: "number"}
+                    %td
+                      %input{max: "1", min: "0", name: "expo", step: "0.01", type: "number"}
+            .gui_box.throttle.spacer_left
+              %table.cf
+                %thead
+                  %tr
+                    %th{colspan: "2", i18n: "pidTuningThrottleCurvePreview"}
+                %tr
+                  %td.throttleCurvePreview{colspan: "2"}
+                    .throttle_curve
+                      %canvas{height: "164px", style: "width: 100%; height: 100%"}
+          .cf_column
+            .gui_box.ratePreview.grey.spacer_left
+              %table.pid_titlebar
+                %thead
+                  %tr
+                    %th{i18n: "pidTuningRatesPreview"}
+                %tbody
+                  %tr
+                    %td.rates_preview_cell
+                      .rates_preview
+                        %canvas#canvas
+        / FILTER SUBTAB
+        .subtab-filter{style: "display: none;"}
+          .clear-both
+          .note.tuningHelp
+            %p{i18n: "tuningHelp"}
+          .note.tuningHelpSliders
+            %p{i18n: "tuningHelpSliders"}
+          .note.filterWarning
+            %p{i18n: "filterWarning"}
+          .note.dynamicNotchWarning
+            %p{i18n: "pidTuningDynamicNotchFilterDisabledWarning"}
+          .note.slidersWarning
+            %p{i18n: "pidTuningSliderWarning"}
+          .gui_box.slidersDisabled
+            %table.note-button
+              %td{i18n: "pidTuningSlidersDisabled"}
+              %td
+                %a.buttonFilterTuningSliders.regular-button{href: "#", i18n: "pidTuningSliderEnableButton"}
+          .gui_box.topspacer.nonExpertModeSlidersNote
+            %p{i18n: "pidTuningSlidersNonExpertMode"}
+          / Filter Slider
+          .gui_box.grey.topspacer.tuningFilterSliders
+            %table.pid_titlebar
+              %tr
+                %th
+                %th
+                %th{i18n: "pidTuningSliderHighFiltering"}
+                %th{i18n: "pidTuningSliderDefaultFiltering"}
+                %th{i18n: "pidTuningSliderLowFiltering"}
+                %th
+                  .helpicon.cf_tip{i18n_title: "pidTuningFilterSlidersHelp"}
+            %table.sliderLabels
+              %tr
+                %td
+                  %span{i18n: "pidTuningGyroFilterSlider"}
+                %td
+                  %output{name: "tuningGyroFilterSlider-number", type: "number"}
+                %td{colspan: "3"}
+                  %input#tuningGyroFilterSlider.tuningSlider{max: "1.5", min: "0.5", step: "0.05", type: "range"}
+                %td
+                  .helpicon.cf_tip{i18n_title: "pidTuningGyroFilterSliderHelp"}
+              %tr
+                %td
+                  %span{i18n: "pidTuningDTermFilterSlider"}
+                %td
+                  %output{name: "tuningDTermFilterSlider-number", type: "number"}
+                %td{colspan: "3"}
+                  %input#tuningDTermFilterSlider.tuningSlider{max: "1.5", min: "0.5", step: "0.05", type: "range"}
+                %td
+                  .helpicon.cf_tip{i18n_title: "pidTuningDTermFilterSliderHelp"}
+          .cf_column.two_columns
+            .gui_box.grey.topspacer.pid_filter.two_columns_first
+              %table.pid_titlebar.new_rates
+                %tr
+                  %th{i18n: "pidTuningNonProfileFilterSettings"}
+              %table.filterTable
+                %tr
+                  %th{colspan: "2"}
+                    .pid_mode
+                      %div{i18n: "pidTuningOndasGroup"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningOndasHelp"}
+                %tr.cadenceGain
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "-100", name: "cadenceGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningCadenceGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningCadenceGainHelp"}
+                %tr.ferocityDGain
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "-100", name: "ferocityDGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningFerocityDGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningFerocityDGainHelp"}
+                %tr.balanceGain
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "-100", name: "balanceGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningBalanceGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningBalanceGainHelp"}
+                %tr.ferocityPGain
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "0", name: "ferocityPGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningFerocityPGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningFerocityPGainHelp"}
+                %tr.ferocityRollGain
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "0", name: "ferocityRollGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningFerocityRollGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningFerocityRollGainHelp"}
+                %tr.ferocityYawGain
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "0", name: "ferocityYawGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningFerocityYawGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningFerocityYawGainHelp"}
+                %tr.warpGain
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "-100", name: "warpGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningWarpGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningWarpGainHelp"}
+                %tr.warpYawGain
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "-100", name: "warpYawGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningWarpYawGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningWarpYawGainHelp"}
+                %tr.anchorGain
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "0", name: "anchorGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningAnchorGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningAnchorGainHelp"}
+                %tr.resonanceGain
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "0", name: "resonanceGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningResonanceGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningResonanceGainHelp"}
+                / Phase 2: Wing Pair Geometry
+                %tr.wingGeometry
+                  %th{colspan: "2"}
+                    .pid_mode
+                      %div{i18n: "pidTuningWingGeometryGroup"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningWingGeometryHelp"}
+                %tr.wingGeometry
+                  %td
+                    %span.inputValue
+                      %input{max: "30", min: "-30", name: "servoMountAngle0", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningServoMountAngle0"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningServoMountAngleHelp"}
+                %tr.wingGeometry
+                  %td
+                    %span.inputValue
+                      %input{max: "30", min: "-30", name: "servoMountAngle1", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningServoMountAngle1"}
+                %tr.wingGeometry
+                  %td
+                    %span.inputValue
+                      %input{max: "30", min: "-30", name: "servoMountAngle2", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningServoMountAngle2"}
+                %tr.wingGeometry
+                  %td
+                    %span.inputValue
+                      %input{max: "30", min: "-30", name: "servoMountAngle3", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningServoMountAngle3"}
+                %tr.wingGeometry
+                  %td
+                    %span.inputValue
+                      %input{max: "180", min: "-180", name: "flappingPhaseShift0", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningFlappingPhaseShift0"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningFlappingPhaseShiftHelp"}
+                %tr.wingGeometry
+                  %td
+                    %span.inputValue
+                      %input{max: "180", min: "-180", name: "flappingPhaseShift1", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningFlappingPhaseShift1"}
+                %tr.wingGeometry
+                  %td
+                    %span.inputValue
+                      %input{max: "180", min: "-180", name: "flappingPhaseShift2", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningFlappingPhaseShift2"}
+                %tr.wingGeometry
+                  %td
+                    %span.inputValue
+                      %input{max: "180", min: "-180", name: "flappingPhaseShift3", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningFlappingPhaseShift3"}
+                / Phase 2: Advanced ONDAS Gains
+                %tr.advancedOndas
+                  %th{colspan: "2"}
+                    .pid_mode
+                      %div{i18n: "pidTuningAdvancedOndasGroup"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningAdvancedOndasHelp"}
+                %tr.advancedOndas
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "0", name: "prescienceGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningPrescienceGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningPrescienceGainHelp"}
+                %tr.advancedOndas
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "0", name: "espelhoGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningEspelhoGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningEspelhoGainHelp"}
+                %tr.advancedOndas
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "0", name: "saudadeGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningSaudadeGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningSaudadeGainHelp"}
+                %tr.advancedOndas
+                  %td
+                    %span.inputValue
+                      %input{max: "100", min: "0", name: "ssffGain", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %strong
+                          %span{i18n: "pidTuningSsffGain"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningSsffGainHelp"}
+                %tr
+                  %th{colspan: "2"}
+                    .pid_mode
+                      %div{i18n: "pidTuningGyroLowpassFiltersGroup"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningLowpassFilterHelp"}
+                %tr.gyroLowpassDyn
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#gyroLowpassDynEnabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input{max: "1000", min: "1", name: "gyroLowpassDynMinFrequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroLowpassDynMinFrequency"}
+                %tr.gyroLowpassDyn
+                  %td
+                    %span.inputValue
+                      %input{max: "1000", min: "1", name: "gyroLowpassDynMaxFrequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroLowpassDynMaxFrequency"}
+                %tr.gyroLowpassDyn
+                  %td
+                    %select{name: "gyroLowpassDynType"}
+                      / Populated on execution
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroLowpassDynType"}
+                %tr
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#gyroLowpassEnabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input.nonProfile{max: "255", min: "1", name: "gyroLowpassFrequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroLowpassFrequency"}
+                %tr
+                  %td
+                    %select{name: "gyroLowpassType"}
+                      / Populated on execution
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroLowpassType"}
+                %tr.gyroLowpass2
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#gyroLowpass2Enabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input.nonProfile{max: "16000", min: "1", name: "gyroLowpass2Frequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroLowpass2Frequency"}
+                %tr.gyroLowpass2Type
+                  %td
+                    %select{name: "gyroLowpass2Type"}
+                      / Populated on execution
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroLowpass2Type"}
+                %tr
+                  %th{colspan: "2"}
+                    .pid_mode
+                      %div{i18n: "pidTuningGyroNotchFiltersGroup"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningNotchFilterHelp"}
+                %tr.newFilter
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#gyroNotch1Enabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input.nonProfile{max: "16000", min: "1", name: "gyroNotch1Frequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroNotch1Frequency"}
+                %tr.newFilter
+                  %td
+                    %input.nonProfile{max: "16000", min: "0", name: "gyroNotch1Cutoff", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroNotch1Cutoff"}
+                %tr.newFilter.gyroNotch2
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#gyroNotch2Enabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input.nonProfile{max: "16000", min: "1", name: "gyroNotch2Frequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroNotch2Frequency"}
+                %tr.newFilter.gyroNotch2
+                  %td
+                    %input.nonProfile{max: "16000", min: "0", name: "gyroNotch2Cutoff", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningGyroNotch2Cutoff"}
+                %tr
+                  %th.rpmFilter{colspan: "2"}
+                    .pid_mode.rpmFilter
+                      %div{i18n: "pidTuningRpmFilterGroup"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningRpmFilterHelp"}
+                %tr.newFilter.rpmFilter
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#rpmFilterEnabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input.nonProfile{max: "3", min: "1", name: "rpmFilterHarmonics", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningRpmHarmonics"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningRpmHarmonicsHelp"}
+                %tr.newFilter.rpmFilter
+                  %td
+                    %input{max: "200", min: "50", name: "rpmFilterMinHz", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningRpmMinHz"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningRpmMinHzHelp"}
+                %tr
+                  %th.dynamicNotch{colspan: "2"}
+                    .pid_mode.dynamicNotch
+                      %div{i18n: "pidTuningDynamicNotchFilterGroup"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningDynamicNotchFilterHelp"}
+                %tr.newFilter.dynamicNotch
+                  %td
+                    %select{name: "dynamicNotchRange"}
+                      / Populated on execution
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDynamicNotchRange"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningDynamicNotchRangeHelp"}
+                %tr.newFilter.dynamicNotch
+                  %td
+                    %input{max: "20", min: "0", name: "dynamicNotchWidthPercent", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDynamicNotchWidthPercent"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningDynamicNotchWidthPercentHelp"}
+                %tr.newFilter.dynamicNotch
+                  %td
+                    %input{max: "1000", min: "1", name: "dynamicNotchQ", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDynamicNotchQ"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningDynamicNotchQHelp"}
+                %tr.newFilter.dynamicNotch
+                  %td
+                    %input{max: "1000", min: "60", name: "dynamicNotchMinHz", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDynamicNotchMinHz"}
+                      .helpicon.cf_tip{i18n_title: "pidTuningDynamicNotchMinHzHelp"}
+            .gui_box.grey.topspacer.pid_filter.two_columns_second
+              %table.pid_titlebar.new_rates
+                %tr
+                  %th{i18n: "pidTuningFilterSettings"}
+              %table.filterTable
+                %tr
+                  %th{colspan: "2"}
+                    .pid_mode
+                      %div{i18n: "pidTuningDTermLowpassFiltersGroup"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningLowpassFilterHelp"}
+                %tr.dtermLowpassDyn
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#dtermLowpassDynEnabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input{max: "1000", min: "1", name: "dtermLowpassDynMinFrequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDTermLowpassDynMinFrequency"}
+                %tr.dtermLowpassDyn
+                  %td
+                    %span.inputValue
+                      %input{max: "1000", min: "1", name: "dtermLowpassDynMaxFrequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDTermLowpassDynMaxFrequency"}
+                %tr.dtermLowpassDyn
+                  %td
+                    %select{name: "dtermLowpassDynType"}
+                      / Populated on execution
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDTermLowpassDynType"}
+                %tr
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#dtermLowpassEnabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input{max: "16000", min: "1", name: "dtermLowpassFrequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDTermLowpassFrequency"}
+                %tr
+                  %td
+                    %select{name: "dtermLowpassType"}
+                      / Populated on execution
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDTermLowpassType"}
+                %tr.dtermLowpass2
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#dtermLowpass2Enabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input{max: "16000", min: "1", name: "dtermLowpass2Frequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDTermLowpass2Frequency"}
+                %tr.dtermLowpass2.dtermLowpass2TypeGroup
+                  %td
+                    %select{name: "dtermLowpass2Type"}
+                      / Populated on execution
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDTermLowpass2Type"}
+                %tr
+                  %th{colspan: "2"}
+                    .pid_mode
+                      %div{i18n: "pidTuningDTermNotchFiltersGroup"}
+                        .helpicon.cf_tip{i18n_title: "pidTuningNotchFilterHelp"}
+                %tr.newFilter
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#dtermNotchEnabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input{max: "16000", min: "1", name: "dTermNotchFrequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDTermNotchFrequency"}
+                %tr.newFilter
+                  %td
+                    %input{max: "16000", min: "0", name: "dTermNotchCutoff", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningDTermNotchCutoff"}
+                %tr
+                  %th{colspan: "2"}
+                    .pid_mode{i18n: "pidTuningYawLospassFiltersGroup"}
+                %tr
+                  %td
+                    %span.groupSwitchValue
+                      %span.inputSwitch
+                        %input#yawLowpassEnabled.toggle{type: "checkbox"}
+                      %span.inputValue
+                        %input{max: "500", min: "1", name: "yawLowpassFrequency", step: "1", type: "number"}
+                  %td
+                    %div
+                      %label
+                        %span{i18n: "pidTuningYawLowpassFrequency"}
+    .clear-both
+  .content_toolbar
+    .btn.refresh_btn
+      %a.refresh{href: "#", i18n: "pidTuningButtonRefresh"}
+    .btn.save_btn
+      %a.update{href: "#", i18n: "pidTuningButtonSave"}
+  %dialog.dialogCopyProfile
+    %h3{i18n: "dialogCopyProfileTitle"}
+    .content
+      %div{i18n: "dialogCopyProfileNote", style: "margin-top: 10px"}
+      .contentProfile{style: "margin-top:20px;"}
+        %div
+          %span{i18n: "dialogCopyProfileText"}
+          %select.selectProfile
+      .contentRateProfile{style: "margin-top:20px;"}
+        %div
+          %span{i18n: "dialogCopyRateProfileText"}
+          %select.selectRateProfile
+    .buttons
+      %a.dialogCopyProfile-confirmbtn.regular-button{href: "#", i18n: "dialogCopyProfileConfirm"}
+      %a.dialogCopyProfile-cancelbtn.regular-button{href: "#", i18n: "dialogCopyProfileClose"}

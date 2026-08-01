@@ -1,0 +1,166 @@
+.tab-led-strip.toolbar_fixed_bottom
+  .content_wrapper
+    .tab_title{i18n: "tabLedStrip"}
+    .cf_doc_version_bt
+      %a#button-documentation{href: "https://github.com/dantiel/orniflight/releases", rel: "noopener noreferrer", target: "_blank"}
+    .note
+      %p{i18n: "ledStripHelp"}
+    .mainGrid
+    .gridSections
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+      .block
+    .controls
+      .wires-remaining
+        %div
+        %span{i18n: "ledStripRemainingText"}
+      %button.funcClear{i18n: "ledStripClearSelectedButton"}
+      %button.funcClearAll{i18n: "ledStripClearAllButton"}
+      .section{i18n: "ledStripFunctionSection"}
+      .select
+        %span.color_section{i18n: "ledStripFunctionTitle"}
+        %select.functionSelect
+          %option{i18n: "ledStripFunctionNoneOption", value: ""}
+          %option{i18n: "ledStripFunctionColorOption", value: "function-c"}
+          %option{i18n: "ledStripFunctionModesOption", value: "function-f"}
+          %option{i18n: "ledStripFunctionArmOption", value: "function-a"}
+          %option.extra_functions20{i18n: "ledStripFunctionBatteryOption", value: "function-l"}
+          %option.extra_functions20{i18n: "ledStripFunctionRSSIOption", value: "function-s"}
+          %option.extra_functions20{i18n: "ledStripFunctionGPSOption", value: "function-g"}
+          %option{i18n: "ledStripFunctionRingOption", value: "function-r"}
+      .modifiers
+        %span.color_section{i18n: "ledStripColorModifierTitle"}
+        .checkbox
+          %input.toggle.function-t{name: "ThrottleHue", type: "checkbox"}
+          %label
+            %select.auxSelect
+              %option{i18n: "controlAxisRoll", value: "0"}
+              %option{i18n: "controlAxisPitch", value: "1"}
+              %option{i18n: "controlAxisYaw", value: "2"}
+              %option{i18n: "controlAxisThrottle", value: "3"}
+              %option{i18n: "controlAxisAux1", value: "4"}
+              %option{i18n: "controlAxisAux2", value: "5"}
+              %option{i18n: "controlAxisAux3", value: "6"}
+              %option{i18n: "controlAxisAux4", value: "7"}
+              %option{i18n: "controlAxisAux5", value: "8"}
+              %option{i18n: "controlAxisAux6", value: "9"}
+              %option{i18n: "controlAxisAux7", value: "10"}
+              %option{i18n: "controlAxisAux8", value: "11"}
+            %span.labelSelect{i18n: "controlAxisThrottle"}
+        .checkbox.extra_functions20
+          %input.toggle.function-o{name: "LarsonScanner", type: "checkbox"}
+          %label
+            %span{i18n: "ledStripVtxFunction"}
+      .blinkers.extra_functions20
+        %span.color_section{i18n: "ledStripBlinkTitle"}
+        .checkbox.blinkOverlay
+          %input.toggle.function-b{name: "blink", type: "checkbox"}
+          %label
+            %span{i18n: "ledStripBlinkAlwaysOverlay"}
+        .checkbox.landingBlinkOverlay
+          %input.toggle.function-n{name: "landingBlink", type: "checkbox"}
+          %label
+            %span{i18n: "ledStripBlinkLandingOverlay"}
+      .overlays
+        %span.color_section{i18n: "ledStripOverlayTitle"}
+        .checkbox.warningOverlay
+          %input.toggle.function-w{name: "Warnings", type: "checkbox"}
+          %label
+            %span{i18n: "ledStripWarningsOverlay"}
+        .checkbox.indicatorOverlay
+          %input.toggle.function-i{name: "Indicator", type: "checkbox"}
+          %label
+            %span{i18n: "ledStripIndecatorOverlay"}
+        .checkbox.vtxOverlay
+          %input.toggle.function-v{name: "Vtx", type: "checkbox"}
+          %label
+            %span{i18n: "ledStripVtxOverlay"}
+      .mode_colors
+        .section{i18n: "ledStripModeColorsTitle"}
+          %select.modeSelect
+            %option{i18n: "ledStripModeColorsModeOrientation", value: "0"}
+            %option{i18n: "ledStripModeColorsModeHeadfree", value: "1"}
+            %option{i18n: "ledStripModeColorsModeHorizon", value: "2"}
+            %option{i18n: "ledStripModeColorsModeAngle", value: "3"}
+            %option{i18n: "ledStripModeColorsModeMag", value: "4"}
+            %option{i18n: "ledStripModeColorsModeBaro", value: "5"}
+          %button.mode_color-0-0.dir-n{i18n: "ledStripDirN"}
+          %button.mode_color-0-1.dir-e{i18n: "ledStripDirE"}
+          %button.mode_color-0-2.dir-s{i18n: "ledStripDirS"}
+          %button.mode_color-0-3.dir-w{i18n: "ledStripDirW"}
+          %button.mode_color-0-4.dir-u{i18n: "ledStripDirU"}
+          %button.mode_color-0-5.dir-d{i18n: "ledStripDirD"}
+        .section{i18n: "ledStripModesOrientationTitle"}
+          .directions
+            %button.dir-n{i18n: "ledStripDirN"}
+            %button.dir-e{i18n: "ledStripDirE"}
+            %button.dir-s{i18n: "ledStripDirS"}
+            %button.dir-w{i18n: "ledStripDirW"}
+            %button.dir-u{i18n: "ledStripDirU"}
+            %button.dir-d{i18n: "ledStripDirD"}
+          .colors
+            .colorDefineSliders
+              %div{i18n: "ledStripColorSetupTitle"}
+                .colorDefineSliderContainer
+                  %label.colorDefineSliderLabel{i18n: "ledStripH"}
+                  %input.sliderHSV{max: "359", min: "0", type: "range", value: "0"}
+                  %label.colorDefineSliderValue.Hvalue 0
+                .colorDefineSliderContainer
+                  %label.colorDefineSliderLabel{i18n: "ledStripS"}
+                  %input.sliderHSV{max: "255", min: "0", type: "range", value: "0"}
+                  %label.colorDefineSliderValue.Svalue 0
+                .colorDefineSliderContainer
+                  %label.colorDefineSliderLabel{i18n: "ledStripV"}
+                  %input.sliderHSV{max: "255", min: "0", type: "range", value: "0"}
+                  %label.colorDefineSliderValue.Vvalue 0
+              %button.color-0{i18n_title: "colorBlack"} 0
+              %button.color-1{i18n_title: "colorWhite"} 1
+              %button.color-2{i18n_title: "colorRed"} 2
+              %button.color-3{i18n_title: "colorOrange"} 3
+              %button.color-4{i18n_title: "colorYellow"} 4
+              %button.color-5{i18n_title: "colorLimeGreen"} 5
+              %button.color-6{i18n_title: "colorGreen"} 6
+              %button.color-7{i18n_title: "colorMintGreen"} 7
+              %button.color-8{i18n_title: "colorCyan"} 8
+              %button.color-9{i18n_title: "colorLightBlue"} 9
+              %button.color-10{i18n_title: "colorBlue"} 10
+              %button.color-11{i18n_title: "colorDarkViolet"} 11
+              %button.color-12{i18n_title: "colorMagenta"} 12
+              %button.color-13{i18n_title: "colorDeepPink"} 13
+              %button.color-14{i18n_title: "colorBlack"} 14
+              %button.color-15{i18n_title: "colorBlack"} 15
+            .special_colors.mode_colors
+              .section{i18n: "ledStripModesSpecialColorsTitle"}
+                %button.mode_color-6-0{i18n: "ledStripModeColorsModeDisarmed", i18n_title: "colorGreen"}
+                %button.mode_color-6-1{i18n: "ledStripModeColorsModeArmed", i18n_title: "colorBlue"}
+                %button.mode_color-6-2{i18n: "ledStripModeColorsModeAnimation", i18n_title: "colorWhite"}
+                  / button class="mode_color-6-3" i18n_title="colorBlack">Background</button
+                %button.mode_color-6-4{i18n: "ledStripModeColorsModeBlinkBg", i18n_title: "colorBlack"}
+                %button.mode_color-6-5{i18n: "ledStripModeColorsModeGPSNoSats", i18n_title: "colorRed"}
+                %button.mode_color-6-6{i18n: "ledStripModeColorsModeGPSNoLock", i18n_title: "colorOrange"}
+                %button.mode_color-6-7{i18n: "ledStripModeColorsModeGPSLocked", i18n_title: "colorGreen"}
+              .section{i18n: "ledStripWiring"}
+                .wiringMode
+                  %button.funcWire.w100{i18n: "ledStripWiringMode"}
+                .wiringControls
+                  %button.funcWireClearSelect.w50{i18n: "ledStripWiringClearControl"}
+                  %button.funcWireClear.w50{i18n: "ledStripWiringClearAllControl"}
+                %p{i18n: "ledStripWiringMessage"}
+              .colorControls
+              .clear-both
+            .content_toolbar
+              .btn.save_btn
+                %a.save{href: "#", i18n: "ledStripButtonSave"}

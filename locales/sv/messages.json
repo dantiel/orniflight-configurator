@@ -568,22 +568,19 @@
         "message": "EEPROM <span class=\"message-positive\">sparad</span>"
     },
     "defaultWelcomeIntro": {
-        "message": "Välkommmen till <strong>Betaflight - Configurator</strong>, ett verktyg utformat för att förenkla uppdateringen, konfigurationen och inställningen av din flygkontroller."
+        "message": "Welcome to <strong>OrniFlight - Configurator</strong>, a utility designed to simplify updating, configuring and tuning your ornithopter flight controller."
     },
     "defaultWelcomeHead": {
-        "message": "Hårdvara"
+        "message": "Ornithopter Flight Control"
     },
     "defaultWelcomeText": {
-        "message": "Detta program stödjer all hårdvara som kan köra Betaflight. Se fullständig lista över hårdvara som stöds under flash-fliken.<br><br> <a href=\"https://github.com/betaflight/blackbox-log-viewer/releases\" target=\"_blank\"> Ladda ner Betaflight Blackbox Log Viewer</a><br /><br />Firmware-källkoden kan laddas ner <a href=\"https://github.com/betaflight/betaflight\" title=\"www.github.com\" target=\"_blank\">här</a><br /><br />De senaste <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com\" target=\"_blank\">CP210x-drivrutinerna</a> kan laddas ner <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com\" target=\"_blank\">här</a><br />De senaste <a href=\"http://www.st.com/web/en/catalog/tools/PF257938\" title=\"http://www.st.com\" target=\"_blank\">STM USB VCP-drivrutinerna</a> kan laddas ner <a href=\"http://www.st.com/web/en/catalog/tools/PF257938\" title=\"http://www.st.com\" target=\"_blank\">här</a><br />Den senaste <a href=\"http://zadig.akeo.ie/\" title=\"http://zadig.akeo.ie\" target=\"_blank\">Zadig</a> för Windows USB drivrutinsinstallationen kan laddas ner <a href=\"http://zadig.akeo.ie/\" title=\"http://zadig.akeo.ie\" target=\"_blank\">här</a><br />"
+        "message": "Whether you're building a single-wing glider, a multi-wing ornithopter, or an experimental flapper — OrniFlight gives you full control over flapping-wing flight dynamics. Configure servo-driven wings, tune aerodynamic parameters, and bring your ornithopter to life."
     },
     "defaultContributingHead": {
-        "message": "Medverka"
+        "message": "Community-driven. Open source. Built for makers."
     },
     "defaultContributingText": {
-        "message": "Om du vill vara med och göra Betaflight ännu bättre kan du hjälpa till på många sätt, tex:<br /><ul><li>Svara på andra användares frågor i forumen och på IRC.</li><li>Bidra med kod till firmwaren och konfiguratorn - nya funktioner, korrigeringar och förbättringar.</li><li>Testa <a href=\"https://github.com/Betaflight/betaflight/pulls\" target=\"_blank\">nya funktioner/korrigeringar</a> och ge feedback.</li><li>Hjälpa till med <a href=\"https://github.com/betaflight/betaflight/issues\" target=\"_blank\">problem och kommentera funktionsförfrågningar</a>.</li><li>Samarbeta genom att <a href=\"https://crowdin.com/project/betaflight-configurator\" target=\"_blank\">översätta konfiguratorn</a> till ditt språk.</li><li></li></ul>"
-    },
-    "defaultFacebookText": {
-        "message": "Vi har också en <a href=\"https://www.facebook.com/groups/betaflightgroup/\" target=\"_blank\">Facebookgrupp</a>.<br />Gå med oss för att prata om Betaflight, ställa konfigurationsfrågor, eller bara hänga med andra piloter."
+        "message": "OrniFlight is an open-source flapping-wing flight controller. If you want to contribute: <ul><li>Answer questions from other users in the <a href=\"https://github.com/dantiel/orniflight/discussions\" target=\"_blank\">OrniFlight Discussions</a>.</li><li>Contribute code — <a href=\"https://github.com/dantiel/orniflight\" target=\"_blank\">firmware</a> and <a href=\"https://github.com/dantiel/orniflight-configurator\" target=\"_blank\">configurator</a>.</li><li>Test new features and provide feedback.</li><li>Help with <a href=\"https://github.com/dantiel/orniflight/issues\" target=\"_blank\">issues and feature requests</a>.</li></ul>"
     },
     "defaultChangelogHead": {
         "message": "Configurator - Ändringslogg"
@@ -604,19 +601,19 @@
         "message": "Donera"
     },
     "defaultSponsorsHead": {
-        "message": "Sponsorer"
+        "message": "Sponsors"
     },
     "defaultDocumentationHead": {
         "message": "Dokumentation / Manual"
     },
     "defaultDocumentation": {
-        "message": "Betaflight-dokumentation finns i versionskommentarerna och wiki.<br /><br />"
+        "message": "OrniFlight documentation is available in release notes and wiki.<br /><br />"
     },
     "defaultDocumentation1": {
-        "message": "Betaflight wiki är en utmärkt informationskälla, den kan hittas <a href=\"https://github.com/betaflight/betaflight/wiki\" target=\"_blank\">här</a>."
+        "message": "The OrniFlight wiki is a great resource for information, it can be found <a href=\"https://github.com/dantiel/orniflight/wiki\" target=\"_blank\">here</a>."
     },
     "defaultDocumentation2": {
-        "message": "Utgåvenoteringarna för firmware kan läsas på GitHubs utgåvesida, <a href=\"https://github.com/Betaflight/Betaflight/releases\" target=\"_blank\"> här</a>."
+        "message": "The release notes for the firmware can be read at GitHub releases page, <a href=\"https://github.com/dantiel/orniflight/releases\" target=\"_blank\">here</a>."
     },
     "defaultSupportHead": {
         "message": "Support"
@@ -628,22 +625,22 @@
         "message": "Utvecklare"
     },
     "defaultSupport": {
-        "message": "För support, var vänlig sök i forumen och wikin först eller kontakta din försäljare.<br /><br />"
+        "message": "For support please check the OrniFlight wiki and discussions first.<br /><br />"
     },
     "defaultSupport1": {
-        "message": "<a href=\"http://www.rcgroups.com/forums/showthread.php?t=2464844&page=1\" target=\"_blank\">RC Groups-tråd</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight/discussions\" target=\"_blank\">OrniFlight Discussions</a>"
     },
     "defaultSupport2": {
-        "message": "<a href=\"http://betaflight.info\" target=\"_blank\">Betaflight Wiki</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight/wiki\" target=\"_blank\">OrniFlight Wiki</a>"
     },
     "defaultSupport3": {
-        "message": "<a href=\"https://www.youtube.com/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Betaflight Videos</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight\" target=\"_blank\">OrniFlight on GitHub</a>"
     },
     "defaultSupport4": {
-        "message": "<a href=\"https://github.com/Betaflight\" target=\"_blank\">GitHub</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight\" target=\"_blank\">GitHub</a>"
     },
     "defaultSupport5": {
-        "message": "<a href=\"https://slack.betaflight.com\" target=\"_blank\">Betaflight-utvecklare på slack</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight/discussions\" target=\"_blank\">OrniFlight Discussions</a>"
     },
     "initialSetupBackupAndRestoreApiVersion": {
         "message": "<span class=\"message-negative\">Säkerhetskopierings- och återställningsfunktioner inaktiverade.</span> Du har firmware med API-version <span class=\"message-negative\">$1</span>, säkerhetskopiering och återställning kräver <span class=\"message-positive\">$2</span>.  Vänligen säkerhetskopiera dina inställningar via CLI, se Betaflight-dokumentation för förfarandet."
@@ -5119,5 +5116,23 @@
     },
     "darkTheme": {
         "message": "Använd mörkt färgtema"
+    },
+    "defaultCommunityText": {
+        "message": "Join the OrniFlight community — contribute code, share builds, report bugs, and shape the future of flapping-wing flight together."
+    },
+    "defaultFirmwareHead": {
+        "message": "Firmware"
+    },
+    "defaultFirmwareText": {
+        "message": "OrniFlight is the firmware running on your flight controller — handling wing servos, sensor fusion, and flight stabilization."
+    },
+    "defaultFirmware1": {
+        "message": "The OrniFlight firmware source code can be found <a href=\"https://github.com/dantiel/orniflight\" target=\"_blank\">here</a>."
+    },
+    "defaultFirmware2": {
+        "message": "The latest firmware binaries are available on the <a href=\"https://github.com/dantiel/orniflight/releases\" target=\"_blank\">releases page</a>."
+    },
+    "defaultDocumentation3": {
+        "message": "The OrniFlight Configurator source code is <a href=\"https://github.com/dantiel/orniflight-configurator\" target=\"_blank\">here</a>."
     }
 }

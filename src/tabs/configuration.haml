@@ -1,0 +1,500 @@
+.tab-configuration.toolbar_fixed_bottom
+  .content_wrapper
+    .tab_title{i18n: "tabConfiguration"}
+    .cf_doc_version_bt
+      %a#button-documentation{href: "https://github.com/dantiel/orniflight/releases", rel: "noopener noreferrer", target: "_blank"}
+    .note.note_adjust
+      %p{i18n: "configurationFeaturesHelp"}
+    %table{style: "width:calc(100%);"}
+      %tr
+        %td{style: "width:calc(50%);vertical-align:top;"}
+          / ROW 1 - LEFT PANE
+          / MIXER
+          .mixer
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationMixer"}
+              .spacer_box
+                .mixerPreview.half
+                  %img{src: "./resources/motor_order/custom.svg"}
+                .half{style: "width: calc(50% - 10px); margin-left: 10px;"}
+                  %select.mixerList
+                    / list generated here
+              .spacer_box.reverseMotor
+                .topBorderLine
+                  %div{style: "float: left; height: 20px; margin-right: 15px; margin-left: 3px;"}
+                    %input#reverseMotorSwitch.toggle{type: "checkbox"}
+                  %span.freelabel{i18n: "configurationReverseMotorSwitch"}
+                  .helpicon.cf_tip{i18n_title: "configurationReverseMotorSwitchHelp"}
+          / SYSTEM CONFIGURATION
+          .systemconfig
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationSystem"}
+              .spacer_box
+                .note
+                  %p.systemconfigNote{i18n: "configurationLoopTimeHelp"}
+                .select.gyroUse32kHz
+                  %div{style: "float: left; height: 20px; margin-right: 15px; margin-left: 3px;"}
+                    %input#gyroUse32kHz.toggle{type: "checkbox"}
+                  %span.freelabel{i18n: "configurationGyroUse32kHz"}
+                  .helpicon.cf_tip{i18n_title: "configurationGyroUse32kHzHelp"}
+                .select
+                  %select.gyroSyncDenom
+                    / list generated here
+                  %span{i18n: "configurationGyroSyncDenom"}
+                .select.selectPidProcessDenom
+                  %select.pidProcessDenom
+                    / list generated here
+                  %span{i18n: "configurationPidProcessDenom"}
+                  .helpicon.cf_tip{i18n_title: "configurationPidProcessDenomHelp"}
+                .hardwareSelection
+                  .select
+                    %div{style: "float: left; height: 20px; margin-right: 15px; margin-left: 3px;"}
+                      %input#accHardwareSwitch.toggle{type: "checkbox"}
+                    %span.freelabel{i18n: "configurationAccHardware"}
+                  .select
+                    %div{style: "float: left; height: 20px; margin-right: 15px; margin-left: 3px;"}
+                      %input#baroHardwareSwitch.toggle{type: "checkbox"}
+                    %span.freelabel{i18n: "configurationBaroHardware"}
+                  .select
+                    %div{style: "float: left; height: 20px; margin-right: 15px; margin-left: 3px;"}
+                      %input#magHardwareSwitch.toggle{type: "checkbox"}
+                    %span.freelabel{i18n: "configurationMagHardware"}
+            .gui_box.grey.miscSettings
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationPersonalization"}
+              .spacer_box
+                .number
+                  %label
+                    %input{maxlength: "32", name: "craftName", style: "width:100px;", type: "text"}
+                    %span{i18n: "craftName"}
+            .gui_box.grey.miscSettings
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationCamera"}
+              .spacer_box
+                .number.fpvCamAngleDegrees
+                  %label
+                    %input{max: "50", min: "0", name: "fpvCamAngleDegrees", step: "1", type: "number"}
+                    %span{i18n: "configurationFpvCamAngleDegrees"}
+        %td{style: "width:calc(50%);vertical-align:top;"}
+          / ROW 1 - RIGHT PANE
+          / MOTOR STOP
+          .motorstop
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationEscFeatures"}
+              .spacer_box
+                .selectProtocol
+                  %label
+                    %select.escprotocol
+                      / list generated here
+                    %span{i18n: "configurationEscProtocol"}
+                    #escProtocolTooltip.helpicon.cf_tip{i18n_title: "configurationEscProtocolHelp"}
+                    #escProtocolTooltipNoDSHOT1200.helpicon.cf_tip{i18n_title: "configurationEscProtocolHelpNoDSHOT1200"}
+                .number.checkboxPwm
+                  %div{style: "float: left; height: 20px; margin-right: 14px; margin-left: 3px;"}
+                    %input#unsyncedPWMSwitch.toggle{type: "checkbox"}
+                  %span.freelabel{i18n: "configurationunsyndePwm"}
+                .number.unsyncedpwmfreq{style: "margin-top: 5px; padding-bottom: 10px;"}
+                  %label
+                    .numberspacer
+                      %input{max: "32000", min: "200", name: "unsyncedpwmfreq", step: "100", type: "number"}
+                    %span{i18n: "configurationUnsyncedPWMFreq"}
+                .disarm
+                  .checkbox
+                    %div{style: "float: left; height: 20px; margin-right: 14px; margin-left: 3px;"}
+                      %input#disarmkillswitch.toggle{type: "checkbox"}
+                    %span.freelabel{i18n: "configurationDisarmKillSwitch"}
+                    .helpicon.cf_tip{i18n_title: "configurationDisarmKillSwitchHelp"}
+                  .number.disarmdelay{style: "display: none; margin-bottom: 5px;"}
+                    %label
+                      .numberspacer
+                        %input{max: "60", min: "0", name: "autodisarmdelay", type: "number"}
+                      %span{i18n: "configurationAutoDisarmDelay"}
+                %table{cellpadding: "0", cellspacing: "0", style: "margin-bottom: 5px;"}
+                  %tbody.features.esc
+                    / table generated here
+                /
+                .number.checkboxDshotBidir
+                  %div{style: "float: left; height: 20px; margin-right: 14px; margin-left: 3px;"}
+                    %input#dshotBidir.toggle{type: "checkbox"}
+                  %span.freelabel{i18n: "configurationDshotBidir"}
+                    .helpicon.cf_tip{i18n_title: "configurationDshotBidirHelp"}
+                    .number.motorPoles
+                      %label
+                        .numberspacer
+                          %input{max: "255", min: "4", name: "motorPoles", step: "1", type: "number"}
+                        %span{i18n: "configurationMotorPolesLong"}
+                      .helpicon.cf_tip{i18n_title: "configurationMotorPolesHelp"}
+                    .number.digitalIdlePercent
+                      %label
+                        .numberspacer
+                          %input{max: "20.00", min: "0.00", name: "digitalIdlePercent", step: "0.01", type: "number"}
+                        %span{i18n: "configurationDigitalIdlePercent"}
+                      .helpicon.cf_tip{i18n_title: "configurationDigitalIdlePercentHelp"}
+                    .number.minthrottle
+                      %label
+                        .numberspacer
+                          %input{max: "2000", min: "0", name: "minthrottle", type: "number"}
+                        %span{i18n: "configurationThrottleMinimum"}
+                        .helpicon.cf_tip{i18n_title: "configurationThrottleMinimumHelp"}
+                    .number.maxthrottle
+                      %label
+                        .numberspacer
+                          %input{max: "2000", min: "0", name: "maxthrottle", type: "number"}
+                        %span{i18n: "configurationThrottleMaximum"}
+                    .number.mincommand
+                      %label
+                        .numberspacer
+                          %input{max: "2000", min: "0", name: "mincommand", type: "number"}
+                        %span{i18n: "configurationThrottleMinimumCommand"}
+                        .helpicon.cf_tip{i18n_title: "configurationThrottleMinimumCommandHelp"}
+            / BOARD ORIENTATION
+            .board.acc
+              .gui_box.grey
+                .gui_box_titlebar
+                  .spacer_box_title{i18n: "configurationBoardAlignment"}
+                  .helpicon.cf_tip{i18n_title: "configHelp2"}
+                .spacer_box
+                  .board_align_content
+                    .board_align_inputs
+                      .alignicon.roll
+                      %label
+                        %input{max: "360", min: "-180", name: "board_align_roll", step: "1", type: "number"}
+                        %span{i18n: "configurationBoardAlignmentRoll"}
+                    .board_align_inputs
+                      .alignicon.pitch
+                      %label
+                        %input{max: "360", min: "-180", name: "board_align_pitch", step: "1", type: "number"}
+                        %span{i18n: "configurationBoardAlignmentPitch"}
+                    .board_align_inputs
+                      .alignicon.yaw
+                      %label
+                        %input{max: "360", min: "-180", name: "board_align_yaw", step: "1", type: "number"}
+                        %span{i18n: "configurationBoardAlignmentYaw"}
+                  .gyro_align_content
+                    .gyro_alignment_inputs.gyro_alignment_inputs_selection
+                      %label
+                        %select.gyro_to_use
+                          / list generated here
+                        %span{i18n: "configurationSensorGyroToUse"}
+                    .gyro_alignment_inputs.gyro_alignment_inputs_first
+                      %label
+                        %span
+                          %select.gyro_1_align
+                            %option{i18n: "configurationSensorAlignmentDefaultOption", value: "0"}
+                            / list generated here
+                          %span{i18n: "configurationSensorAlignmentGyro1"}
+                    .gyro_alignment_inputs.gyro_alignment_inputs_second
+                      %label
+                        %select.gyro_2_align
+                          %option{i18n: "configurationSensorAlignmentDefaultOption", value: "0"}
+                          / list generated here
+                        %span{i18n: "configurationSensorAlignmentGyro2"}
+                    .gyro_alignment_inputs.gyro_alignment_inputs_notfound
+                      %span.message-negative{i18n: "configurationSensorGyroToUseNotFound"}
+                  .sensor_align_content
+                    .legacy_gyro_alignment.select
+                      %label
+                        %span{i18n: "configurationSensorAlignmentGyro"}
+                        %select.gyroalign
+                          %option{i18n: "configurationSensorAlignmentDefaultOption", value: "0"}
+                          / list generated here
+                    .legacy_accel_alignment.select
+                      %label
+                        %span{i18n: "configurationSensorAlignmentAcc"}
+                        %select.accalign
+                          %option{i18n: "configurationSensorAlignmentDefaultOption", value: "0"}
+                          / list generated here
+                    .select
+                      %label
+                        %span{i18n: "configurationSensorAlignmentMag"}
+                        %select.magalign
+                          %option{i18n: "configurationSensorAlignmentDefaultOption", value: "0"}
+                          / list generated here
+              .gui_box.grey
+                .gui_box_titlebar
+                  .spacer_box_title{i18n: "configurationAccelTrims"}
+                .spacer_box
+                  .number
+                    %label
+                      %input{max: "300", min: "-300", name: "roll", type: "number"}
+                      %span{i18n: "configurationAccelTrimRoll"}
+                  .number
+                    %label
+                      %input{max: "300", min: "-300", name: "pitch", type: "number"}
+                      %span{i18n: "configurationAccelTrimPitch"}
+              .gui_box.grey
+                .gui_box_titlebar
+                  .spacer_box_title{i18n: "configurationArming"}
+                  .helpicon.cf_tip{i18n_title: "configurationArmingHelp"}
+                .spacer_box
+                  ._smallAngle
+                    .number
+                      %label
+                        %input#configurationSmallAngle{max: "180", min: "1", step: "1", type: "number"}
+                        %span{i18n: "configurationSmallAngle"}
+                        .helpicon.cf_tip{i18n_title: "configurationSmallAngleHelp"}
+      %tr
+        %td{style: "width:calc(50%);vertical-align:top;"}
+          / ROW 2 - LEFT PANE
+          / RECEIVER
+          / FIXME move receiver and RSSI to receiver tab
+          .receiver
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationReceiver"}
+              .spacer_box
+                %select.features.rxMode{name: "rxMode"}
+                  / list generated here
+                %span{i18n: "configurationReceiverMode"}
+              .serialRXBox.spacer_box
+                .note
+                  %p{i18n: "configurationSerialRXHelp"}
+                %select.serialRX
+                  / list generated here
+                %span{i18n: "configurationSerialRX"}
+              .spiRxBox.spacer_box
+                .note
+                  %p{i18n: "configurationSpiRxHelp"}
+                %select.spiRx
+                  / list generated here
+                %span{i18n: "configurationSpiRX"}
+        %td{style: "width:calc(50%);vertical-align:top;"}
+          / ROW 2 - RIGHT PANE
+          / RSSI
+          .rssi
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationRSSI"}
+                .helpicon.cf_tip{i18n_title: "configurationRSSIHelp"}
+              .spacer_box
+                %table{cellpadding: "0", cellspacing: "0"}
+                  %thead
+                    %tr
+                      %th{i18n: "configurationFeatureEnabled"}
+                      %th{i18n: "configurationFeatureDescription"}
+                      %th{i18n: "configurationFeatureName"}
+                  %tbody.features.rssi
+                    / table generated here
+      %tr
+        %td{style: "width:calc(50%);vertical-align:top;"}
+          / ROW 3 - LEFT PANE
+          / OTHER FEATURES
+          .featuresOther
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationFeatures"}
+              .spacer_box
+                .note
+                  %p{i18n: "configurationOtherFeaturesHelp"}
+                %table{cellpadding: "0", cellspacing: "0"}
+                  %thead
+                    %tr
+                      %th{i18n: "configurationFeatureEnabled"}
+                      %th{i18n: "configurationFeatureDescription"}
+                      %th{i18n: "configurationFeatureName"}
+                  %tbody#noline.features.other
+                    / table generated here
+        %td{style: "width:calc(50%);vertical-align:top;"}
+          / ROW 3 - RIGHT PANE
+          / 3D
+          .3d
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configuration3d"}
+              .spacer_box
+                %table{cellpadding: "0", cellspacing: "0"}
+                  %thead
+                    %tr
+                      %th{i18n: "configurationFeatureEnabled"}
+                      %th{i18n: "configurationFeatureDescription"}
+                      %th{i18n: "configurationFeatureName"}
+                  %tbody.features.3D{style: "margin-bottom:10px;"}
+                    / table generated here
+                ._3dSettings
+                  .number
+                    %label
+                      %input{max: "1600", min: "1250", name: "3ddeadbandlow", step: "1", type: "number"}
+                      %span{i18n: "configuration3dDeadbandLow"}
+                  .number
+                    %label
+                      %input{max: "1750", min: "1400", name: "3ddeadbandhigh", step: "1", type: "number"}
+                      %span{i18n: "configuration3dDeadbandHigh"}
+                  .number
+                    %label
+                      %input{max: "1600", min: "1400", name: "3dneutral", step: "1", type: "number"}
+                      %span{i18n: "configuration3dNeutral"}
+          / GPS
+          .gps
+            .gui_box.grey.gps
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationGPS"}
+              .spacer_box
+                %table{cellpadding: "0", cellspacing: "0"}
+                  %thead
+                    %tr
+                      %th{i18n: "configurationFeatureEnabled"}
+                      %th{i18n: "configurationFeatureDescription"}
+                      %th{i18n: "configurationFeatureName"}
+                  %tbody.features.gps
+                    / table generated here
+                .gpsSettings
+                  %div{style: "float:left; width:100%;"}
+                    .note
+                      %p{i18n: "configurationGPSHelp"}
+                    .line
+                      %select.gps_protocol
+                        / list generated here
+                      %span{i18n: "configurationGPSProtocol"}
+                    .line
+                      %select.gps_baudrate
+                        / list generated here
+                      %span{i18n: "configurationGPSBaudrate"}
+                    .select.gps_auto_baud
+                      %div{style: "float: left; height: 20px; margin-right: 15px; margin-left: 3px;"}
+                        %input.toggle{name: "gps_auto_baud", type: "checkbox"}
+                      %span.freelabel{i18n: "configurationGPSAutoBaud"}
+                    .select.gps_auto_config
+                      %div{style: "float: left; height: 20px; margin-right: 15px; margin-left: 3px;"}
+                        %input.toggle{name: "gps_auto_config", type: "checkbox"}
+                      %span.freelabel{i18n: "configurationGPSAutoConfig"}
+                    .line
+                      %select.gps_ubx_sbas
+                        / list generated here
+                      %span{i18n: "configurationGPSubxSbas"}
+                    .number
+                      %label
+                        %input{max: "180", min: "-180", name: "mag_declination", step: "0.01", type: "number"}
+                        %span{i18n: "configurationMagDeclination"}
+      %tr.oldBatteryConfig
+        %td{style: "width:calc(50%);vertical-align:top;"}
+          / ROW 4 - LEFT PANE
+          / BATTERY CONFIG FOR PRE BF 3.2
+          .voltage
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationBatteryVoltage"}
+              .spacer_box
+                %table{cellpadding: "0", cellspacing: "0"}
+                  %thead
+                    %tr
+                      %th{i18n: "configurationFeatureEnabled"}
+                      %th{i18n: "configurationFeatureDescription"}
+                      %th{i18n: "configurationFeatureName"}
+                  %tbody.features.batteryVoltage
+                    / table generated here
+                .select.batterymetertype.vbatmonitoring
+                  %label
+                    %select.batterymetertype
+                      / list generated here
+                    %span{i18n: "configurationBatteryMeterType"}
+                .number.vbatmonitoring
+                  %label
+                    %input{max: "5", min: "1", name: "mincellvoltage", step: "0.1", type: "number"}
+                    %span{i18n: "configurationBatteryMinimum"}
+                .number.vbatmonitoring
+                  %label
+                    %input{max: "5", min: "1", name: "maxcellvoltage", step: "0.1", type: "number"}
+                    %span{i18n: "configurationBatteryMaximum"}
+                .number.vbatmonitoring
+                  %label
+                    %input{max: "5", min: "1", name: "warningcellvoltage", step: "0.1", type: "number"}
+                    %span{i18n: "configurationBatteryWarning"}
+                .number.vbatmonitoring.vbatCalibration
+                  %label
+                    %input{max: "255", min: "10", name: "voltagescale", step: "1", type: "number"}
+                    %span{i18n: "configurationBatteryScale"}
+                .number.vbatmonitoring
+                  %label
+                    %input.disabled{name: "batteryvoltage", readonly: "", type: "text"}
+                    %span{i18n: "configurationBatteryVoltage"}
+        %td{style: "width:calc(50%);vertical-align:top;"}
+          / ROW 4 - RIGHT PANE
+          / CURRENT CONFIG FOR PRE BF 3.2
+          .current
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationCurrent"}
+              .spacer_box
+                %table{cellpadding: "0", cellspacing: "0"}
+                  %thead
+                    %tr
+                      %th{i18n: "configurationFeatureEnabled"}
+                      %th{i18n: "configurationFeatureDescription"}
+                      %th{i18n: "configurationFeatureName"}
+                  %tbody.features.batteryCurrent
+                    / table generated here
+                .select.currentMonitoring
+                  %label
+                    %select.currentmetertype
+                      / list generated here
+                    %span{i18n: "configurationCurrentMeterType"}
+                .number.currentMonitoring.currentCalibration
+                  %label
+                    %input{max: "16000", min: "-16000", name: "currentscale", step: "1", type: "number"}
+                    %span{i18n: "configurationCurrentScale"}
+                .number.currentMonitoring.currentCalibration
+                  %label
+                    %input{max: "16000", min: "-1600", name: "currentoffset", step: "1", type: "number"}
+                    %span{i18n: "configurationCurrentOffset"}
+                .number.currentMonitoring.currentOutput
+                  %label
+                    %input.disabled{name: "batterycurrent", readonly: "", type: "text"}
+                    %span{i18n: "configurationBatteryCurrent"}
+                .checkbox.currentMonitoring.currentOutput
+                  .numberspacer
+                    %input.toggle{name: "multiwiicurrentoutput", type: "checkbox"}
+                  %span{i18n: "configurationBatteryMultiwiiCurrent"}
+      %tr.dshotbeeper
+        %td{colspan: "2", style: "width:calc(100%)"}
+          / ROW 5 - FULL WIDTH PANE
+          / DSHOT BEEPER
+          .dshotBeeper{style: "width: calc(100%);"}
+            .gui_box.grey{style: "margin-top:10px;"}
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationDshotBeeper"}
+                .helpicon.cf_tip{i18n_title: "configurationDshotBeaconHelp"}
+              .spacer_box
+                %table{cellpadding: "0", cellspacing: "0"}
+                  %tbody#noline.dshot-beeper-configuration
+                    %tr.dshotBeaconSwitch
+                      %td
+                        .number
+                          %div{style: "float: left; height: 20px; margin-right: 34px;"}
+                            %input#dshotBeeperSwitch.dshot-beeper.toggle{type: "checkbox"}
+                          %span{i18n: "configurationUseDshotBeeper"}
+                    %tr.dshotbeacon
+                      %td
+                        .select
+                          %div{style: "float: left; height: 20px; margin-right: 10px;"}
+                            %select.dshotBeeperBeaconTone
+                              %option{hidden: "", value: "0"}
+                              / list generated here
+                          %span{i18n: "configurationDshotBeaconTone"}
+                %table{cellpadding: "0", cellspacing: "0"}
+                  %tbody#noline.dshotBeaconConditions
+                    / table generated here
+      %tr.beepers
+        %td{colspan: "2", style: "width:calc(100%)"}
+          / ROW 6 - FULL WIDTH PANE
+          / BEEPER
+          .beepers{style: "width: calc(100%);"}
+            .gui_box.grey{style: "margin-top:10px;"}
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "configurationBeeper"}
+              .spacer_box
+                %table{cellpadding: "0", cellspacing: "0"}
+                  %tbody#noline.beeper-configuration
+                    %tr.beeper-template{style: "display:none"}
+                      %td
+                        %input.condition.toggle{name: "", title: "", type: "checkbox"}
+                      %td
+                        %div
+                      %td
+                        %span
+                    / table generated here
+    .content_toolbar
+      .btn.save_btn
+        %a.save{href: "#", i18n: "configurationButtonSave"}

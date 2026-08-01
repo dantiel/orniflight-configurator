@@ -1,7 +1,7 @@
 # Configurator ↔ OrniFlight MSP Interface
 
 > *The bridge between mind and wing — what the configurator expects, what the firmware must provide.*
-> *Phase 1 & 2 complete — firmware and configurator now agree on all 71 bytes at apiVersion ≥ 1.43.*
+> *Phase 1, 2 & 3 complete — firmware and configurator agree on all 76 bytes at apiVersion ≥ 1.46.*
 
 ## Cross-Reference
 
@@ -55,8 +55,9 @@ The configurator does **not** currently gate on `flightControllerIdentifier === 
 | `1.41.0` | `flapBaseFrequency`, `flapBaseAmplitude`, ONDAS v1 (`cadence_gain`, `ferocity_d_gain`, `balance_gain` in `MSP_PID_ADVANCED`) |
 | `1.42.0` | **ONDAS v2 — full 10-param set** + `itermRelaxCutoff` |
 | `1.43.0` | **Phase 2 — Wing Pair Geometry + Advanced ONDAS Gains (12 new values)** |
+| `1.46.0` | **Phase 3 — Ornithopter profile index + 4 aeroelastic coefficients (5 new values)** |
 
-**Firmware now reports `1.43.0`.** → ONDAS v2 + Phase 2 UI active when connected to OrniFlight firmware. ✅
+**Firmware now reports `1.46.0`.** → ONDAS v2 + Phase 2 + Phase 3 (aeroelastic) UI active when connected to OrniFlight firmware. ✅
 
 ---
 
@@ -68,7 +69,7 @@ The configurator does **not** currently gate on `flightControllerIdentifier === 
 | 2 | `MSP_FC_VARIANT` | FC→GUI | 4-char identifier — now `"ORNI"` ✅ |
 | 42/43 | `MSP_MIXER_CONFIG` | R/W | `mixer` (u8) — mixer enum (ornithopter=27, not in configurator list) |
 | 92/93 | `MSP_FILTER_CONFIG` | R/W | Filter settings + legacy `cadence_gain` |
-| **94/95** | **`MSP_PID_ADVANCED`** | **R/W** | **ALL ONDAS v2 (10 params) + flapBase + itermRelaxCutoff + Phase 2 (12 params) = 71 bytes** |
+| **94/95** | **`MSP_PID_ADVANCED`** | **R/W** | **ALL ONDAS v2 (10 params) + flapBase + itermRelaxCutoff + Phase 2 (12 params) + Phase 3 (5 params) = 76 bytes** |
 | 120/212 | `MSP_SERVO_CONFIGURATIONS` | R/W | Per-servo config + `ornithopter_glide_deg` + ONDAS v1 triplet |
 | 244 | `MSP_SET_ORNITHOPTER_GLIDE_DEGREE` | GUI→FC | ⛔ **NO-OP** in firmware (use SERVO_CONFIGURATIONS instead) |
 
@@ -320,17 +321,93 @@ Adding all 12 values grows `MSP_PID_ADVANCED` from 59 → **71 bytes** at `apiVe
 - "Wing Pair Setup" (4 incidence + 4 phase sliders) — gated on multi-wing mixer
 - "Advanced ONDAS" (4 gain sliders) — gated on `apiVersion >= 1.43.0`
 
-### 12.3 Phase 2 TODO
+### 12.3 Phase 2 Status — COMPLETE ✅ (v0.4.5)
 
-**Firmware-side:**
-- [ ] Add 12 values to `MSP_PID_ADVANCED` send/receive at offsets 59–70
-- [ ] Bump `API_VERSION_MINOR` to 43
-- [ ] Gate on `sbufBytesRemaining(src) >= 16` for backward compat
+All 12 values now live on the wire at offsets 59–70 in MSP_PID_ADVANCED (apiVersion ≥ 1.43). See §13 for the Phase 3 additions.
 
-**Configurator-side:**
-- [ ] JS read/write for offsets 59–70 (8 signed + 4 unsigned)
-- [ ] HTML: 4 "Wing Pair N Incidence" sliders (–30..+30°, val+128 wire)
-- [ ] HTML: 4 "Wing Pair N Phase Offset" sliders (–180..+180°, val+128 wire)
-- [ ] HTML: 4 advanced gain sliders (0–100, direct wire)
-- [ ] Locale entries for all 12 new labels
-- [ ] Gate UI on `apiVersion >= "1.43.0"`
+---
+
+## 13. Phase 3 — Aeroelastic ONDAS (apiVersion ≥ 1.46) — v0.4.6 ✅
+
+### 13.1 Five New Parameters (offsets 59–63 before Phase 2 shift, or final offsets after Phase 2)
+
+When Phase 2 is active (apiVersion ≥ 1.43), these append at offsets 71–75. When only Phase 3 is in play (apiVersion ≥ 1.46 without Phase 2), they occupy offsets 59–63. All five are **unsigned u8 direct-wire** (0–100 range except profile_index: 0–2).
+
+| Offset (post-Phase2) | Wire | JS Read | Field | Range | Default |
+|-----------------------|------|---------|-------|-------|---------|
+| 71 | u8 | `readU8()` | `ornithopter_profile_index` | 0–2 | 0 |
+| 72 | u8 | `readU8()` | `ferocity_downstroke` | 0–100 | 50 |
+| 73 | u8 | `readU8()` | `ferocity_upstroke` | 0–100 | 50 |
+| 74 | u8 | `readU8()` | `aeroelastic_glide_coefficient` | 0–100 | 30 |
+| 75 | u8 | `readU8()` | `aeroelastic_flap_coefficient` | 0–100 | 70 |
+
+### 13.2 Read Path (MSPHelper.js ~line 1164)
+
+Nested inside the `if (semver.gte(CONFIG.apiVersion, "1.45.0"))` block:
+
+```js
+if (semver.gte(CONFIG.apiVersion, "1.46.0")) {
+    ADVANCED_TUNING.ornithopter_profile_index = data.readU8();
+    ADVANCED_TUNING.ferocity_downstroke = data.readU8();
+    ADVANCED_TUNING.ferocity_upstroke = data.readU8();
+    ADVANCED_TUNING.aeroelastic_glide_coefficient = data.readU8();
+    ADVANCED_TUNING.aeroelastic_flap_coefficient = data.readU8();
+}
+```
+
+### 13.3 Write Path (MSPHelper.js ~line 2110)
+
+Nested inside the `if (semver.gte(CONFIG.apiVersion, "1.45.0"))` block:
+
+```js
+if (semver.gte(CONFIG.apiVersion, "1.46.0")) {
+    buffer.push8(ADVANCED_TUNING.ornithopter_profile_index)
+          .push8(ADVANCED_TUNING.ferocity_downstroke)
+          .push8(ADVANCED_TUNING.ferocity_upstroke)
+          .push8(ADVANCED_TUNING.aeroelastic_glide_coefficient)
+          .push8(ADVANCED_TUNING.aeroelastic_flap_coefficient);
+}
+```
+
+### 13.4 UI Layout (pid_tuning.html)
+
+All new elements live inside `div.subtab-ondas`, gated on API ≥ 1.46:
+
+- **Profile selector**: `<select name="ornithopterProfile" class="ornithopterProfile">` with 3 hardcoded options (Profile 1/2/3). Follows existing CONFIG.profile pattern but operates independently — value is read/written through ADVANCED_TUNING.ornithopter_profile_index, not via a separate MSP command.
+- **Four aeroelastic inputs**: `<input type="number" name="ferocityDownstroke-number" class="aeroelasticOndas">` etc. All use `-number` suffix pattern, min=0 max=100, step=1.
+
+### 13.5 Display & Save Logic (pid_tuning.js)
+
+- **Display** (`pid_and_rc_to_form`, ~line 392): Nested `if (semver.gte("1.46.0"))` inside the 1.43.0 block. Sets select val + 4 input values from `ADVANCED_TUNING.*`.
+- **Save** (`form_to_pid_and_rc`, ~line 850): Same gate pattern. Reads DOM values via `parseInt($('input[name="..."]').val())` into `ADVANCED_TUNING.*`.
+- **Profile switch handler** (~line 1149): `$('.subtab-ondas select[name="ornithopterProfile"]').change(...)` — sets `ADVANCED_TUNING.ornithopter_profile_index`, marks dirty, then triggers `self.updatePidControllerParameters()` to re-read from firmware.
+
+### 13.6 Locale Keys (messages.json)
+
+| Key | Label |
+|-----|-------|
+| `pidTuningOrnithopterProfile` | "Ornithopter Profile" |
+| `pidTuningOrnithopterProfileTip` | "Select flapping profile (1-3)" |
+| `pidTuningFerocityDownstroke` | "Ferocity Downstroke" |
+| `pidTuningFerocityDownstrokeHelp` | "Motor power during downstroke (0-100%)" |
+| `pidTuningFerocityUpstroke` | "Ferocity Upstroke" |
+| `pidTuningFerocityUpstrokeHelp` | "Motor power during upstroke (0-100%)" |
+| `pidTuningAeroelasticGlideCoefficient` | "Aeroelastic Glide" |
+| `pidTuningAeroelasticGlideCoefficientHelp` | "Wing passive twist during glide (0-100%)" |
+| `pidTuningAeroelasticFlapCoefficient` | "Aeroelastic Flap" |
+| `pidTuningAeroelasticFlapCoefficientHelp` | "Wing passive twist during flapping (0-100%)" |
+| `pidTuningOrnithopterProfileOption` | "Profile" (for dropdown labels) |
+
+### 13.7 Bugs Found & Fixed During v0.4.6
+
+1. **Zero-value suppression** (MSPHelper.js:2106): `if (ADVANCED_TUNING.aeroelastic_glide_coefficient)` → `if (ADVANCED_TUNING.aeroelastic_glide_coefficient != null)`. The truthiness check suppressed writes when value was legitimately 0. Fixed with explicit null guard.
+2. **ReferenceError on profile switch** (pid_tuning.js:1178): `updatePidControllerParameters()` → `self.updatePidControllerParameters()`. Bare function call threw ReferenceError in jQuery change handler scope. Fixed with `self` closure reference.
+
+---
+
+## 14. Version History Matrix
+
+| Configurator | API | MSP_PID_ADVANCED Payload | Key Additions |
+|-------------|-----|--------------------------|---------------|
+| v0.4.5 (Phase 2) | 1.43 | 71 bytes | Wing Pair Geometry + Advanced ONDAS Gains |
+| **v0.4.6** | **1.46** | **76 bytes** | **Ornithopter profile index + 4 aeroelastic coefficients** |

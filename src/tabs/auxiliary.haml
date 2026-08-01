@@ -1,0 +1,57 @@
+.tab-auxiliary.toolbar_fixed_bottom
+  .content_wrapper
+    .tab_title{i18n: "tabAuxiliary"} tabAuxiliary
+    .cf_doc_version_bt
+      %a#button-documentation{href: "https://github.com/dantiel/orniflight/releases", rel: "noopener noreferrer", target: "_blank"}
+    .note
+      %p{i18n: "auxiliaryHelp"}
+    .toolbox
+      %form
+        %input#switch-toggle-unused.toggle{name: "switch-toggle-unused", type: "checkbox"}
+        %span{i18n: "auxiliaryToggleUnused"}
+    %table.modes
+      %tbody
+  .content_toolbar
+    .btn.save_btn
+      %a.save{href: "#", i18n: "auxiliaryButtonSave"}
+#tab-auxiliary-templates
+  %table.modes
+    %tbody
+      %tr.mode
+        %td.info
+          %p.name
+          .buttons
+            %a.addLink{href: "#", i18n: "auxiliaryAddLink"}
+            %a.addRange{href: "#", i18n: "auxiliaryAddRange"}
+        %td.ranges
+  .range
+    .channelInfo
+      .channelName
+        %select.channel
+          %option{value: ""}
+      .rangeLogic
+        %select.logic
+          %option{value: ""}
+      .limits
+        %p.lowerLimit
+          %span{i18n: "auxiliaryMin"}
+          \:
+          %span.lowerLimitValue
+        %p.upperLimit
+          %span{i18n: "auxiliaryMax"}
+          \:
+          %span.upperLimitValue
+    .channel-slider.pips-channel-range
+      .marker
+    .delete
+      %a.deleteRange{href: "#"}
+  .link
+    .modeInfo
+      .modeLink
+        %select.linkedTo
+          %option{value: ""}
+      .linkLogic
+        %select.logic
+          %option{value: ""}
+    .delete
+      %a.deleteLink{href: "#"}

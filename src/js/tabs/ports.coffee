@@ -1,0 +1,404 @@
+'use strict'
+TABS.ports = analyticsChanges: {}
+
+TABS.ports.initialize = (callback, scrollPosition) ->
+    self = this
+    board_definition = {}
+    functionRules = [
+        {
+            name: 'MSP'
+            groups: [
+                'configuration'
+                'msp'
+            ]
+            maxPorts: 2
+        }
+        {
+            name: 'GPS'
+            groups: [ 'sensors' ]
+            maxPorts: 1
+        }
+        {
+            name: 'TELEMETRY_FRSKY'
+            groups: [ 'telemetry' ]
+            sharableWith: [ 'msp' ]
+            notSharableWith: [ 'peripherals' ]
+            maxPorts: 1
+        }
+        {
+            name: 'TELEMETRY_HOTT'
+            groups: [ 'telemetry' ]
+            sharableWith: [ 'msp' ]
+            notSharableWith: [ 'peripherals' ]
+            maxPorts: 1
+        }
+        {
+            name: 'TELEMETRY_SMARTPORT'
+            groups: [ 'telemetry' ]
+            maxPorts: 1
+        }
+        {
+            name: 'RX_SERIAL'
+            groups: [ 'rx' ]
+            maxPorts: 1
+        }
+        {
+            name: 'BLACKBOX'
+            groups: [ 'peripherals' ]
+            sharableWith: [ 'msp' ]
+            notSharableWith: [ 'telemetry' ]
+            maxPorts: 1
+        }
+    ]
+
+    load_configuration_from_fc = ->
+
+        on_configuration_loaded_handler = ->
+            $('#content').load './tabs/ports.html', on_tab_loaded_handler
+            board_definition = BOARD.find_board_definition(CONFIG.boardIdentifier)
+            console.log 'Using board definition', board_definition
+            return
+
+        if semver.gte(CONFIG.apiVersion, '1.42.0')
+            MSP.promise(MSPCodes.MSP_VTX_CONFIG).then ->
+                MSP.send_message MSPCodes.MSP_CF_SERIAL_CONFIG, false, false, on_configuration_loaded_handler
+        else
+            MSP.send_message MSPCodes.MSP_CF_SERIAL_CONFIG, false, false, on_configuration_loaded_handler
+        return
+
+    update_ui = ->
+        `var i`
+        `var i`
+        `var i`
+        `var msp_baudrate_e`
+        `var telemetry_baudrate_e`
+        `var gps_baudrate_e`
+        `var blackbox_baudrate_e`
+        `var i`
+        `var checkbox_e`
+        self.analyticsChanges = {}
+        if semver.lt(CONFIG.apiVersion, '1.6.0')
+            $('.tab-ports').removeClass 'supported'
+            return
+        $('.tab-ports').addClass 'supported'
+        VCP_PORT_IDENTIFIER = 20
+        portIdentifierToNameMapping = 
+            0: 'UART1'
+            1: 'UART2'
+            2: 'UART3'
+            3: 'UART4'
+            4: 'UART5'
+            5: 'UART6'
+            6: 'UART7'
+            7: 'UART8'
+            8: 'UART9'
+            9: 'UART10'
+            20: 'USB VCP'
+            30: 'SOFTSERIAL1'
+            31: 'SOFTSERIAL2'
+        gps_baudrate_e = $('select.gps_baudrate')
+        i = 0
+        while i < gpsBaudRates.length
+            gps_baudrate_e.append '<option value="' + gpsBaudRates[i] + '">' + gpsBaudRates[i] + '</option>'
+            i++
+        msp_baudrate_e = $('select.msp_baudrate')
+        i = 0
+        while i < mspBaudRates.length
+            msp_baudrate_e.append '<option value="' + mspBaudRates[i] + '">' + mspBaudRates[i] + '</option>'
+            i++
+        telemetry_baudrate_e = $('select.telemetry_baudrate')
+        i = 0
+        while i < telemetryBaudRates.length
+            telemetry_baudrate_e.append '<option value="' + telemetryBaudRates[i] + '">' + telemetryBaudRates[i] + '</option>'
+            i++
+        blackbox_baudrate_e = $('select.blackbox_baudrate')
+        i = 0
+        while i < blackboxBaudRates.length
+            blackbox_baudrate_e.append '<option value="' + blackboxBaudRates[i] + '">' + blackboxBaudRates[i] + '</option>'
+            i++
+        lastVtxControlSelected = undefined
+        ports_e = $('.tab-ports .ports')
+        port_configuration_template_e = $('#tab-ports-templates .portConfiguration')
+        portIndex = 0
+        while portIndex < SERIAL_CONFIG.ports.length
+            port_configuration_e = port_configuration_template_e.clone()
+            serialPort = SERIAL_CONFIG.ports[portIndex]
+            port_configuration_e.data 'serialPort', serialPort
+            msp_baudrate_e = port_configuration_e.find('select.msp_baudrate')
+            msp_baudrate_e.val serialPort.msp_baudrate
+            telemetry_baudrate_e = port_configuration_e.find('select.telemetry_baudrate')
+            telemetry_baudrate_e.val serialPort.telemetry_baudrate
+            gpsBaudrate = undefined
+            if serialPort.functions.indexOf('GPS') >= 0
+                gpsBaudrate = serialPort.gps_baudrate
+            else
+                gpsBaudrate = 'AUTO'
+            gps_baudrate_e = port_configuration_e.find('select.gps_baudrate')
+            gps_baudrate_e.val gpsBaudrate
+            blackboxBaudrate = undefined
+            if serialPort.functions.indexOf('BLACKBOX') >= 0
+                blackboxBaudrate = serialPort.blackbox_baudrate
+            else
+                blackboxBaudrate = 'AUTO'
+            blackbox_baudrate_e = port_configuration_e.find('select.blackbox_baudrate')
+            blackbox_baudrate_e.val blackboxBaudrate
+            port_configuration_e.find('.identifier').text portIdentifierToNameMapping[serialPort.identifier]
+            port_configuration_e.data 'index', portIndex
+            port_configuration_e.data 'port', serialPort
+            columnIndex = 0
+            while columnIndex < columns.length
+                column = columns[columnIndex]
+                functions_e = $(port_configuration_e).find('.functionsCell-' + column)
+                i = 0
+                while i < functionRules.length
+                    functionRule = functionRules[i]
+                    functionName = functionRule.name
+                    if functionRule.groups.indexOf(column) == -1
+                        i++
+                        continue
+                    select_e = undefined
+                    if column != 'telemetry' and column != 'sensors' and column != 'peripherals'
+                        checkboxId = 'functionCheckbox-' + portIndex + '-' + columnIndex + '-' + i
+                        functions_e.prepend '<span class="function"><input type="checkbox" class="togglemedium" id="' + checkboxId + '" value="' + functionName + '" /><label for="' + checkboxId + '"></label></span>'
+                        if serialPort.functions.indexOf(functionName) >= 0
+                            checkbox_e = functions_e.find('#' + checkboxId)
+                            checkbox_e.prop 'checked', true
+                        if serialPort.identifier == VCP_PORT_IDENTIFIER and functionName == 'MSP'
+                            checkbox_e = functions_e.find('#' + checkboxId)
+                            checkbox_e.prop 'checked', true
+                            checkbox_e.prop 'disabled', true
+                    else
+                        selectElementName = 'function-' + column
+                        selectElementSelector = 'select[name=' + selectElementName + ']'
+                        select_e = functions_e.find(selectElementSelector)
+                        if select_e.length == 0
+                            functions_e.prepend '<span class="function"><select name="' + selectElementName + '" /></span>'
+                            select_e = functions_e.find(selectElementSelector)
+                            disabledText = i18n.getMessage('portsTelemetryDisabled')
+                            select_e.append '<option value="">' + disabledText + '</option>'
+                        select_e.append '<option value="' + functionName + '">' + functionRule.displayName + '</option>'
+                        if serialPort.functions.indexOf(functionName) >= 0
+                            select_e.val functionName
+                            if column == 'peripherals' and (functionName == 'TBS_SMARTAUDIO' or functionName == 'IRC_TRAMP')
+                                lastVtxControlSelected = functionName
+                        if column == 'telemetry'
+                            initialValue = functionName
+                            select_e.change ->
+                                telemetryValue = $(this).val()
+                                newValue = undefined
+                                if telemetryValue != initialValue
+                                    newValue = $(this).find('option:selected').text()
+                                self.analyticsChanges['Telemetry'] = newValue
+                                return
+                    i++
+                columnIndex++
+            ports_e.find('tbody').append port_configuration_e
+            portIndex++
+        vtxTableNotConfigured = true
+        if semver.gte(CONFIG.apiVersion, '1.42.0')
+            vtxTableNotConfigured = VTX_CONFIG.vtx_table_available and (VTX_CONFIG.vtx_table_bands == 0 or VTX_CONFIG.vtx_table_channels == 0 or VTX_CONFIG.vtx_table_powerlevels == 0)
+        else
+            $('.vtxTableNotSet').hide()
+        pheripheralsSelectElement = $('select[name="function-peripherals"]')
+        pheripheralsSelectElement.change ->
+            vtxControlSelected = undefined
+            pheripheralsSelectElement.each ->
+                el = $(this)
+                if el.val() == 'TBS_SMARTAUDIO' or el.val() == 'IRC_TRAMP'
+                    vtxControlSelected = el.val()
+                return
+            if lastVtxControlSelected != vtxControlSelected
+                self.analyticsChanges['VtxControl'] = vtxControlSelected
+                lastVtxControlSelected = vtxControlSelected
+            if semver.gte(CONFIG.apiVersion, '1.42.0')
+                if vtxControlSelected and vtxTableNotConfigured
+                    $('.vtxTableNotSet').show()
+                else
+                    $('.vtxTableNotSet').hide()
+            return
+        pheripheralsSelectElement.change()
+        return
+
+    on_tab_loaded_handler = ->
+        `var self`
+        self = this
+        i18n.localizePage()
+        update_ui()
+        $('a.save').click on_save_handler
+        # status data pulled via separate timer with static speed
+        GUI.interval_add 'status_pull', (->
+            MSP.send_message MSPCodes.MSP_STATUS
+            return
+        ), 250, true
+        GUI.content_ready callback
+        return
+
+    on_save_handler = ->
+
+        save_to_eeprom = ->
+            MSP.send_message MSPCodes.MSP_EEPROM_WRITE, false, false, on_saved_handler
+            return
+
+        on_saved_handler = ->
+            GUI.log i18n.getMessage('configurationEepromSaved')
+            GUI.tab_switch_cleanup ->
+                MSP.send_message MSPCodes.MSP_SET_REBOOT, false, false
+                reinitialiseConnection self
+                return
+            return
+
+        analytics.sendChangeEvents analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, self.analyticsChanges
+        self.analyticsChanges = {}
+        # update configuration based on current ui state
+        SERIAL_CONFIG.ports = []
+        ports_e = $('.tab-ports .portConfiguration').each((portConfiguration_e) ->
+            `var portConfiguration_e`
+            portConfiguration_e = this
+            oldSerialPort = $(this).data('serialPort')
+            functions = $(portConfiguration_e).find('input:checkbox:checked').map(->
+                @value
+            ).get()
+            telemetryFunction = $(portConfiguration_e).find('select[name=function-telemetry]').val()
+            if telemetryFunction
+                functions.push telemetryFunction
+            sensorFunction = $(portConfiguration_e).find('select[name=function-sensors]').val()
+            if sensorFunction
+                functions.push sensorFunction
+            peripheralFunction = $(portConfiguration_e).find('select[name=function-peripherals]').val()
+            if peripheralFunction
+                functions.push peripheralFunction
+            gpsBaudrate = $(portConfiguration_e).find('.gps_baudrate').val()
+            if gpsBaudrate == 'AUTO'
+                gpsBaudrate = '57600'
+            blackboxBaudrate = $(portConfiguration_e).find('.blackbox_baudrate').val()
+            if blackboxBaudrate == 'AUTO'
+                blackboxBaudrate = '115200'
+            serialPort = 
+                functions: functions
+                msp_baudrate: $(portConfiguration_e).find('.msp_baudrate').val()
+                telemetry_baudrate: $(portConfiguration_e).find('.telemetry_baudrate').val()
+                gps_baudrate: gpsBaudrate
+                blackbox_baudrate: blackboxBaudrate
+                identifier: oldSerialPort.identifier
+            SERIAL_CONFIG.ports.push serialPort
+            return
+        )
+        MSP.send_message MSPCodes.MSP_SET_CF_SERIAL_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_CF_SERIAL_CONFIG), false, save_to_eeprom
+        return
+
+    if semver.gte(CONFIG.apiVersion, '1.15.0')
+        ltmFunctionRule = 
+            name: 'TELEMETRY_LTM'
+            groups: [ 'telemetry' ]
+            sharableWith: [ 'msp' ]
+            notSharableWith: [ 'peripherals' ]
+            maxPorts: 1
+        functionRules.push ltmFunctionRule
+    else
+        mspFunctionRule = 
+            name: 'TELEMETRY_MSP'
+            groups: [ 'telemetry' ]
+            sharableWith: [ 'msp' ]
+            notSharableWith: [ 'peripherals' ]
+            maxPorts: 1
+        functionRules.push mspFunctionRule
+    if semver.gte(CONFIG.apiVersion, '1.18.0')
+        mavlinkFunctionRule = 
+            name: 'TELEMETRY_MAVLINK'
+            groups: [ 'telemetry' ]
+            sharableWith: [ 'msp' ]
+            notSharableWith: [ 'peripherals' ]
+            maxPorts: 1
+        functionRules.push mavlinkFunctionRule
+    if semver.gte(CONFIG.apiVersion, '1.31.0')
+        functionRules.push
+            name: 'ESC_SENSOR'
+            groups: [ 'sensors' ]
+            maxPorts: 1
+        functionRules.push
+            name: 'TBS_SMARTAUDIO'
+            groups: [ 'peripherals' ]
+            maxPorts: 1
+    if semver.gte(CONFIG.apiVersion, '1.27.0')
+        functionRules.push
+            name: 'IRC_TRAMP'
+            groups: [ 'peripherals' ]
+            maxPorts: 1
+    if semver.gte(CONFIG.apiVersion, '1.32.0')
+        functionRules.push
+            name: 'TELEMETRY_IBUS'
+            groups: [ 'telemetry' ]
+            maxPorts: 1
+    if semver.gte(CONFIG.apiVersion, '1.36.0')
+        functionRules.push
+            name: 'RUNCAM_DEVICE_CONTROL'
+            groups: [ 'peripherals' ]
+            maxPorts: 1
+    if semver.gte(CONFIG.apiVersion, '1.37.0')
+        functionRules.push
+            name: 'LIDAR_TF'
+            groups: [ 'peripherals' ]
+            maxPorts: 1
+    i = 0
+    while i < functionRules.length
+        functionRules[i].displayName = i18n.getMessage('portsFunction_' + functionRules[i].name)
+        i++
+    mspBaudRates = [
+        '9600'
+        '19200'
+        '38400'
+        '57600'
+        '115200'
+        '230400'
+        '250000'
+    ]
+    if semver.gte(CONFIG.apiVersion, '1.31.0')
+        mspBaudRates = mspBaudRates.concat([
+            '500000'
+            '1000000'
+        ])
+    gpsBaudRates = [
+        'AUTO'
+        '9600'
+        '19200'
+        '38400'
+        '57600'
+        '115200'
+    ]
+    telemetryBaudRates = [
+        'AUTO'
+        '9600'
+        '19200'
+        '38400'
+        '57600'
+        '115200'
+    ]
+    blackboxBaudRates = [
+        'AUTO'
+        '19200'
+        '38400'
+        '57600'
+        '115200'
+        '230400'
+        '250000'
+        '1500000'
+        '2000000'
+        '2470000'
+    ]
+    columns = [
+        'configuration'
+        'peripherals'
+        'sensors'
+        'telemetry'
+        'rx'
+    ]
+    if GUI.active_tab != 'ports'
+        GUI.active_tab = 'ports'
+    load_configuration_from_fc()
+    return
+
+TABS.ports.cleanup = (callback) ->
+    if callback
+        callback()
+    return
+

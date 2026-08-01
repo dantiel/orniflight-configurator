@@ -1,0 +1,199 @@
+.tab-vtx.toolbar_fixed_bottom
+  .content_wrapper
+    / should be the first DIV on each tab
+    .cf_column
+      .tab_title{i18n: "tabVtx"}
+        .cf_doc_version_bt
+          %a#button-documentation{href: "", target: "_blank"}
+      .note.vtx_supported
+        %p{i18n: "vtxHelp"}
+      .note.vtx_not_supported
+        %div{i18n: "vtxMessageNotSupported"}
+        .note.vtx_table_not_configured
+          %div{i18n: "vtxMessageTableNotConfigured"}
+          %table{style: "width:100%"}
+            %tr
+              %td
+                .leftWrapper
+                  .gui_box.grey.select_mode.vtx_supported
+                    .gui_box_titlebar
+                      .spacer_box_title{i18n: "vtxSelectedMode"}
+                      .spacer_box
+                        .field.checkbox.vtx_frequency_channel
+                          %span.checkboxspacer
+                            %input#vtx_frequency_channel.toggle{type: "checkbox"}
+                          %label
+                            %span.freelabel{i18n: "vtxFrequencyChannel"}
+                              .helpicon.cf_tip{i18n_title: "vtxFrequencyChannelHelp"}
+                        .field.number.vtx_band
+                          %span.numberspacer
+                            %select#vtx_band
+                              / Band options generated here from the js
+                          %label
+                            %span{i18n: "vtxBand"}
+                              .helpicon.cf_tip{i18n_title: "vtxBandHelp"}
+                        .field.number.vtx_channel
+                          %span.numberspacer
+                            %select#vtx_channel
+                              / Channel options generated here from the js
+                          %label
+                            %span{i18n: "vtxChannel"}
+                              .helpicon.cf_tip{i18n_title: "vtxChannelHelp"}
+                        .field.number.vtx_frequency
+                          %span.numberspacer
+                            %input#vtx_frequency.frequency_input{max: "5999", min: "64", type: "number"}
+                          %label
+                            %span{i18n: "vtxFrequency"}
+                              .helpicon.cf_tip{i18n_title: "vtxFrequencyHelp"}
+                        .field.number.vtx_power
+                          %span.numberspacer
+                            %select#vtx_power
+                              / Power options generated here from the js
+                          %span{i18n: "vtxPower"}
+                            .helpicon.cf_tip{i18n_title: "vtxPowerHelp"}
+                            .field.checkbox.vtx_pit_mode
+                              %span.checkboxspacer
+                                %input#vtx_pit_mode.toggle{type: "checkbox"}
+                              %span.freelabel{i18n: "vtxPitMode"}
+                                .helpicon.cf_tip{i18n_title: "vtxPitModeHelp"}
+                                .field.number.vtx_pit_mode_frequency
+                                  %span.numberspacer
+                                    %input#vtx_pit_mode_frequency.frequency_input{max: "5999", min: "0", type: "number"}
+                                  %span{i18n: "vtxPitModeFrequency"}
+                                    .helpicon.cf_tip{i18n_title: "vtxPitModeFrequencyHelp"}
+                                    .field.select.vtx_low_power_disarm
+                                      %span.selectspacer
+                                        %select#vtx_low_power_disarm
+                                          %option{i18n: "vtxLowPowerDisarmOption_0", value: "0"}
+                                          %option{i18n: "vtxLowPowerDisarmOption_1", value: "1"}
+                                          %option{i18n: "vtxLowPowerDisarmOption_2", value: "2"}
+                                      %span.freelabel{i18n: "vtxLowPowerDisarm"}
+                                        .helpicon.cf_tip{i18n_title: "vtxLowPowerDisarmHelp"}
+                            .rightWrapper
+                              .gui_box.grey.vtx_supported
+                                .gui_box_titlebar
+                                  .spacer_box_title{i18n: "vtxActualState"}
+                                .spacer_box
+                                  %table.cf_table
+                                    %tbody
+                                      %tr.description.vtx_type
+                                        %td.description_text{i18n: "vtxType"}
+                                        %td#vtx_type_description.description_value
+                                      %tr.description.vtx_device_ready
+                                        %td.description_text{i18n: "vtxDeviceReady"}
+                                        %td#vtx_device_ready_description.description_value
+                                      %tr.description.vtx_band
+                                        %td.description_text{i18n: "vtxBand"}
+                                        %td#vtx_band_description.description_value
+                                      %tr.description.vtx_channel
+                                        %td.description_text{i18n: "vtxChannel"}
+                                        %td#vtx_channel_description.description_value
+                                      %tr.description.vtx_frequency
+                                        %td.description_text{i18n: "vtxFrequency"}
+                                        %td#vtx_frequency_description.description_value
+                                      %tr.description.vtx_power
+                                        %td.description_text{i18n: "vtxPower"}
+                                        %td#vtx_power_description.description_value
+                                      %tr.description.pit_mode
+                                        %td.description_text{i18n: "vtxPitMode"}
+                                        %td#vtx_pit_mode_description.description_value
+                                      %tr.description.vtx_pit_mode
+                                        %td.description_text{i18n: "vtxPitModeFrequency"}
+                                        %td#vtx_pit_mode_frequency_description.description_value
+                                      %tr.description.vtx_low_power_disarm
+                                        %td.description_text{i18n: "vtxLowPowerDisarm"}
+                                        %td#vtx_low_power_disarm_description.description_value
+            %tr
+              %td
+                .leftWrapper
+                  .note.vtx_table_save_pending
+                    %div{i18n: "vtxMessageVerifyTable"}
+                    #vtx_table.gui_box.grey.vtx_table_box.vtx_table_available
+                      .gui_box_titlebar
+                        .spacer_box_title{i18n: "vtxTable"}
+                      .spacer_box
+                        .field.number.vtx_table_bands_channels
+                          %span.numberspacer
+                            %input#vtx_table_bands.one_digit_input{max: "8", min: "0", type: "number"}
+                          %label
+                            %span{i18n: "vtxTableBands"}
+                          %span.numberspacer
+                            %input#vtx_table_channels.one_digit_input{max: "8", min: "0", type: "number"}
+                          %label
+                            %span{i18n: "vtxTableChannels"}
+                          .helpicon.cf_tip{i18n_title: "vtxTableBandsChannelsHelp"}
+                          .field.number.table.vtx_table_bands_table
+                            %span
+                              %table.table_vtx_bands
+                                %tbody
+                                  / Bands generated here from the templates at the bottom
+                            %span
+                              .helpicon.cf_tip{i18n_title: "vtxTableBandsChannelsTableHelp"}
+                          .field.number.vtx_table_powerlevels
+                            %span.numberspacer
+                              %input#vtx_table_powerlevels.one_digit_input{max: "8", min: "0", type: "number"}
+                            %label
+                              %span{i18n: "vtxTablePowerLevels"}
+                                .helpicon.cf_tip{i18n_title: "vtxTablePowerLevelsHelp"}
+                          .field.number.table.vtx_table_powerlevels_table
+                            %span
+                              %table.table_vtx_powerlevels
+                                %tbody
+                                  %tr.vtx_table_powerlevels_title
+                                    / Title values generated here dinamically
+                                  %tr.vtx_table_powerlevels_values
+                                    / Powerlevels values generated here from the templates at the bottom
+                                  %tr.vtx_table_powerlevels_labels
+                                    / Powerlevels labels generated here from the templates at the bottom
+                            %span
+                              .helpicon.cf_tip{i18n_title: "vtxTablePowerLevelsTableHelp"}
+        .content_toolbar
+          .btn.save_file_btn
+            %a#save_file_button.save_file{href: "#", i18n: "vtxButtonSaveFile"}
+          .btn.load_file_btn
+            %a#load_file_button.load_file{href: "#", i18n: "vtxButtonLoadFile"}
+          .btn.load_cliboard_btn.clipboard_available
+            %a#load_clipboard_button.load_clipboard{href: "#", i18n: "vtxButtonLoadClipboard"}
+          .btn.save_btn
+            %a#save_button.save{href: "#", i18n: "vtxButtonSave"}
+      #tab-vtx-templates
+        #tab-vtx-powerlevel-values
+          %table
+            %tr
+              %td
+                %span.numberspacer.field_powerlevel_value
+                  %input#vtx_table_powerlevels{max: "65535", min: "0", type: "number", value: "0"}
+        #tab-vtx-powerlevel-labels
+          %table
+            %tr
+              %td
+                %span.textspacer.field_powerlevel_label
+                  %input#vtx_table_powerlabels.uppercase{maxlength: "3", size: "1", type: "text"}
+        #tab-vtx-bands-title
+          %table
+            %tr.vtx_table_band_values_title
+              %td
+                %span{i18n: "vtxTableBandTitleName"}
+              %td
+                %span{i18n: "vtxTableBandTitleLetter"}
+              %td
+                %span{i18n: "vtxTableBandTitleFactory"}
+        #tab-vtx-bands
+          %table
+            %tr.vtx_table_band_values
+              %td
+                %span.textspacer.field_band_name
+                  %input#vtx_table_band_name.uppercase{maxlength: "8", size: "8", type: "text"}
+              %td
+                %span.textspacer.field_band_letter
+                  %input#vtx_table_band_letter.uppercase{maxlength: "1", size: "1", type: "text"}
+              %td
+                %span.checkboxspacer
+                  %input#vtx_table_band_factory.togglesmall{type: "checkbox"}
+              / Channels generated here from the templates at the bottom
+        #tab-vtx-channels
+          %table
+            %tr
+              %td
+                %span.numberspacer.field_band_channel
+                  %input#vtx_table_band_channel.frequency_input{max: "5999", min: "0", type: "number", value: "0"}

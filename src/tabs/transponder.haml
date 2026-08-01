@@ -1,0 +1,36 @@
+.tab-transponder.toolbar_fixed_bottom
+  .content_wrapper
+    .tab_title{i18n: "tabTransponder"} Transponder
+    .cf_doc_version_bt
+      %a#button-documentation{href: "https://github.com/dantiel/orniflight/releases", rel: "noopener noreferrer", target: "_blank"}
+    .require-transponder-unsupported.note
+      %p{i18n: "transponderNotSupported"}
+    .require-transponder-supported
+      .gui_box.grey
+        .gui_box_titlebar
+          .spacer_box_title{i18n: "transponderConfigurationType"}
+        .spacer_box
+          .radio.transponderType
+            .textspacer-small
+              %select#transponder_type_select
+          #transponderHelpBox
+            .clear-both
+            .note
+              %p#transponderHelp
+      #transponder-configuration.gui_box.grey
+    .clear-both
+    .note
+      %p{i18n: "transponderInformation"}
+  .content_toolbar.require-transponder-supported
+    .btn.save_btn.save_no_reboot
+      %a.save{href: "#", i18n: "transponderButtonSave"}
+    .btn.save_btn.save_reboot{style: "display: none"}
+      %a.save.reboot{href: "#", i18n: "transponderButtonSaveReboot"}
+#tab-transponder-templates
+  #transponder-configuration-template
+    .gui_box_titlebar
+      .spacer_box_title
+    .spacer_box
+      .text
+        %span.dataHelp
+        .input_block.textspacer

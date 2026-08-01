@@ -1,0 +1,61 @@
+.tab-adjustments.toolbar_fixed_bottom
+  .content_wrapper
+    .tab_title{i18n: "tabAdjustments"}
+    .cf_doc_version_bt
+      %a#button-documentation{href: "https://github.com/dantiel/orniflight/wiki", rel: "noopener noreferrer", target: "_blank"}
+    .note
+      %p{i18n: "adjustmentsHelp"}
+      %p.adjustmentSlotsHelp{i18n: "adjustmentSlotsHelp"}
+      %b
+        %p{i18n: "adjustmentsExamples"}
+      %ul
+        %li{i18n: "adjustmentsExample1"}
+        %li{i18n: "adjustmentsExample2"}
+    %table.adjustments
+      %thead
+        %tr
+          %td.column-enable{i18n: "adjustmentsColumnEnable"}
+          %td{i18n: "adjustmentsColumnWhenChannel"}
+          %td{i18n: "adjustmentsColumnIsInRange"}
+          %td{i18n: "adjustmentsColumnThenApplyFunction"}
+          %td.adjustmentSlotHeader{i18n: "adjustmentsColumnUsingSlot"}
+          %td{i18n: "adjustmentsColumnViaChannel"}
+      %tbody
+  .content_toolbar
+    .btn.save_btn
+      %a.save{href: "#", i18n: "adjustmentsSave"}
+#tab-adjustments-templates
+  %table.adjustments
+    %tbody
+      %tr.adjustment
+        %td.info
+          .enabling
+            %input.enable.toggle{type: "checkbox"}
+        %td.channelInfo
+          %div
+            %select.channel
+              %option{value: ""}
+          .limits
+            %p.lowerLimit
+              %span{i18n: "adjustmentsMin"}
+              \:
+              %span.lowerLimitValue
+            %p.upperLimit
+              %span{i18n: "adjustmentsMax"}
+              \:
+              %span.upperLimitValue
+        %td.range
+          .channel-slider.pips-channel-range
+            .marker
+        %td.functionSelection
+          %select#functionSelectionSelect.function
+            / Generated values go here
+        %td.adjustmentSlot
+          %select.slot
+            %option{i18n: "adjustmentsSlot0", value: "0"}
+            %option{i18n: "adjustmentsSlot1", value: "1"}
+            %option{i18n: "adjustmentsSlot2", value: "2"}
+            %option{i18n: "adjustmentsSlot3", value: "3"}
+        %td.functionSwitchChannel
+          %select.channel
+            %option{value: ""}

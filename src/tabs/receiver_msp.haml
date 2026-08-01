@@ -1,0 +1,42 @@
+%html
+  %head
+    %link{href: "/css/opensans_webfontkit/fonts.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %script{src: "/node_modules/jquery/dist/jquery.min.js", type: "text/javascript"}
+    %script{src: "/node_modules/jquery-ui-npm/jquery-ui.min.js", type: "text/javascript"}
+    %script{src: "/js/libraries/jquery.nouislider.all.min.js", type: "text/javascript"}
+    %script{src: "/js/tabs/receiver_msp.js", type: "text/javascript"}
+    %link{href: "/js/libraries/jquery.nouislider.min.css", rel: "stylesheet", type: "text/css"}
+    %link{href: "/js/libraries/jquery.nouislider.pips.min.css", rel: "stylesheet", type: "text/css"}
+    %link{href: "/css/main.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "/css/tabs/receiver_msp.css", media: "all", rel: "stylesheet", type: "text/css"}
+  %body
+    .control-gimbals
+      .control-gimbal.left
+        %span.gimbal-label.gimbal-label-vert
+        %span.gimbal-label.gimbal-label-horz
+        %span.crosshair.crosshair-vert
+        %span.crosshair.crosshair-horz
+        .control-stick
+      .control-gimbal.right
+        %span.gimbal-label.gimbal-label-vert
+        %span.gimbal-label.gimbal-label-horz
+        %span.crosshair.crosshair-vert
+        %span.crosshair.crosshair-horz
+        .control-stick
+    .control-sliders
+      .control-slider
+        .slider
+          %span.slider-label
+      .control-slider
+        .slider
+          %span.slider-label
+      .control-slider
+        .slider
+          %span.slider-label
+      .control-slider
+        .slider
+          %span.slider-label
+    .warning
+      %p{i18n: "receiverMspWarningText"}
+      .button-enable
+        %a.btn{href: "#", i18n: "receiverMspEnableButton"}

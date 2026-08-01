@@ -1,0 +1,93 @@
+.tab-onboard_logging.toolbar_fixed_bottom
+  .content_wrapper
+    .tab_title{i18n: "tabOnboardLogging"}
+    .cf_doc_version_bt
+      %a#button-documentation{href: "https://github.com/dantiel/orniflight/releases", rel: "noopener noreferrer", target: "_blank"}
+    .require-blackbox-unsupported.note
+      %p{i18n: "blackboxNotSupported"}
+    .require-blackbox-maybe-supported.note
+      %p{i18n: "blackboxMaybeSupported"}
+    .require-blackbox-supported
+      .gui_box.grey.require-blackbox-config-supported
+        .gui_box_titlebar
+          .spacer_box_title{i18n: "blackboxConfiguration"}
+        .spacer_box
+          .line.blackboxDevice
+            %select{name: "blackbox_device"}
+            %span{i18n: "onboardLoggingBlackbox"}
+          .line.blackboxRate
+            %select{name: "blackbox_rate"}
+            %span{i18n: "onboardLoggingRateOfLogging"}
+          .line.blackboxDebugMode
+            %select{name: "blackboxDebugMode"}
+            %span{i18n: "onboardLoggingDebugMode"}
+          .line
+            %a.save-settings.regular-button{href: "#", i18n: "blackboxButtonSave"}
+      .gui_box.grey
+        .gui_box_titlebar{align: "left"}
+          .spacer_box_title{i18n: "onboardLoggingSerialLogger"}
+        .spacer_box
+          %p{i18n: "serialLoggingSupportedNote"}
+      .gui_box.grey.require-dataflash-supported
+        .gui_box_titlebar{align: "left"}
+          .spacer_box_title{i18n: "onboardLoggingFlashLogger"}
+        .spacer_box
+          .require-dataflash-supported
+            %p{i18n: "dataflashNote"}
+            %dialog.dataflash-confirm-erase
+              %h3{i18n: "dataflashConfirmEraseTitle"}
+              .dataflash-confirm-erase-note{i18n: "dataflashConfirmEraseNote"}
+              .dataflash-erase-progress
+                .data-loading
+                  %p{i18n: "onboardLoggingEraseInProgress"}
+              .buttons
+                %a.erase-flash-confirm.regular-button{href: "#", i18n: "dataflashButtonEraseConfirm"}
+                %a.erase-flash-cancel.regular-button{href: "#", i18n: "dataflashButtonEraseCancel"}
+            %dialog.dataflash-saving
+              %h3{i18n: "dataflashSavingTitle"}
+              .dataflash-saving-before
+                %div{i18n: "dataflashSavingNote"}
+                %progress{max: "100", min: "0", value: "0"}
+                .buttons
+                  %a.save-flash-cancel.regular-button{href: "#", i18n: "dataflashButtonSaveCancel"}
+              .dataflash-saving-after
+                %div{i18n: "dataflashSavingNoteAfter"}
+                .buttons
+                  %a.save-flash-dismiss.regular-button{href: "#", i18n: "dataflashButtonSaveDismiss"}
+            %ul.dataflash-contents
+              %li.dataflash-used
+                .legend
+              %li.dataflash-free
+                .legend
+            .dataflash-buttons
+              %a.regular-button.erase-flash{href: "#", i18n: "dataflashButtonErase"}
+              %a.regular-button.require-msc-not-supported.save-flash{href: "#", i18n: "dataflashButtonSaveFile"}
+              %a.regular-button.require-msc-supported.save-flash{href: "#"}
+                %span{i18n: "dataflashButtonSaveFileDeprecated"}
+                %span.helpicon.cf_tip{i18n_title: "dataflashSaveFileDepreciationHint"}
+          %p.require-dataflash-not-present{i18n: "dataflashNotPresentNote"}
+          %p.require-dataflash-unsupported{i18n: "dataflashFirmwareUpgradeRequired"}
+      .require-sdcard-supported
+        .gui_box.grey
+          .gui_box_titlebar{align: "left"}
+            .spacer_box_title{i18n: "onboardLoggingOnboardSDCard"}
+          .spacer_box
+            .sdcard
+              .sdcard-icon
+              .sdcard-status
+            %p{i18n: "sdcardNote"}
+            .require-sdcard-ready
+              %ul.sdcard-contents
+                %li.sdcard-other
+                  .legend
+                %li.sdcard-free
+                  .legend
+    .gui_box.grey.require-msc-supported
+      .gui_box_titlebar{align: "left"}
+        .spacer_box_title{i18n: "onboardLoggingMsc"}
+      .spacer_box
+        .require-msc-supported
+          %p{i18n: "onboardLoggingMscNote"}
+          %div
+            %a.require-msc-ready.regular-button.onboardLoggingRebootMsc{href: "#", i18n: "onboardLoggingRebootMscText"}
+        %p.require-msc-not-ready{i18n: "onboardLoggingMscNotReady"}

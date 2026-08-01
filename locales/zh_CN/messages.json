@@ -586,22 +586,19 @@
         "message": "EEPROM <span class=\"message-positive\">已保存</span>"
     },
     "defaultWelcomeIntro": {
-        "message": "欢迎使用<strong>Betaflight - 配置程序</strong>，为简化固件升级，设置和调校飞控而生的工具。"
+        "message": "Welcome to <strong>OrniFlight - Configurator</strong>, a utility designed to simplify updating, configuring and tuning your ornithopter flight controller."
     },
     "defaultWelcomeHead": {
-        "message": "硬件"
+        "message": "Ornithopter Flight Control"
     },
     "defaultWelcomeText": {
-        "message": "本应用支持所有能运行betaflight的飞控。在”固件烧写“页面查看所有支持的飞控列表。<br><br> <a href=\"https://github.com/betaflight/blackbox-log-viewer/releases\" target=\"_blank\">下载 Betaflight Blackbox 日志查看工具 </a><br /><br />固件源代码可以点击 <a href=\"https://github.com/betaflight/betaflight\" title=\"www.github.com\" target=\"_blank\">这里</a> 下载<br />最新发布已编译的固件可以点击 <a href=\"https://github.com/betaflight/betaflight/releases\" title=\"www.github.com\" target=\"_blank\">这里</a> 下载<br /><br />最新的 <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com\" target=\"_blank\">CP210x 驱动</a> 可以点击 <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com\" target=\"_blank\">这里</a> 下载 <br />最新的 <a href=\"http://www.st.com/web/en/catalog/tools/PF257938\" title=\"http://www.st.com\" target=\"_blank\">STM USB VCP Drivers</a> 可以点击 <a href=\"http://www.st.com/web/en/catalog/tools/PF257938\" title=\"http://www.st.com\" target=\"_blank\">这里</a> 下载<br />最新的 <a href=\"http://zadig.akeo.ie/\" title=\"http://zadig.akeo.ie\" target=\"_blank\">Zadig</a>可以点击 <a href=\"http://zadig.akeo.ie/\" title=\"http://zadig.akeo.ie\" target=\"_blank\">这里</a> 下载<br />"
+        "message": "Whether you're building a single-wing glider, a multi-wing ornithopter, or an experimental flapper — OrniFlight gives you full control over flapping-wing flight dynamics. Configure servo-driven wings, tune aerodynamic parameters, and bring your ornithopter to life."
     },
     "defaultContributingHead": {
-        "message": "参与开发"
+        "message": "Community-driven. Open source. Built for makers."
     },
     "defaultContributingText": {
-        "message": "如果你想帮助betaflight变得更好，你可以：<br /><ul><li>在论坛和IRC里帮助回答其他用户的问题</li><li> 参与固件和配置程序的开发，例如增加新功能，解决漏洞，改善代码</li><li>测试 <a href=\"https://github.com/Betaflight/betaflight/pulls\" target=\"_blank\">新功能和修改</a> 并提供测试反馈</li><li>帮助 <a href=\"https://github.com/betaflight/betaflight/issues\" target=\"_blank\">寻找问题和提出建议</a> </li><li>在这里 <a href=\"https://crowdin.com/project/betaflight-configurator\" target=\"_blank\">帮助翻译配置程序</a></li><li></li></ul>"
-    },
-    "defaultFacebookText": {
-        "message": "我们还有一个 <a href=\"https://www.facebook.com/groups/betaflightgroup/\" target=\"_blank\">Facebook 小组</a>。<br />加入我们来一起讨论 Betaflight, 询问配置问题, 或者只是和小伙伴们闲聊。"
+        "message": "OrniFlight is an open-source flapping-wing flight controller. If you want to contribute: <ul><li>Answer questions from other users in the <a href=\"https://github.com/dantiel/orniflight/discussions\" target=\"_blank\">OrniFlight Discussions</a>.</li><li>Contribute code — <a href=\"https://github.com/dantiel/orniflight\" target=\"_blank\">firmware</a> and <a href=\"https://github.com/dantiel/orniflight-configurator\" target=\"_blank\">configurator</a>.</li><li>Test new features and provide feedback.</li><li>Help with <a href=\"https://github.com/dantiel/orniflight/issues\" target=\"_blank\">issues and feature requests</a>.</li></ul>"
     },
     "defaultChangelogHead": {
         "message": "Configurator - 更新日志"
@@ -622,19 +619,19 @@
         "message": "捐赠"
     },
     "defaultSponsorsHead": {
-        "message": "赞助商"
+        "message": "Sponsors"
     },
     "defaultDocumentationHead": {
         "message": "文档/手册"
     },
     "defaultDocumentation": {
-        "message": "Betaflight的文档和发布说明可以在wiki里面找到。<br /><br />"
+        "message": "OrniFlight documentation is available in release notes and wiki.<br /><br />"
     },
     "defaultDocumentation1": {
-        "message": "学习Betaflight最好的资源是使用Betaflight wiki，它在 <a href=\"https://github.com/betaflight/betaflight/wiki\" target=\"_blank\">这里</a> 。"
+        "message": "The OrniFlight wiki is a great resource for information, it can be found <a href=\"https://github.com/dantiel/orniflight/wiki\" target=\"_blank\">here</a>."
     },
     "defaultDocumentation2": {
-        "message": "最新发布版本的信息可以在 <a href=\"https://github.com/Betaflight/Betaflight/releases\" target=\"_blank\">这里</a> 找到。"
+        "message": "The release notes for the firmware can be read at GitHub releases page, <a href=\"https://github.com/dantiel/orniflight/releases\" target=\"_blank\">here</a>."
     },
     "defaultSupportHead": {
         "message": "支持"
@@ -646,22 +643,22 @@
         "message": "开发者"
     },
     "defaultSupport": {
-        "message": "需要帮助时请先搜索论坛或者咨询飞控的生产商。<br /><br />"
+        "message": "For support please check the OrniFlight wiki and discussions first.<br /><br />"
     },
     "defaultSupport1": {
-        "message": "<a href=\"http://www.rcgroups.com/forums/showthread.php?t=2464844&page=1\" target=\"_blank\">RC Groups thread</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight/discussions\" target=\"_blank\">OrniFlight Discussions</a>"
     },
     "defaultSupport2": {
-        "message": "<a href=\"http://betaflight.info\" target=\"_blank\">Betaflight Wiki</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight/wiki\" target=\"_blank\">OrniFlight Wiki</a>"
     },
     "defaultSupport3": {
-        "message": "<a href=\"https://www.youtube.com/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Betaflight 设置教程视频</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight\" target=\"_blank\">OrniFlight on GitHub</a>"
     },
     "defaultSupport4": {
-        "message": "<a href=\"https://github.com/Betaflight\" target=\"_blank\">GitHub</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight\" target=\"_blank\">GitHub</a>"
     },
     "defaultSupport5": {
-        "message": "<a href=\"https://slack.betaflight.com\" target=\"_blank\">Betaflight 开发者 Slack</a>"
+        "message": "<a href=\"https://github.com/dantiel/orniflight/discussions\" target=\"_blank\">OrniFlight Discussions</a>"
     },
     "initialSetupBackupAndRestoreApiVersion": {
         "message": "<span class=\"message-negative\">备份和恢复功能被禁用。</span>当前飞控固件的API版本为 <span class=\"message-negative\">$1</span>，而备份和恢复功能需要版本 <span class=\"message-positive\">$2</span>。请通过 CLI 命令行手工备份，具体操作流程请参阅 Betaflight 文档。"
@@ -5372,5 +5369,23 @@
     },
     "darkTheme": {
         "message": "使用暗色主题"
+    },
+    "defaultCommunityText": {
+        "message": "Join the OrniFlight community — contribute code, share builds, report bugs, and shape the future of flapping-wing flight together."
+    },
+    "defaultFirmwareHead": {
+        "message": "Firmware"
+    },
+    "defaultFirmwareText": {
+        "message": "OrniFlight is the firmware running on your flight controller — handling wing servos, sensor fusion, and flight stabilization."
+    },
+    "defaultFirmware1": {
+        "message": "The OrniFlight firmware source code can be found <a href=\"https://github.com/dantiel/orniflight\" target=\"_blank\">here</a>."
+    },
+    "defaultFirmware2": {
+        "message": "The latest firmware binaries are available on the <a href=\"https://github.com/dantiel/orniflight/releases\" target=\"_blank\">releases page</a>."
+    },
+    "defaultDocumentation3": {
+        "message": "The OrniFlight Configurator source code is <a href=\"https://github.com/dantiel/orniflight-configurator\" target=\"_blank\">here</a>."
     }
 }

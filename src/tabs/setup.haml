@@ -1,0 +1,115 @@
+.tab-setup
+  .content_wrapper.initialstyle
+    / should be the first DIV on each tab
+    .cf_column.full
+      .tab_title{i18n: "tabSetup"} Setup
+      .cf_doc_version_bt
+        %a#button-documentation{href: "", target: "_blank"}
+      .cf_column.fourth.buttonarea
+        .spacer_right
+          .default_btn
+            #accel_calib_rest
+              %a#default_btn_green.calibrateAccel{href: "#", i18n: "initialSetupButtonCalibrateAccel"}
+            #accel_calib_running
+              .data-loading-setup
+                %p{i18n: "initialSetupButtonCalibratingText"}
+          .default_btn
+            #mag_calib_rest
+              %a.calibrateMag{href: "#", i18n: "initialSetupButtonCalibrateMag"}
+            #mag_calib_running
+              .data-loading-setup
+                %p{i18n: "initialSetupButtonCalibratingText"}
+          .default_btn
+            %a.resetSettings{href: "#", i18n: "initialSetupButtonReset"}
+          .half
+            .spacer_right.halfbuttons
+              .default_btn.half
+                %a.backup{href: "#", i18n: "initialSetupButtonBackup"}
+          .half
+            .default_btn.half
+              %a.restore{href: "#", i18n: "initialSetupButtonRestore"}
+          .default_btn.initialSetupRebootBootloader
+            %a.rebootBootloader{href: "#", i18n: "initialSetupButtonRebootBootloader"}
+      .threefourth_right.setupinfo
+        .cell_setup
+          %span{i18n: "initialSetupCalibrateAccelText"}
+        .cell_setup
+          %span{i18n: "initialSetupCalibrateMagText"}
+        .cell_setup
+          %span{i18n: "initialSetupResetText"}
+        .cell_setup
+          %span{i18n: "initialSetupBackupRestoreText"}
+        .cell_setup.initialSetupRebootBootloader
+          %span{i18n: "initialSetupRebootBootloaderText"}
+    .modelwrapper
+    .cf_column.threefourth_left
+      .spacer_right
+        .model-and-info
+          #interactive_block
+            #canvas_wrapper
+              %canvas#canvas
+              %canvas#wave-canvas{height: "120", width: "660"}
+              .attitude_info
+                %dl
+                  %dt Heading:
+                  %dd.heading
+                  %dt Pitch:
+                  %dd.pitch
+                  %dt Roll:
+                  %dd.roll
+            %a.reset{href: "#", i18n: "initialSetupButtonResetZaxis"}
+    .cf_column.fourth
+      .spacer_left
+        .gui_box.grey
+          .gui_box_titlebar
+            .spacer_box_title{i18n: "initialSetupInfoHead"}
+          .spacer_box
+            %table.cf_table{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+              %tbody
+                %tr
+                  %td#arming-disable-flag.cf_tip{i18n: "initialSetupArmingDisableFlags"}
+                  %td.arming-disable-flags
+                %tr
+                  %td{i18n: "initialSetupBattery"}
+                  %td.bat-voltage 0 V
+                %tr
+                  %td{i18n: "initialSetupDrawn"}
+                  %td.bat-mah-drawn 0 mAh
+                %tr
+                  %td{i18n: "initialSetupDrawing"}
+                  %td.bat-mah-drawing 0.00 A
+                %tr.noboarder
+                  %td{i18n: "initialSetupRSSI"}
+                  %td.rssi 0 %
+      .spacer_left
+        .gui_box.grey
+          .gui_box_titlebar
+            .spacer_box_title{i18n: "initialSetupGPSHead"}
+          .spacer_box
+            %table.cf_table{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+              %tbody
+                %tr
+                  %td{i18n: "gps3dFix"}
+                  %td.gpsFix
+                %tr
+                  %td{i18n: "gpsSats"}
+                  %td.gpsSats
+                %tr
+                  %td{i18n: "gpsLat"}
+                  %td.gpsLat
+                %tr.noboarder
+                  %td{i18n: "gpsLon"}
+                  %td.gpsLon
+      .spacer_left
+        .gui_box.grey.instrumentsbox{align: "center"}
+          .gui_box_titlebar{align: "left"}
+            .spacer_box_title{i18n: "initialSetupInstrumentsHead"}
+          %span#attitude
+          %span#heading
+  %dialog.dialogConfirmReset
+    %h3{i18n: "dialogConfirmResetTitle"}
+    .content
+      %div{i18n: "dialogConfirmResetNote", style: "margin-top: 10px"}
+    .buttons
+      %a.dialogConfirmReset-confirmbtn.regular-button{href: "#", i18n: "dialogConfirmResetConfirm"}
+      %a.dialogConfirmReset-cancelbtn.regular-button{href: "#", i18n: "dialogConfirmResetClose"}

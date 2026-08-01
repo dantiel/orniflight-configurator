@@ -1,0 +1,26 @@
+.tab-setup-osd
+  .content_wrapper.initialstyle
+    / should be the first DIV on each tab
+    .cf_column.full
+      .tab_title{i18n: "tabSetupOSD"} OSD
+      .cf_doc_version_bt
+        %a#button-documentation{href: "", target: "_blank"}
+      .cf_column.fourth.buttonarea
+        .spacer_right
+          .default_btn
+            %a.resetSettings{href: "#", i18n: "osdSetupButtonReset"}
+      .threefourth_right.osdinfo
+        .cell_osd
+          %span{i18n: "osdSetupResetText"}
+    .gui_box.grey.info
+      .gui_box_titlebar
+        .spacer_box_title{i18n: "osdSetupHead"}
+      .spacer_box
+        %table.cf_table{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+          %tbody
+            %tr
+              %td{i18n: "osdSetupVideoMode"}
+              %td.video-mode
+            %tr
+              %td{i18n: "osdSetupCameraConnected"}
+              %td.camera-connected

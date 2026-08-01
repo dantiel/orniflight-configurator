@@ -2,110 +2,111 @@
 
 ![OrniFlight](of_logo.png)
 
-OrniFlight Configurator is a crossplatform configuration tool for the OrniFlight flight control system.
+> **The complete flapping-wing flight suite.** For scientific laboratories, ornithopter builders, makers, and pilots shaping the future of avian aviation.
 
-It runs as an app within Google Chrome and allows you to configure the OrniFlight software running on any [supported OrniFlight target](https://github.com/dantiel/orniflight/tree/master/src/main/target).
+---
 
-There is also now a standalone version available, since Google Chrome Apps are getting deprecated on platforms that aren't Chrome OS. [Downloads are available in Releases.](https://github.com/dantiel/orniflight-configurator/releases)
+OrniFlight Configurator is the official desktop configuration tool for the [OrniFlight](https://github.com/dantiel/orniflight) flight control system — the cutting-edge open-source platform for flapping-wing aircraft.
 
-Various types of flapping aircraft are supported by the tool and by OrniFlight, e.g. twin flapters, quad flapters, etc.
+Whether you're in a university lab researching avian aerodynamics, building a high-performance racing ornithopter, or crafting a biologically-inspired multi-wing flapper, the Configurator gives you full-spectrum control: tune aerodynamic profiles, visualize servo waveforms in real time, configure multi-wing geometries, and push the boundaries of what flapping flight can achieve.
 
-## Authors
+### What Makes OrniFlight Different
 
-OrniFlight Configurator is a [fork](#credits) of the Betaflight Configurator with support for OrniFlight instead of Betaflight.
+- **Purpose-built for flapping flight** — not a quadcopter firmware with wings bolted on. Aerodynamic parameters, glide coefficients, ferocity curves, and waveform tuning are first-class citizens.
+- **Real-time 3D visualization** — see your ornithopter's wings move exactly as they will in flight, with live servo waveform plotting and dynamic wing-pair rendering (1–4 pairs).
+- **Scientific-grade configurability** — per-slot ornithopter profiles, aeroelastic coefficients, downstroke/upstroke ferocity, cadence gain, amplitude, frequency, and more.
+- **Multi-wing architecture** — twin flapters, quad flapters, experimental multi-wing platforms. The configurator adapts its 3D model and waveform display to your servo count.
+- **F3 to H7** — backward-compatible with STM32F3 hardware. Cutting-edge features run on cutting-edge chips; proven stability runs on proven hardware.
 
-This configurator is the only configurator with support for OrniFlight specific features. It will likely require that you run the latest firmware on the flight controller.
-If you are experiencing any problems please make sure you are running the [latest firmware version](https://github.com/dantiel/orniflight/releases/).
+### Target Audience
+
+| Audience | Use Case |
+|----------|----------|
+| **Research Labs** | Avian flight dynamics, aeroelasticity studies, biomimetic drone research |
+| **Ornithopter Builders** | Full configuration, tuning, and visualization for custom flapping-wing craft |
+| **Makers & Hobbyists** | Bring your ornithopter to life with an intuitive, powerful configurator |
+| **Pilots** | Tune flight characteristics, switch ornithopter profiles mid-air, optimize for speed or grace |
+| **Future Racers** | OrniFlight is built for the day flapping-wing racing takes off — and that day is coming |
 
 ## Installation
 
-### Standalone
+### Standalone (Recommended)
 
-**This is the default installation method, and at some point in the future this will become the only way available for most platforms. Please use this method whenever possible.**
+Download the latest installer for your platform from [Releases](https://github.com/dantiel/orniflight-configurator/releases).
 
-Download the installer from [Releases.](https://github.com/dantiel/orniflight-configurator/releases)
-
-#### Note for MacOS X users
-
-Changes to the security model used in the latest versions of MacOS X 10.14 (Mojave) and 10.15 (Catalina) mean that the operating system will show an error message ('"OrniFlight Configurator.app" is damaged and can’t be opened. You should move it to the Trash.') when trying to install the application. To work around this, run the following command in a terminal before installing: `sudo spctl --master-disable`. Then install OrniFlight configurator, and after verifying that the installation has worked, run `sudo spctl --master-enable`.
-
-## Native app build via NW.js
-
-### Development
-
-1. Install node.js (version 10 required)
-2. Install yarn: `npm install yarn -g`
-3. Change to project folder and run `yarn install`.
-4. Run `yarn start`.
-
-### Running tests
-
-`yarn test`
-
-### App build and release
-
-The tasks are defined in `gulpfile.js` and can be run with through yarn:
+**macOS**: If you see a security warning on Mojave/Catalina or later, run:
 ```
-yarn gulp <taskname> [[platform] [platform] ...]
+sudo spctl --master-disable
+```
+Install OrniFlight Configurator, verify it works, then:
+```
+sudo spctl --master-enable
 ```
 
-List of possible values of `<task-name>`:
-* **dist** copies all the JS and CSS files in the `./dist` folder.
-* **apps** builds the apps in the `./apps` folder [1].
-* **debug** builds debug version of the apps in the `./debug` folder [1].
-* **release** zips up the apps into individual archives in the `./release` folder [1]. 
+## Development
 
-[1] Running this task on macOS or Linux requires Wine, since it's needed to set the icon for the Windows app (build for specific platform to avoid errors).
+### Prerequisites
+- Node.js 10+
+- Yarn: `npm install yarn -g`
 
-#### Build or release app for one specific platform
-To build or release only for one specific platform you can append the plaform after the `task-name`.
-If no platform is provided, all the platforms will be done in sequence.
+### Setup
+```bash
+yarn install
+yarn start
+```
 
-* **MacOS X** use `yarn gulp <task-name> --osx64`
-* **Linux** use `yarn gulp <task-name> --linux64`
-* **Windows** use `yarn gulp <task-name> --win32`
-* **ChromeOS** use `yarn gulp <task-name> --chromeos`
+### Tests
+```bash
+yarn test
+```
 
-You can also use multiple platforms e.g. `yarn gulp <taskname> --osx64 --linux64`.
+### Building
+```bash
+yarn gulp dist          # Gather JS/CSS → ./dist
+yarn gulp apps          # Build standalone apps → ./apps
+yarn gulp release       # Package archives → ./release
+```
 
-## Notes
+Platform-specific builds:
+```bash
+yarn gulp <task> --osx64
+yarn gulp <task> --linux64
+yarn gulp <task> --win32
+yarn gulp <task> --chromeos
+```
 
-### WebGL
+> Building Windows apps on macOS/Linux requires Wine (for icon embedding).
 
-Make sure Settings -> System -> "User hardware acceleration when available" is checked to achieve the best performance
+## Performance Notes
 
-### Linux users
-
-Dont forget to add your user into dialout group "sudo usermod -aG dialout YOUR_USERNAME" for serial access
-
-### Linux / MacOS X users
-
-If you have 3D model animation problems, enable "Override software rendering list" in Chrome flags chrome://flags/#ignore-gpu-blacklist
+- **WebGL**: Ensure Chrome's "Use hardware acceleration when available" is enabled under Settings → System.
+- **Linux**: Add your user to the `dialout` group: `sudo usermod -aG dialout $USER`
+- **3D rendering issues**: Enable `chrome://flags/#ignore-gpu-blacklist` → "Override software rendering list"
 
 ## Support
 
-### Issue trackers
+| Resource | Link |
+|----------|------|
+| **Discussions** | [github.com/dantiel/orniflight/discussions](https://github.com/dantiel/orniflight/discussions) |
+| **Wiki** | [github.com/dantiel/orniflight/wiki](https://github.com/dantiel/orniflight/wiki) |
+| **Firmware Issues** | [github.com/dantiel/orniflight/issues](https://github.com/dantiel/orniflight/issues) |
+| **Configurator Issues** | [github.com/dantiel/orniflight-configurator/issues](https://github.com/dantiel/orniflight-configurator/issues) |
 
-For OrniFlight configurator issues raise them here
+## Technical Details
 
-https://github.com/dantiel/orniflight-configurator/issues
+The Configurator uses the **MSP** (MultiWii Serial Protocol) over serial/USB to communicate with the flight controller. The UI is built with jQuery and NW.js, forked from Betaflight Configurator 10.6.0 and evolved into a standalone ornithopter-focused tool.
 
-For OrniFlight firmware issues raise them here
+## Contributing
 
-https://github.com/dantiel/orniflight/issues
-
-## Technical details
-
-The configurator is based on chrome.serial API running on Google Chrome/Chromium core.
-
-## Developers
-
-We accept clean and reasonable patches, submit them!
+We welcome clean, focused patches. OrniFlight spans firmware (C, embedded) and configurator (JavaScript, HTML, CSS) — both repos are open to contributions.
 
 ## Credits
 
-Betaflight squad - based on Betaflight 4.0.6 and Betaflight configurator 10.6.0
+- **Betaflight team** — original Betaflight Configurator 10.6.0, the foundation this project was forked from
+- **ctn** — primary author of Baseflight Configurator
+- **Hydra** — author of Cleanflight Configurator
+- **dantiel & OrniFlight contributors** — transforming the platform for flapping-wing flight
 
-ctn - primary author and maintainer of Baseflight Configurator from which Cleanflight Configurator project was forked.
+---
 
-Hydra -  author and maintainer of Cleanflight Configurator from which this project was forked.
+*The future of cutting-edge flapping flight is OrniFlight.*

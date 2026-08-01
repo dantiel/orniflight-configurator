@@ -1,0 +1,136 @@
+.tab-firmware_flasher.toolbar_fixed_bottom
+  .content_wrapper
+    .options.gui_box
+      .spacer
+        %table.cf_table{style: "margin-top: 10px;"}
+          %tr.option
+            %td
+              %label
+                %input.show_development_releases.toggle{type: "checkbox"}
+                %span{i18n: "firmwareFlasherShowDevelopmentReleases"}
+            %td
+              %span.description{i18n: "firmwareFlasherShowDevelopmentReleasesDescription"}
+          %tr.expert_mode.option
+            %td
+              %label
+                %input.expert_mode.toggle{type: "checkbox"}
+                %span{i18n: "expertMode"}
+            %td
+              %span.description{i18n: "expertModeDescription"}
+          %tr.build_type
+            %td
+              %select{name: "build_type"}
+                / options generated at runtime
+            %td
+              %span.description{i18n: "firmwareFlasherOnlineSelectBuildType"}
+          %tr
+            %td
+              %select{name: "board"}
+                %option{i18n: "firmwareFlasherOptionLoading", value: "0"} Loading ...
+            %td
+              %span.description{i18n: "firmwareFlasherOnlineSelectBoardDescription"}
+              .helpicon.cf_tip_wide{i18n_title: "firmwareFlasherOnlineSelectBoardHint"}
+          %tr
+            %td
+              %select{name: "firmware_version"}
+                %option{i18n: "firmwareFlasherOptionLoading", value: "0"} Loading ...
+            %td
+              %span.description{i18n: "firmwareFlasherOnlineSelectFirmwareVersionDescription"}
+          %tr
+            %td
+              %label
+                %input.updating.toggle{type: "checkbox"}
+                %span{i18n: "firmwareFlasherNoReboot"}
+            %td
+              %span.description{i18n: "firmwareFlasherNoRebootDescription"}
+          %tr.option.flash_on_connect_wrapper
+            %td
+              %label
+                %input.flash_on_connect.toggle{type: "checkbox"}
+                %span{i18n: "firmwareFlasherFlashOnConnect"}
+            %td
+              %span.description{i18n: "firmwareFlasherFlashOnConnectDescription"}
+          %tr.option
+            %td
+              %label
+                %input.erase_chip.toggle{type: "checkbox"}
+                %span{i18n: "firmwareFlasherFullChipErase"}
+            %td
+              %span.description{i18n: "firmwareFlasherFullChipEraseDescription"}
+          %tr.option.manual_baud_rate.noboarder
+            %td
+              %label
+                %input.flash_manual_baud.toggle{type: "checkbox"}
+                %span{i18n: "firmwareFlasherManualBaud"}
+                %select#flash_manual_baud_rate{i18n_title: "firmwareFlasherBaudRate"}
+                  %option{value: "921600"} 921600
+                  %option{value: "460800"} 460800
+                  %option{selected: "selected", value: "256000"} 256000
+                  %option{value: "230400"} 230400
+                  %option{value: "115200"} 115200
+                  %option{value: "57600"} 57600
+                  %option{value: "38400"} 38400
+                  %option{value: "28800"} 28800
+                  %option{value: "19200"} 19200
+            %td
+              %span.description{i18n: "firmwareFlasherManualBaudDescription"}
+    .clear-both
+    .git_info
+      .title{i18n: "firmwareFlasherGithubInfoHead"}
+      %p
+        %strong{i18n: "firmwareFlasherHash"}
+        %a.hash{href: "#", i18n_title: "firmwareFlasherUrl", target: "_blank"}
+        %br
+        %strong{i18n: "firmwareFlasherCommiter"}
+        %span.committer
+        %br
+        %strong{i18n: "firmwareFlasherDate"}
+        %span.date
+        %br
+        %strong{i18n: "firmwareFlasherMessage"}
+        %span.message
+    .release_info.gui_box
+      .darkgrey_box.gui_box_titlebar
+        .spacer_box_title{i18n: "firmwareFlasherReleaseSummaryHead", style: "text-align: center;"}
+      .spacer{style: "margin-bottom: 10px;"}
+        %strong{i18n: "firmwareFlasherReleaseTarget"}
+        %span.target
+        %br
+        #manufacturerInfo
+          %strong{i18n: "firmwareFlasherReleaseManufacturer"}
+          %span#manufacturer
+          %br
+        %strong{i18n: "firmwareFlasherReleaseVersion"}
+        %a.name{href: "#", i18n_title: "firmwareFlasherReleaseVersionUrl", target: "_blank"}
+        %br
+        %strong{i18n: "firmwareFlasherReleaseFile"}
+        %a.file{href: "#", i18n_title: "firmwareFlasherReleaseFileUrl", target: "_blank"}
+        %br
+        %strong{i18n: "firmwareFlasherReleaseDate"}
+        %span.date
+        %br
+        %strong{i18n: "firmwareFlasherReleaseNotes"}
+        .notes
+    .gui_box.gui_warning
+      .gui_box_titlebar
+        .spacer_box_title{i18n: "warningTitle", style: "text-align: center;"}
+      .spacer{style: "margin-bottom: 10px;"}
+        %p{i18n: "firmwareFlasherWarningText"}
+        %br
+        %p{i18n: "firmwareFlasherTargetWarning"}
+    .gui_box.gui_note
+      .gui_box_titlebar
+        .spacer_box_title{i18n: "firmwareFlasherRecoveryHead", style: "text-align: center;"}
+      .spacer{style: "margin-bottom: 10px;"}
+        %p{i18n: "firmwareFlasherRecoveryText"}
+  .content_toolbar
+    .info
+      %a{name: "progressbar"}
+      %progress.progress{max: "100", min: "0", value: "0"}
+      %span.progressLabel{i18n: "firmwareFlasherLoadFirmwareFile"}
+    .btn
+      %a.flash_firmware.disabled{href: "#progressbar", i18n: "firmwareFlasherFlashFirmware"}
+    .btn
+      %a.load_remote_file.disabled{href: "#", i18n: "firmwareFlasherButtonLoadOnline"}
+    .btn
+      %a.load_file{href: "#", i18n: "firmwareFlasherButtonLoadLocal"}

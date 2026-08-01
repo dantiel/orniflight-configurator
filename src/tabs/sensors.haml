@@ -1,0 +1,255 @@
+.tab-sensors
+  .content_wrapper
+    .tab_title{i18n: "tabRawSensorData"}
+    .cf_doc_version_bt
+      %a#button-documentation{href: "https://github.com/dantiel/orniflight/releases", rel: "noopener noreferrer", target: "_blank"}
+    .note
+      %p{i18n: "sensorsInfo"}
+    .gui_box
+      .info
+        .checkboxes
+          %label
+            %input.first{name: "gyro_on", type: "checkbox"}
+            %span{i18n: "sensorsGyroSelect"}
+          %label
+            %input{name: "accel_on", type: "checkbox"}
+            %span{i18n: "sensorsAccelSelect"}
+          %label
+            %input{name: "mag_on", type: "checkbox"}
+            %span{i18n: "sensorsMagSelect"}
+          %label
+            %input{name: "altitude_on", type: "checkbox"}
+            %span{i18n: "sensorsAltitudeSelect"}
+          %label
+            %input{name: "sonar_on", type: "checkbox"}
+            %span{i18n: "sensorsSonarSelect"}
+          %label
+            %input{name: "debug_on", type: "checkbox"}
+            %span{i18n: "sensorsDebugSelect"}
+    .wrapper.gyro
+      .gui_box.grey
+        .plot_control
+          .title{i18n: "sensorsGyroTitle"}
+          %dl
+            %dt{i18n: "sensorsRefresh"}
+            %dd.rate
+              %select{name: "gyro_refresh_rate"}
+                %option{value: "10"} 10 ms
+                %option{value: "20"} 20 ms
+                %option{value: "30"} 30 ms
+                %option{value: "40"} 40 ms
+                %option{selected: "selected", value: "50"} 50 ms
+                %option{value: "100"} 100 ms
+                %option{value: "250"} 250 ms
+                %option{value: "500"} 500 ms
+                %option{value: "1000"} 1000 ms
+            %dt{i18n: "sensorsScale"}
+            %dd.scale
+              %select{name: "gyro_scale"}
+                %option{value: "100"} 100
+                %option{value: "500"} 500
+                %option{value: "1000"} 1000
+                %option{selected: "selected", value: "2000"} 2000
+            %dt X:
+            %dd.x 0
+            %dt Y:
+            %dd.y 0
+            %dt Z:
+            %dd.z 0
+        %svg#gyro
+          %g.grid.x{transform: "translate(40, 120)"}
+          %g.grid.y{transform: "translate(40, 10)"}
+          %g.data{transform: "translate(41, 10)"}
+          %g.axis.x{transform: "translate(40, 120)"}
+          %g.axis.y{transform: "translate(40, 10)"}
+        .clear-both
+    .wrapper.accel
+      .gui_box.grey
+        .plot_control
+          .title{i18n: "sensorsAccelTitle"}
+          %dl
+            %dt{i18n: "sensorsRefresh"}
+            %dd.rate
+              %select{name: "accel_refresh_rate"}
+                %option{value: "10"} 10 ms
+                %option{value: "20"} 20 ms
+                %option{value: "30"} 30 ms
+                %option{value: "40"} 40 ms
+                %option{selected: "selected", value: "50"} 50 ms
+                %option{value: "100"} 100 ms
+                %option{value: "250"} 250 ms
+                %option{value: "500"} 500 ms
+                %option{value: "1000"} 1000 ms
+            %dt{i18n: "sensorsScale"}
+            %dd.scale
+              %select{name: "accel_scale"}
+                %option{value: "0.5"} 0.5
+                %option{value: "1"} 1
+                %option{selected: "selected", value: "2"} 2
+            %dt X:
+            %dd.x 0
+            %dt Y:
+            %dd.y 0
+            %dt Z:
+            %dd.z 0
+        %svg#accel
+          %g.grid.x{transform: "translate(40, 120)"}
+          %g.grid.y{transform: "translate(40, 10)"}
+          %g.data{transform: "translate(41, 10)"}
+          %g.axis.x{transform: "translate(40, 120)"}
+          %g.axis.y{transform: "translate(40, 10)"}
+        .clear-both
+    .wrapper.mag
+      .gui_box.grey
+        .plot_control
+          .title{i18n: "sensorsMagTitle"}
+          %dl
+            %dt{i18n: "sensorsRefresh"}
+            %dd.rate
+              %select{name: "mag_refrash_rate"}
+                %option{value: "10"} 10 ms
+                %option{value: "20"} 20 ms
+                %option{value: "30"} 30 ms
+                %option{value: "40"} 40 ms
+                %option{selected: "selected", value: "50"} 50 ms
+                %option{value: "100"} 100 ms
+                %option{value: "250"} 250 ms
+                %option{value: "500"} 500 ms
+                %option{value: "1000"} 1000 ms
+            %dt{i18n: "sensorsScale"}
+            %dd.scale
+              %select{name: "mag_scale"}
+                %option{value: "0.5"} 0.5
+                %option{selected: "selected", value: "1"} 1
+            %dt X:
+            %dd.x 0
+            %dt Y:
+            %dd.y 0
+            %dt Z:
+            %dd.z 0
+        %svg#mag
+          %g.grid.x{transform: "translate(40, 120)"}
+          %g.grid.y{transform: "translate(40, 10)"}
+          %g.data{transform: "translate(41, 10)"}
+          %g.axis.x{transform: "translate(40, 120)"}
+          %g.axis.y{transform: "translate(40, 10)"}
+        .clear-both
+    .wrapper.altitude
+      .gui_box.grey
+        .plot_control
+          %div
+            .title{i18n: "sensorsAltitudeTitle"}
+            #sensorsAltitudeHint.helpicon.cf_tip{i18n_title: "sensorsAltitudeHint"}
+            %dl
+              %dt{i18n: "sensorsRefresh"}
+              %dd.rate
+                %select{name: "altitude_refresh_rate"}
+                  %option{value: "10"} 10 ms
+                  %option{value: "20"} 20 ms
+                  %option{value: "30"} 30 ms
+                  %option{value: "40"} 40 ms
+                  %option{value: "50"} 50 ms
+                  %option{selected: "selected", value: "100"} 100 ms
+                  %option{value: "250"} 250 ms
+                  %option{value: "500"} 500 ms
+                  %option{value: "1000"} 1000 ms
+              %dt X:
+              %dd.x 0
+          %svg#altitude
+            %g.grid.x{transform: "translate(40, 120)"}
+            %g.grid.y{transform: "translate(40, 10)"}
+            %g.data{transform: "translate(41, 10)"}
+            %g.axis.x{transform: "translate(40, 120)"}
+            %g.axis.y{transform: "translate(40, 10)"}
+          .clear-both
+      .wrapper.sonar
+        .gui_box.grey
+          .plot_control
+            .title{i18n: "sensorsSonarTitle"}
+            %dl
+              %dt{i18n: "sensorsRefresh"}
+              %dd.rate
+                %select{name: "sonar_refresh_rate"}
+                  %option{value: "10"} 10 ms
+                  %option{value: "20"} 20 ms
+                  %option{value: "30"} 30 ms
+                  %option{value: "40"} 40 ms
+                  %option{value: "50"} 50 ms
+                  %option{selected: "selected", value: "100"} 100 ms
+                  %option{value: "250"} 250 ms
+                  %option{value: "500"} 500 ms
+                  %option{value: "1000"} 1000 ms
+              %dt X:
+              %dd.x 0
+          %svg#sonar
+            %g.grid.x{transform: "translate(40, 120)"}
+            %g.grid.y{transform: "translate(40, 10)"}
+            %g.data{transform: "translate(41, 10)"}
+            %g.axis.x{transform: "translate(40, 120)"}
+            %g.axis.y{transform: "translate(40, 10)"}
+          .clear-both
+      .wrapper.debug
+        .gui_box.grey
+          .plot_control
+            .title
+              %span{i18n: "sensorsDebugTitle"} 0
+            %dl
+              %dt{i18n: "sensorsRefresh"}
+              %dd.rate
+                %select{name: "debug_refresh_rate"}
+                  %option{value: "10"} 10 ms
+                  %option{value: "20"} 20 ms
+                  %option{value: "30"} 30 ms
+                  %option{value: "40"} 40 ms
+                  %option{value: "50"} 50 ms
+                  %option{value: "100"} 100 ms
+                  %option{value: "250"} 250 ms
+                  %option{selected: "selected", value: "500"} 500 ms
+                  %option{value: "1000"} 1000 ms
+              %dt X:
+              %dd.x 0
+          %svg#debug1
+            %g.grid.x{transform: "translate(40, 120)"}
+            %g.grid.y{transform: "translate(40, 10)"}
+            %g.data{transform: "translate(41, 10)"}
+            %g.axis.x{transform: "translate(40, 120)"}
+            %g.axis.y{transform: "translate(40, 10)"}
+          .clear-both
+          .plot_control
+            .title
+              %span{i18n: "sensorsDebugTitle"} 1
+            %dl
+              %dt X:
+              %dd.x blue
+          %svg#debug2
+            %g.grid.x{transform: "translate(40, 120)"}
+            %g.grid.y{transform: "translate(40, 10)"}
+            %g.data{transform: "translate(41, 10)"}
+            %g.axis.x{transform: "translate(40, 120)"}
+            %g.axis.y{transform: "translate(40, 10)"}
+          .clear-both
+          .plot_control
+            .title
+              %span{i18n: "sensorsDebugTitle"} 2
+            %dl
+              %dt X:
+              %dd.x 0
+          %svg#debug3
+            %g.grid.x{transform: "translate(40, 120)"}
+            %g.grid.y{transform: "translate(40, 10)"}
+            %g.data{transform: "translate(41, 10)"}
+            %g.axis.x{transform: "translate(40, 120)"}
+            %g.axis.y{transform: "translate(40, 10)"}
+          .clear-both
+          .plot_control
+            .title
+              %span{i18n: "sensorsDebugTitle"} 3
+            %dl
+              %dt X:
+              %dd.x 0
+          %svg#debug4
+            %g.grid.x{transform: "translate(40, 120)"}
+            %g.grid.y{transform: "translate(40, 10)"}
+            %g.data{transform: "translate(41, 10)"}
+            %g.axis.x{transform: "translate(40, 120)"}
+            %g.axis.y{transform: "translate(40, 10)"}

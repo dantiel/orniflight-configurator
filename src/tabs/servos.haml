@@ -1,0 +1,37 @@
+.tab-servos.toolbar_fixed_bottom
+  .content_wrapper
+    .tab_title{i18n: "tabServos"} Servos
+    .cf_doc_version_bt
+      %a#button-documentation{href: "", target: "_blank"}
+    .title
+      %span{i18n: "servosOrnithopterSettingsGroup"}
+      .helpicon.cf_tip{i18n_title: "servosOrnithopterSettingsHelp"}
+      %table.settingsTable
+        %tr.ornithopterGlideDegree
+          %td
+            %input{max: "100", min: "-100", name: "ornithopterGlideDegree-number", step: "1", type: "number"}
+          %td
+            %div
+              %label
+                %strong
+                  %span{i18n: "servosOrnithopterGlideDegree"}
+      .require-support
+        .title{i18n: "servosChangeDirection"}
+        %table.fields
+          %tr.main
+            %th{i18n: "servosName", width: "110px"}
+            %th{i18n: "servosMid"}
+            %th{i18n: "servosMin"}
+            %th{i18n: "servosMax"}
+            %th.short CH1
+            %th.short CH2
+            %th.short CH3
+            %th.short CH4
+        .live
+          %input.togglemedium{type: "checkbox"}
+          %span{i18n: "servosLiveMode"}
+      .note.require-upgrade
+        %p{i18n: "servosFirmwareUpgradeRequired"}
+    .content_toolbar
+      .btn.save_btn
+        %a.update{href: "#", i18n: "servosButtonSave"}

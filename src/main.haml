@@ -1,0 +1,346 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=utf-8", "http-equiv": "Content-Type"}
+    %meta{content: "cTn", name: "author"}
+    %link{href: "./node_modules/jbox/dist/jBox.min.css", rel: "stylesheet", type: "text/css"}
+    %link{href: "./js/libraries/jquery.nouislider.min.css", rel: "stylesheet", type: "text/css"}
+    %link{href: "./js/libraries/jquery.nouislider.pips.min.css", rel: "stylesheet", type: "text/css"}
+    %link{href: "./js/libraries/flightindicators.css", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/main.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/static_tab.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/landing.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/setup.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/help.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/ports.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/configuration.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/pid_tuning.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/receiver.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/servos.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/gps.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/motors.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/led_strip.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/sensors.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/cli.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/logging.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/onboard_logging.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/firmware_flasher.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/adjustments.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/auxiliary.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/failsafe.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/osd.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/vtx.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/power.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/transponder.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/privacy_policy.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/font-awesome/css/font-awesome.min.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/opensans_webfontkit/fonts.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/dropdown-lists/css/style_lists.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./js/libraries/switchery/switchery.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/main-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/landing-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/setup-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/help-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/ports-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/configuration-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/pid_tuning-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/receiver-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/servos-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/gps-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/motors-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/led_strip-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/sensors-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/cli-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/logging-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/onboard_logging-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/firmware_flasher-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/adjustments-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/auxiliary-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/failsafe-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/osd-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/power-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/transponder-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/static_tab-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %script{src: "./node_modules/lru_map/lru.js", type: "text/javascript"}
+    %script{src: "./node_modules/i18next/i18next.min.js", type: "text/javascript"}
+    %script{src: "./node_modules/i18next-xhr-backend/i18nextXHRBackend.min.js", type: "text/javascript"}
+    %script{src: "./node_modules/marked/marked.min.js", type: "text/javascript"}
+    %script{src: "./node_modules/universal-ga/lib/analytics.min.js", type: "text/javascript"}
+    %script{src: "./node_modules/short-unique-id/dist/short-unique-id.min.js", type: "text/javascript"}
+    %script{src: "./node_modules/object-hash/dist/object_hash.js", type: "text/javascript"}
+    %script{src: "./js/libraries/q.js", type: "text/javascript"}
+    %script{src: "./node_modules/jquery/dist/jquery.min.js", type: "text/javascript"}
+    %script{src: "./node_modules/jbox/dist/jBox.min.js", type: "text/javascript"}
+    %script{src: "./node_modules/jquery-ui-npm/jquery-ui.min.js", type: "text/javascript"}
+    %script{src: "./js/libraries/d3.min.js", type: "text/javascript"}
+    %script{src: "./js/libraries/jquery.nouislider.all.min.js", type: "text/javascript"}
+    %script{src: "./js/libraries/three/three.min.js", type: "text/javascript"}
+    %script{src: "./js/libraries/three/Projector.js", type: "text/javascript"}
+    %script{src: "./js/libraries/three/CanvasRenderer.js", type: "text/javascript"}
+    %script{src: "./js/libraries/jquery.flightindicators.js", type: "text/javascript"}
+    %script{src: "./js/libraries/semver.js", type: "text/javascript"}
+    %script{src: "./js/libraries/switchery/switchery.js", type: "text/javascript"}
+    %script{src: "./node_modules/bluebird/js/browser/bluebird.min.js", type: "text/javascript"}
+    %script{src: "./js/libraries/jquery.ba-throttle-debounce.min.js", type: "text/javascript"}
+    %script{src: "./node_modules/inflection/inflection.min.js", type: "text/javascript"}
+    %script{src: "./js/libraries/analytics.js", type: "text/javascript"}
+    %script{src: "./js/injected_methods.js", type: "text/javascript"}
+    %script{src: "./js/ConfigStorage.js", type: "text/javascript"}
+    %script{src: "./js/data_storage.js", type: "text/javascript"}
+    %script{src: "./js/fc.js", type: "text/javascript"}
+    %script{src: "./js/port_handler.js", type: "text/javascript"}
+    %script{src: "./js/port_usage.js", type: "text/javascript"}
+    %script{src: "./js/serial.js", type: "text/javascript"}
+    %script{src: "./js/gui.js", type: "text/javascript"}
+    %script{src: "./js/huffman.js", type: "text/javascript"}
+    %script{src: "./js/default_huffman_tree.js", type: "text/javascript"}
+    %script{src: "./js/model.js", type: "text/javascript"}
+    %script{src: "./js/serial_backend.js", type: "text/javascript"}
+    %script{src: "./js/msp/MSPCodes.js", type: "text/javascript"}
+    %script{src: "./js/msp/MSPConnector.js", type: "text/javascript"}
+    %script{src: "./js/msp.js", type: "text/javascript"}
+    %script{src: "./js/msp/MSPHelper.js", type: "text/javascript"}
+    %script{src: "./js/backup_restore.js", type: "text/javascript"}
+    %script{src: "./js/peripherals.js", type: "text/javascript"}
+    %script{src: "./js/protocols/stm32.js", type: "text/javascript"}
+    %script{src: "./js/protocols/stm32usbdfu.js", type: "text/javascript"}
+    %script{src: "./js/localization.js", type: "text/javascript"}
+    %script{src: "./js/boards.js", type: "text/javascript"}
+    %script{src: "./js/RateCurve.js", type: "text/javascript"}
+    %script{src: "./js/Features.js", type: "text/javascript"}
+    %script{src: "./js/Beepers.js", type: "text/javascript"}
+    %script{src: "./js/release_checker.js", type: "text/javascript"}
+    %script{src: "./js/jenkins_loader.js", type: "text/javascript"}
+    %script{src: "./js/Analytics.js", type: "text/javascript"}
+    %script{src: "./js/main.js", type: "text/javascript"}
+    %script{src: "./js/Clipboard.js", type: "text/javascript"}
+    %script{src: "./js/tabs/static_tab.js", type: "text/javascript"}
+    %script{src: "./js/tabs/landing.js", type: "text/javascript"}
+    %script{src: "./js/tabs/setup.js", type: "text/javascript"}
+    %script{src: "./js/tabs/setup_osd.js", type: "text/javascript"}
+    %script{src: "./js/tabs/help.js", type: "text/javascript"}
+    %script{src: "./js/tabs/ports.js", type: "text/javascript"}
+    %script{src: "./js/tabs/configuration.js", type: "text/javascript"}
+    %script{src: "./js/tabs/pid_tuning.js", type: "text/javascript"}
+    %script{src: "./js/tabs/receiver.js", type: "text/javascript"}
+    %script{src: "./js/tabs/auxiliary.js", type: "text/javascript"}
+    %script{src: "./js/tabs/adjustments.js", type: "text/javascript"}
+    %script{src: "./js/tabs/servos.js", type: "text/javascript"}
+    %script{src: "./js/tabs/gps.js", type: "text/javascript"}
+    %script{src: "./js/tabs/motors.js", type: "text/javascript"}
+    %script{src: "./js/tabs/led_strip.js", type: "text/javascript"}
+    %script{src: "./js/tabs/sensors.js", type: "text/javascript"}
+    %script{src: "./js/tabs/cli.js", type: "text/javascript"}
+    %script{src: "./js/tabs/logging.js", type: "text/javascript"}
+    %script{src: "./js/tabs/onboard_logging.js", type: "text/javascript"}
+    %script{src: "./js/FirmwareCache.js", type: "text/javascript"}
+    %script{src: "./js/tabs/firmware_flasher.js", type: "text/javascript"}
+    %script{src: "./js/tabs/failsafe.js", type: "text/javascript"}
+    %script{src: "./js/LogoManager.js", type: "text/javascript"}
+    %script{src: "./js/tabs/osd.js", type: "text/javascript"}
+    %script{src: "./js/tabs/vtx.js", type: "text/javascript"}
+    %script{src: "./js/tabs/power.js", type: "text/javascript"}
+    %script{src: "./js/tabs/transponder.js", type: "text/javascript"}
+    %script{src: "./node_modules/jquery-textcomplete/dist/jquery.textcomplete.min.js", type: "text/javascript"}
+    %script{src: "./js/CliAutoComplete.js", type: "text/javascript"}
+    %script{src: "./js/DarkTheme.js", type: "text/javascript"}
+    %script{src: "./js/ConfigInserter.js", type: "text/javascript"}
+    %script{src: "./js/TuningSliders.js", type: "text/javascript"}
+    %title{i18n: "windowTitle"}
+  %body
+    #main-wrapper
+      .headerbar
+        #logo
+          .logo_text
+            CONFIGURATOR
+            .version
+        %a#options{href: "#", i18n_title: "options_title"}
+        #port-picker
+          #connectbutton.connect_controls
+            .connect_b
+              %a.connect.disabled{href: "#"}
+            %a.connect_state{i18n: "connect"}
+          #flashbutton.open_firmware_flasher
+            .firmware_b
+              %a.flash.disabled{href: "#"}
+            %a.flash_state{i18n: "flashTab"}
+          #portsinput
+            .dropdown.dropdown-dark
+              %select#port.dropdown-select{i18n_title: "firmwareFlasherManualPort"}
+                %option{value: "manual"} Manual
+                / port list gets generated here
+            .dropdown.dropdown-dark
+              %select#baud.dropdown-select{i18n_title: "firmwareFlasherBaudRate"}
+                %option{value: "1000000"} 1000000
+                %option{value: "500000"} 500000
+                %option{value: "250000"} 250000
+                %option{selected: "selected", value: "115200"} 115200
+                %option{value: "57600"} 57600
+                %option{value: "38400"} 38400
+                %option{value: "28800"} 28800
+                %option{value: "19200"} 19200
+                %option{value: "14400"} 14400
+                %option{value: "9600"} 9600
+                %option{value: "4800"} 4800
+                %option{value: "2400"} 2400
+                %option{value: "1200"} 1200
+            #port-override-option
+              %label{for: "port-override"}
+                %span{i18n: "portOverrideText"} Port:
+                %input#port-override{type: "text", value: "/dev/rfcomm0"}
+            #autoConnectSwitch
+              %label
+                %input.auto_connect.togglesmall{type: "checkbox"}
+                %span.auto_connect{i18n: "autoConnect"}
+        .header-wrapper
+          #dataflash_wrapper_global
+            .noflash_global{align: "center", i18n: "sensorDataFlashNotFound"}
+            %ul.dataflash-contents_global
+              %li.dataflash-free_global
+                .legend{i18n: "sensorDataFlashFreeSpace"}
+            #expertMode{align: "center"}
+              %label
+                %input.togglesmall{name: "expertModeCheckbox", type: "checkbox"}
+                %span{i18n: "expertMode"}
+          #sensor-status.sensor_state.mode-connected
+            %ul
+              %li.gyro{i18n_title: "sensorStatusGyro"}
+                .gyroicon{i18n: "sensorStatusGyroShort"}
+              %li.accel{i18n_title: "sensorStatusAccel"}
+                .accicon{i18n: "sensorStatusAccelShort"}
+              %li.mag{i18n_title: "sensorStatusMag"}
+                .magicon{i18n: "sensorStatusMagShort"}
+              %li.baro{i18n_title: "sensorStatusBaro"}
+                .baroicon{i18n: "sensorStatusBaroShort"}
+              %li.gps{i18n_title: "sensorStatusGPS"}
+                .gpsicon{i18n: "sensorStatusGPSShort"}
+              %li.sonar{i18n_title: "sensorStatusSonar"}
+                .sonaricon{i18n: "sensorStatusSonarShort"}
+          #quad-status_wrapper
+            .battery-icon
+              .quad-status-contents
+                .battery-status
+            .battery-legend Battery voltage
+            .bottomStatusIcons
+              .armedicon.cf_tip{i18n_title: "mainHelpArmed"}
+              .failsafeicon.cf_tip{i18n_title: "mainHelpFailsafe"}
+              .linkicon.cf_tip{i18n_title: "mainHelpLink"}
+      .clear-both
+      #log
+        .logswitch
+          %a#showlog{href: "#", i18n: "logActionShow"}
+        #scrollicon
+        .wrapper
+      .tab_container
+        #tabs
+          %ul.mode-disconnected
+            %li#tab_landing.tab_landing
+              %a.tabicon.ic_welcome{href: "#", i18n: "tabLanding", i18n_title: "tabLanding"}
+            %li.tab_changelog
+              %a.tabicon.ic_help{href: "#", i18n: "tabChangelog"}
+            %li.tab_privacy_policy
+              %a.tabicon.ic_help{href: "#", i18n: "tabPrivacyPolicy"}
+            %li#tab_help.tab_help
+              %a.tabicon.ic_help{href: "#", i18n: "tabHelp", i18n_title: "tabHelp"}
+            %li#tabFirmware.tab_firmware_flasher
+              %a.tabicon.ic_flasher{href: "#", i18n: "tabFirmwareFlasher", i18n_title: "tabFirmwareFlasher"}
+          %ul.mode-connected
+            %li.tab_setup
+              %a.tabicon.ic_setup{href: "#", i18n: "tabSetup", i18n_title: "tabSetup"}
+            %li.tab_setup_osd
+              %a.tabicon.ic_setup{href: "#", i18n: "tabSetupOSD", i18n_title: "tabSetupOSD"}
+            %li.tab_ports
+              %a.tabicon.ic_ports{href: "#", i18n: "tabPorts", i18n_title: "tabPorts"}
+            %li.tab_configuration
+              %a.tabicon.ic_config{href: "#", i18n: "tabConfiguration", i18n_title: "tabConfiguration"}
+            %li.tab_power
+              %a.tabicon.ic_power{href: "#", i18n: "tabPower", i18n_title: "tabPower"}
+            %li.tab_failsafe
+              %a.tabicon.ic_failsafe{href: "#", i18n: "tabFailsafe", i18n_title: "tabFailsafe"}
+            %li.tab_pid_tuning
+              %a.tabicon.ic_pid{href: "#", i18n: "tabPidTuning", i18n_title: "tabPidTuning"}
+            %li.tab_receiver
+              %a.tabicon.ic_rx{href: "#", i18n: "tabReceiver", i18n_title: "tabReceiver"}
+            %li.tab_auxiliary
+              %a.tabicon.ic_modes{href: "#", i18n: "tabAuxiliary", i18n_title: "tabAuxiliary"}
+            %li.tab_adjustments
+              %a.tabicon.ic_adjust{href: "#", i18n: "tabAdjustments", i18n_title: "tabAdjustments"}
+            %li.tab_servos
+              %a.tabicon.ic_servo{href: "#", i18n: "tabServos", i18n_title: "tabServos"}
+            %li.tab_gps
+              %a.tabicon.ic_gps{href: "#", i18n: "tabGPS", i18n_title: "tabGPS"}
+            %li.tab_motors
+              %a.tabicon.ic_motor{href: "#", i18n: "tabMotorTesting", i18n_title: "tabMotorTesting"}
+            %li.tab_osd
+              %a.tabicon.ic_osd{href: "#", i18n: "tabOsd", i18n_title: "tabOsd"}
+            %li.tab_vtx
+              %a.tabicon.ic_vtx{href: "#", i18n: "tabVtx", i18n_title: "tabVtx"}
+            %li.tab_transponder
+              %a.tabicon.ic_transponder{href: "#", i18n: "tabTransponder", i18n_title: "tabTransponder"}
+            %li.tab_led_strip
+              %a.tabicon.ic_led{href: "#", i18n: "tabLedStrip", i18n_title: "tabLedStrip"}
+            %li.tab_sensors
+              %a.tabicon.ic_sensors{href: "#", i18n: "tabRawSensorData", i18n_title: "tabRawSensorData"}
+            %li.tab_logging
+              %a.tabicon.ic_log{href: "#", i18n: "tabLogging", i18n_title: "tabLogging"}
+            %li.tab_onboard_logging
+              %a.tabicon.ic_data{href: "#", i18n: "tabOnboardLogging", i18n_title: "tabOnboardLogging"}
+            /
+              spare icons
+              <li class=""><a href="#"class="tabicon ic_mission">Mission (spare icon)</a></li>
+              <li class=""><a href="#"class="tabicon ic_advanced">Advanced (spare icon)</a></li>
+              <li class=""><a href="#"class="tabicon ic_wizzard">Wizzard (spare icon)</a></li>
+          %ul.mode-connected.mode-connected-cli
+            %li.tab_cli
+              %a.tabicon.ic_cli{href: "#", i18n: "tabCLI", i18n_title: "tabCLI"}
+        .clear-both
+      #content
+      #status-bar
+        %div
+          %span{i18n: "statusbar_port_utilization"}
+          %span.port_usage_down D: 0%
+          %span.port_usage_up U: 0%
+        %div
+          %span{i18n: "statusbar_packet_error"}
+          %span.packet-error 0
+        %div
+          %span{i18n: "statusbar_i2c_error"}
+          %span.i2c-error 0
+        %div
+          %span{i18n: "statusbar_cycle_time"}
+          %span.cycle-time 0
+        %div
+          %span.cpu-load
+        .version
+          / configuration version generated here
+      #cache
+        .data-loading
+          %p Waiting for data ...
+    %dialog.dialogConfiguratorUpdate
+      %h3{i18n: "noticeTitle"}
+      .content
+        .dialogConfiguratorUpdate-content{style: "margin-top: 10px"}
+      .buttons
+        %a.dialogConfiguratorUpdate-websitebtn.regular-button{href: "#", i18n: "configuratorUpdateWebsite"}
+        %a.dialogConfiguratorUpdate-closebtn.regular-button{href: "#", i18n: "close"}
+    %dialog.dialogConnectWarning
+      %h3{i18n: "warningTitle"}
+      .content
+        .dialogConnectWarning-content{style: "margin-top: 10px"}
+      .buttons
+        %a.dialogConnectWarning-closebtn.regular-button{href: "#", i18n: "close"}
+    %dialog#dialogResetToCustomDefaults
+      %h3{i18n: "noticeTitle"}
+      .content
+        #dialogResetToCustomDefaults-content
+      %div
+        %span.buttons
+          %a#dialogResetToCustomDefaults-acceptbtn.regular-button{href: "#", i18n: "resetToCustomDefaultsAccept"}
+        %span.buttons
+          %a#dialogResetToCustomDefaults-cancelbtn.regular-button{href: "#", i18n: "cancel"}
+    %dialog.dialogError
+      %h3{i18n: "errorTitle"}
+      .content
+        .dialogError-content{style: "margin-top: 10px"}
+      .buttons
+        %a.dialogError-closebtn.regular-button{href: "#", i18n: "close"}

@@ -1,0 +1,166 @@
+.tab-power.toolbar_fixed_bottom
+  .content_wrapper
+    / should be the first DIV on each tab
+    .cf_column
+      .tab_title{i18n: "tabPower"} Power
+      .cf_doc_version_bt
+        %a#button-documentation{href: "", target: "_blank"}
+    %table{style: "width:100%"}
+      %tr
+        %td
+          .leftWrapper
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "powerBatteryHead"}
+              .spacer_box.battery
+                %table.cf_table{border: "0", cellpadding: "0", cellspacing: "0"}
+                  %tbody.battery-config
+                    %td.configuration{rowspan: "4"}
+          .rightWrapper
+            .gui_box.grey
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "powerStateHead"}
+              .spacer_box.battery
+                %table.cf_table{border: "0", cellpadding: "0", cellspacing: "0"}
+                  %tbody.battery-state
+    %table{style: "width:100%"}
+      %tr
+        %td
+          .leftWrapper
+            .gui_box.grey.boxVoltageConfiguration
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "powerVoltageHead"}
+              .spacer_box
+                %table.cf_table{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+                  %tbody.voltage-meters
+    %table{style: "width:100%"}
+      %tr
+        %td
+          .leftWrapper
+            .gui_box.grey.boxAmperageConfiguration
+              .gui_box_titlebar
+                .spacer_box_title{i18n: "powerAmperageHead"}
+              .spacer_box
+                %table.cf_table{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+                  %tbody.amperage-meters
+    .note.require-upgrade
+      %p{i18n: "powerFirmwareUpgradeRequired"}
+  .content_toolbar
+    .btn.calibration
+      %a#calibrationmanager.calibrationmanager{href: "#", i18n: "powerCalibrationManagerButton"}
+    .btn.save_btn
+      %a.save{href: "#", i18n: "powerButtonSave"}
+#tab-power-templates
+  %table.voltage-meters
+    %tbody
+      %tr.voltage-meter
+        %td.label
+        %td.value
+        %td.configuration
+  %table.amperage-meters
+    %tbody
+      %tr.amperage-meter
+        %td.label
+        %td.value
+        %td.configuration
+  %table.battery-state
+    %tbody.battery-state
+      %tr.connection-state
+        %td{i18n: "powerBatteryConnected"}
+        %td.value ?
+      %tr.voltage
+        %td{i18n: "powerBatteryVoltage"}
+        %td.value
+      %tr.mah-drawn
+        %td{i18n: "powerBatteryCurrentDrawn"}
+        %td.value
+      %tr.amperage
+        %td{i18n: "powerBatteryAmperage"}
+        %td.value
+  .battery-configuration
+    .select.vbatmonitoring
+      %label
+        %select.batterymetersource
+          / list generated here
+        %span{i18n: "powerBatteryVoltageMeterSource"}
+    .select.currentMonitoring
+      %label
+        %select.currentmetersource
+          / list generated here
+        %span{i18n: "powerBatteryCurrentMeterSource"}
+    .number
+      %label
+        %input{max: "5", min: "1", name: "mincellvoltage", step: "0.1", type: "number"}
+        %span{i18n: "powerBatteryMinimum"}
+    .number
+      %label
+        %input{max: "5", min: "1", name: "maxcellvoltage", step: "0.1", type: "number"}
+        %span{i18n: "powerBatteryMaximum"}
+    .number
+      %label
+        %input{max: "5", min: "1", name: "warningcellvoltage", step: "0.1", type: "number"}
+        %span{i18n: "powerBatteryWarning"}
+    .number
+      %label
+        %input{max: "65535", min: "0", name: "capacity", step: "1", type: "number"}
+        %span{i18n: "powerBatteryCapacity"}
+  .voltage-configuration
+    .number
+      %label
+        %input{max: "255", min: "10", name: "vbatscale", step: "1", type: "number"}
+        %span{i18n: "powerVoltageScale"}
+    .number
+      %label
+        %input{max: "255", min: "1", name: "vbatresdivval", step: "1", type: "number"}
+        %span{i18n: "powerVoltageDivider"}
+    .number
+      %label
+        %input{max: "255", min: "1", name: "vbatresdivmultiplier", step: "1", type: "number"}
+        %span{i18n: "powerVoltageMultiplier"}
+  .amperage-configuration
+    .number
+      %label
+        %input{max: "16000", min: "-16000", name: "amperagescale", step: "1", type: "number"}
+        %span{i18n: "powerAmperageScale"}
+    .number
+      %label
+        %input{max: "32000", min: "-32000\"", name: "amperageoffset", step: "1", type: "number"}
+        %span{i18n: "powerAmperageOffset"}
+#calibrationmanagercontent.tab-power
+  .note
+    %p{i18n: "powerCalibrationManagerHelp"}
+  .note
+    %p{i18n: "powerCalibrationManagerNote"}
+  .note.nocalib
+    %p{i18n: "powerCalibrationManagerWarning"}
+  .note.srcchange
+    %p{i18n: "powerCalibrationManagerSourceNote"}
+  .vbatcalibration
+    .number
+      %label
+        %input{max: "255", min: "0", name: "vbatcalibration", step: "0.01", type: "number"}
+        %span{i18n: "powerVoltageCalibration"}
+  .amperagecalibration
+    .number
+      %label
+        %input{max: "255", min: "0", name: "amperagecalibration", step: "0.01", type: "number"}
+        %span{i18n: "powerAmperageCalibration"}
+  .default_btn.margin-top5
+    %a#calibrate.calibrate{href: "#", i18n: "powerCalibrationSave"}
+#calibrationmanagerconfirmcontent.tab-power
+  .note
+    %p{i18n: "powerCalibrationConfirmHelp"}
+  .vbatcalibration
+    .number.tab_title
+      %label
+        %span{i18n: "powerVoltageCalibratedScale"}
+        %output{name: "vbatnewscale", type: "number"}
+  .amperagecalibration
+    .number.tab_title
+      %label
+        %span{i18n: "powerAmperageCalibratedScale"}
+        %output{name: "amperagenewscale", type: "number"}
+  .default_btn.margin-top5
+    %a#applycalibration.applycalibration{href: "#", i18n: "powerCalibrationApply"}
+  .default_btn
+    %a#discardcalibration.discardcalibration{href: "#", i18n: "powerCalibrationDiscard"}

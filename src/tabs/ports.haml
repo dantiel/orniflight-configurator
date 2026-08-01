@@ -1,0 +1,47 @@
+.tab-ports.toolbar_fixed_bottom
+  .content_wrapper
+    .tab_title{i18n: "tabPorts"} Ports
+    .cf_doc_version_bt
+      %a#button-documentation{href: "https://github.com/dantiel/orniflight/releases", target: "_blank"}
+    .require-support
+      .note
+        %p{i18n: "portsHelp"}
+        %p{i18n: "portsMSPHelp"}
+      .note.vtxTableNotSet
+        %p{i18n: "portsVtxTableNotSet"}
+      %table.ports
+        %thead
+          %tr
+            %td{i18n: "portsIdentifier"}
+            %td{i18n: "portsConfiguration"}
+            %td{i18n: "portsSerialRx"}
+            %td{i18n: "portsTelemetryOut"}
+            %td{i18n: "portsSensorIn"}
+            %td{i18n: "portsPeripherals"}
+        %tbody
+      .clear-both
+    .note.require-upgrade
+      %p{i18n: "portsFirmwareUpgradeRequired"}
+  .content_toolbar
+    .btn.save_btn
+      %a.save{href: "#", i18n: "configurationButtonSave"}
+#tab-ports-templates
+  %table.ports
+    %thead
+    %tbody
+      %tr.portConfiguration
+        %td.identifierCell
+          %p.identifier
+        %td.functionsCell-configuration
+          %select.msp_baudrate
+            / list generated here
+        %td.functionsCell-rx
+        %td.functionsCell-telemetry
+          %select.telemetry_baudrate
+            / list generated here
+        %td.functionsCell-sensors
+          %select.gps_baudrate
+            / list generated here
+        %td.functionsCell-peripherals
+          %select.blackbox_baudrate
+            / list generated here
