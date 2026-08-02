@@ -49,6 +49,8 @@ getValidLocale = function(userLocale) {
 
 i18n = {};
 
+i18n.ready = false;
+
 languagesAvailables = ['ca', 'de', 'en', 'es', 'fr', 'gl', 'hr', 'id', 'it', 'ja', 'ko', 'lv', 'pt', 'ru', 'sv', 'zh_CN'];
 
 
@@ -74,6 +76,9 @@ i18n.init = function(cb) {
         console.error('Error loading i18n ' + err);
       } else {
         console.log('i18n system loaded');
+        i18n.ready = true;
+        i18n.localizePage(true);
+        updateStatusBarVersion();
         detectedLanguage = i18n.getMessage('language_' + getValidLocale('DEFAULT'));
         i18n.addResources({
           'detectedLanguage': detectedLanguage
@@ -86,6 +91,9 @@ i18n.init = function(cb) {
   });
   i18next.on('languageChanged', function(newLang) {
     var translate;
+    if (!i18n.ready) {
+      return;
+    }
     translate = function(messageID) {
       return i18n.getMessage(messageID);
     };
