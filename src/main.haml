@@ -195,9 +195,7 @@
             #requestSerialPort
               %a.request_serial_port{href: "#", i18n: "requestSerialPort"}
         #noWebSerialNotice
-          %span ⚠ No WebSerial —
-          %a{href: "https://github.com/dantiel/orniflight-configurator/releases"}Desktop-App
-          %span  für FC-Verbindung
+          %span{i18n: "noWebSerialNotice"}
         .header-wrapper
           #dataflash_wrapper_global
             .noflash_global{align: "center", i18n: "sensorDataFlashNotFound"}

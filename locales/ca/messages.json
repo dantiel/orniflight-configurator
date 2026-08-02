@@ -3264,5 +3264,13 @@
   },
   "defaultWelcomeText": {
     "message": "OrniFlight is the cutting-edge open-source flight control platform for flapping-wing aircraft. Whether you're in a university lab researching avian aerodynamics, building a high-performance racing ornithopter, or crafting a biologically-inspired multi-wing drone — OrniFlight delivers the precision, configurability, and raw power your wings demand. Tune aerodynamic profiles, visualize servo waveforms in real time, and push the boundaries of what flapping flight can achieve."
+  },
+  "heroTagline": {
+    "message": "Vol batent, redefinit.",
+    "description": "Hero tagline on the landing page"
+  },
+  "noWebSerialNotice": {
+    "message": "⚠ Sense WebSerial — utilitzeu l'<a href=\"https://github.com/dantiel/orniflight-configurator/releases\" target=\"_blank\">aplicació d'escriptori</a> per a la connexió FC",
+    "description": "Notice shown when WebSerial API is not available (Safari, Firefox), directing users to the desktop app"
   }
 }

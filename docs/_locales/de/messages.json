@@ -5320,5 +5320,13 @@
   },
   "defaultDocumentation3": {
     "message": "<a href=\"https://github.com/dantiel/orniflight-configurator/releases\" target=\"_blank\">Configurator Releases</a><br />"
+  },
+  "heroTagline": {
+    "message": "Schlagflügelflug, neu definiert.",
+    "description": "Hero tagline on the landing page"
+  },
+  "noWebSerialNotice": {
+    "message": "⚠ Kein WebSerial — <a href=\"https://github.com/dantiel/orniflight-configurator/releases\" target=\"_blank\">Desktop-App</a> für FC-Verbindung nutzen",
+    "description": "Notice shown when WebSerial API is not available (Safari, Firefox), directing users to the desktop app"
   }
 }

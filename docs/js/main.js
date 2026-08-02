@@ -22,7 +22,9 @@ checkSetupAnalytics = function(callback) {
         if (!analytics) {
           setupAnalytics(result);
         }
-        callback(analytics);
+        if (typeof callback === "function") {
+          callback(analytics);
+        }
       });
     });
   } else if (callback) {
@@ -35,7 +37,7 @@ getBuildType = function() {
 };
 
 setupAnalytics = function(result) {
-  var analytics, checkForDebugVersions, debugMode, logException, optOut, sendCloseEvent, uid, userId, win;
+  var checkForDebugVersions, debugMode, logException, optOut, sendCloseEvent, uid, userId, win;
   userId = void 0;
   logException = function(exception) {
     analytics.sendException(exception.stack);
