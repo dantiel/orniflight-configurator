@@ -1,0 +1,266 @@
+<div class='tab-power toolbar_fixed_bottom'>
+<div class='content_wrapper'>
+<!-- should be the first DIV on each tab -->
+<div class='cf_column'>
+<div class='tab_title' i18n='tabPower'>Power</div>
+<div class='cf_doc_version_bt'>
+<a href='' id='button-documentation' target='_blank'></a>
+</div>
+</div>
+<table style='width:100%'>
+<tr>
+<td>
+<div class='leftWrapper'>
+<div class='gui_box grey'>
+<div class='gui_box_titlebar'>
+<div class='spacer_box_title' i18n='powerBatteryHead'></div>
+</div>
+<div class='spacer_box battery'>
+<table border='0' cellpadding='0' cellspacing='0' class='cf_table'>
+<tbody class='battery-config'>
+<td class='configuration' rowspan='4'></td>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class='rightWrapper'>
+<div class='gui_box grey'>
+<div class='gui_box_titlebar'>
+<div class='spacer_box_title' i18n='powerStateHead'></div>
+</div>
+<div class='spacer_box battery'>
+<table border='0' cellpadding='0' cellspacing='0' class='cf_table'>
+<tbody class='battery-state'></tbody>
+</table>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table style='width:100%'>
+<tr>
+<td>
+<div class='leftWrapper'>
+<div class='gui_box grey boxVoltageConfiguration'>
+<div class='gui_box_titlebar'>
+<div class='spacer_box_title' i18n='powerVoltageHead'></div>
+</div>
+<div class='spacer_box'>
+<table border='0' cellpadding='0' cellspacing='0' class='cf_table' width='100%'>
+<tbody class='voltage-meters'></tbody>
+</table>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table style='width:100%'>
+<tr>
+<td>
+<div class='leftWrapper'>
+<div class='gui_box grey boxAmperageConfiguration'>
+<div class='gui_box_titlebar'>
+<div class='spacer_box_title' i18n='powerAmperageHead'></div>
+</div>
+<div class='spacer_box'>
+<table border='0' cellpadding='0' cellspacing='0' class='cf_table' width='100%'>
+<tbody class='amperage-meters'></tbody>
+</table>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</table>
+<div class='note require-upgrade'>
+<p i18n='powerFirmwareUpgradeRequired'></p>
+</div>
+</div>
+<div class='content_toolbar'>
+<div class='btn calibration'>
+<a class='calibrationmanager' href='#' i18n='powerCalibrationManagerButton' id='calibrationmanager'></a>
+</div>
+<div class='btn save_btn'>
+<a class='save' href='#' i18n='powerButtonSave'></a>
+</div>
+</div>
+</div>
+<div id='tab-power-templates'>
+<table class='voltage-meters'>
+<tbody>
+<tr class='voltage-meter'>
+<td class='label'></td>
+<td class='value'></td>
+<td class='configuration'></td>
+</tr>
+</tbody>
+</table>
+<table class='amperage-meters'>
+<tbody>
+<tr class='amperage-meter'>
+<td class='label'></td>
+<td class='value'></td>
+<td class='configuration'></td>
+</tr>
+</tbody>
+</table>
+<table class='battery-state'>
+<tbody class='battery-state'>
+<tr class='connection-state'>
+<td i18n='powerBatteryConnected'></td>
+<td class='value'>?</td>
+</tr>
+<tr class='voltage'>
+<td i18n='powerBatteryVoltage'></td>
+<td class='value'></td>
+</tr>
+<tr class='mah-drawn'>
+<td i18n='powerBatteryCurrentDrawn'></td>
+<td class='value'></td>
+</tr>
+<tr class='amperage'>
+<td i18n='powerBatteryAmperage'></td>
+<td class='value'></td>
+</tr>
+</tbody>
+</table>
+<div class='battery-configuration'>
+<div class='select vbatmonitoring'>
+<label>
+<select class='batterymetersource'>
+<!-- list generated here -->
+</select>
+<span i18n='powerBatteryVoltageMeterSource'></span>
+</label>
+</div>
+<div class='select currentMonitoring'>
+<label>
+<select class='currentmetersource'>
+<!-- list generated here -->
+</select>
+<span i18n='powerBatteryCurrentMeterSource'></span>
+</label>
+</div>
+<div class='number'>
+<label>
+<input max='5' min='1' name='mincellvoltage' step='0.1' type='number'>
+<span i18n='powerBatteryMinimum'></span>
+</label>
+</div>
+<div class='number'>
+<label>
+<input max='5' min='1' name='maxcellvoltage' step='0.1' type='number'>
+<span i18n='powerBatteryMaximum'></span>
+</label>
+</div>
+<div class='number'>
+<label>
+<input max='5' min='1' name='warningcellvoltage' step='0.1' type='number'>
+<span i18n='powerBatteryWarning'></span>
+</label>
+</div>
+<div class='number'>
+<label>
+<input max='65535' min='0' name='capacity' step='1' type='number'>
+<span i18n='powerBatteryCapacity'></span>
+</label>
+</div>
+</div>
+<div class='voltage-configuration'>
+<div class='number'>
+<label>
+<input max='255' min='10' name='vbatscale' step='1' type='number'>
+<span i18n='powerVoltageScale'></span>
+</label>
+</div>
+<div class='number'>
+<label>
+<input max='255' min='1' name='vbatresdivval' step='1' type='number'>
+<span i18n='powerVoltageDivider'></span>
+</label>
+</div>
+<div class='number'>
+<label>
+<input max='255' min='1' name='vbatresdivmultiplier' step='1' type='number'>
+<span i18n='powerVoltageMultiplier'></span>
+</label>
+</div>
+</div>
+<div class='amperage-configuration'>
+<div class='number'>
+<label>
+<input max='16000' min='-16000' name='amperagescale' step='1' type='number'>
+<span i18n='powerAmperageScale'></span>
+</label>
+</div>
+<div class='number'>
+<label>
+<input max='32000' min='-32000&quot;' name='amperageoffset' step='1' type='number'>
+<span i18n='powerAmperageOffset'></span>
+</label>
+</div>
+</div>
+</div>
+<div class='tab-power' id='calibrationmanagercontent'>
+<div class='note'>
+<p i18n='powerCalibrationManagerHelp'></p>
+</div>
+<div class='note'>
+<p i18n='powerCalibrationManagerNote'></p>
+</div>
+<div class='note nocalib'>
+<p i18n='powerCalibrationManagerWarning'></p>
+</div>
+<div class='note srcchange'>
+<p i18n='powerCalibrationManagerSourceNote'></p>
+</div>
+<div class='vbatcalibration'>
+<div class='number'>
+<label>
+<input max='255' min='0' name='vbatcalibration' step='0.01' type='number'>
+<span i18n='powerVoltageCalibration'></span>
+</label>
+</div>
+</div>
+<div class='amperagecalibration'>
+<div class='number'>
+<label>
+<input max='255' min='0' name='amperagecalibration' step='0.01' type='number'>
+<span i18n='powerAmperageCalibration'></span>
+</label>
+</div>
+</div>
+<div class='default_btn margin-top5'>
+<a class='calibrate' href='#' i18n='powerCalibrationSave' id='calibrate'></a>
+</div>
+</div>
+<div class='tab-power' id='calibrationmanagerconfirmcontent'>
+<div class='note'>
+<p i18n='powerCalibrationConfirmHelp'></p>
+</div>
+<div class='vbatcalibration'>
+<div class='number tab_title'>
+<label>
+<span i18n='powerVoltageCalibratedScale'></span>
+<output name='vbatnewscale' type='number'></output>
+</label>
+</div>
+</div>
+<div class='amperagecalibration'>
+<div class='number tab_title'>
+<label>
+<span i18n='powerAmperageCalibratedScale'></span>
+<output name='amperagenewscale' type='number'></output>
+</label>
+</div>
+</div>
+<div class='default_btn margin-top5'>
+<a class='applycalibration' href='#' i18n='powerCalibrationApply' id='applycalibration'></a>
+</div>
+<div class='default_btn'>
+<a class='discardcalibration' href='#' i18n='powerCalibrationDiscard' id='discardcalibration'></a>
+</div>
+</div>

@@ -192,6 +192,12 @@
               %label
                 %input.auto_connect.togglesmall{type: "checkbox"}
                 %span.auto_connect{i18n: "autoConnect"}
+            #requestSerialPort
+              %a.request_serial_port{href: "#", i18n: "requestSerialPort"}
+        #noWebSerialNotice
+          %span ⚠ No WebSerial —
+          %a{href: "https://github.com/dantiel/orniflight-configurator/releases"}Desktop-App
+          %span  für FC-Verbindung
         .header-wrapper
           #dataflash_wrapper_global
             .noflash_global{align: "center", i18n: "sensorDataFlashNotFound"}
@@ -236,6 +242,8 @@
           %ul.mode-disconnected
             %li#tab_landing.tab_landing
               %a.tabicon.ic_welcome{href: "#", i18n: "tabLanding", i18n_title: "tabLanding"}
+            %li.tab_setup
+              %a.tabicon.ic_setup{href: "#", i18n: "tabSetup", i18n_title: "tabSetup"}
             %li.tab_changelog
               %a.tabicon.ic_help{href: "#", i18n: "tabChangelog"}
             %li.tab_privacy_policy

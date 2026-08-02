@@ -22,6 +22,17 @@ initializeSerialBackend = ->
     $('div#port-picker #port').change (target) ->
         GUI.updateManualPortVisibility()
         return
+    if GUI.hasWebSerial()
+        $('#requestSerialPort').show()
+        $('#requestSerialPort').click ->
+            serial.requestPort (path) ->
+                if path
+                    $('div#port-picker #port').val path
+                    GUI.updateManualPortVisibility()
+                return
+            return false
+    else if !GUI.isNWJS()
+        $('#noWebSerialNotice').show()
     $('div.connect_controls a.connect').click ->
 
         onFinishCallback = ->
@@ -552,4 +563,3 @@ reinitialiseConnection = (originatorTab, callback) ->
 'use strict'
 mspHelper = undefined
 connectionTimestamp = undefined
-

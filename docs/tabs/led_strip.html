@@ -1,0 +1,212 @@
+<div class='tab-led-strip toolbar_fixed_bottom'>
+<div class='content_wrapper'>
+<div class='tab_title' i18n='tabLedStrip'></div>
+<div class='cf_doc_version_bt'>
+<a href='https://github.com/dantiel/orniflight/releases' id='button-documentation' rel='noopener noreferrer' target='_blank'></a>
+</div>
+<div class='note'>
+<p i18n='ledStripHelp'></p>
+</div>
+<div class='mainGrid'></div>
+<div class='gridSections'>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+<div class='block'></div>
+</div>
+<div class='controls'>
+<div class='wires-remaining'>
+<div></div>
+<span i18n='ledStripRemainingText'></span>
+</div>
+<button class='funcClear' i18n='ledStripClearSelectedButton'></button>
+<button class='funcClearAll' i18n='ledStripClearAllButton'></button>
+<div class='section' i18n='ledStripFunctionSection'></div>
+<div class='select'>
+<span class='color_section' i18n='ledStripFunctionTitle'></span>
+<select class='functionSelect'>
+<option i18n='ledStripFunctionNoneOption' value=''></option>
+<option i18n='ledStripFunctionColorOption' value='function-c'></option>
+<option i18n='ledStripFunctionModesOption' value='function-f'></option>
+<option i18n='ledStripFunctionArmOption' value='function-a'></option>
+<option class='extra_functions20' i18n='ledStripFunctionBatteryOption' value='function-l'></option>
+<option class='extra_functions20' i18n='ledStripFunctionRSSIOption' value='function-s'></option>
+<option class='extra_functions20' i18n='ledStripFunctionGPSOption' value='function-g'></option>
+<option i18n='ledStripFunctionRingOption' value='function-r'></option>
+</select>
+</div>
+<div class='modifiers'>
+<span class='color_section' i18n='ledStripColorModifierTitle'></span>
+<div class='checkbox'>
+<input class='toggle function-t' name='ThrottleHue' type='checkbox'>
+<label>
+<select class='auxSelect'>
+<option i18n='controlAxisRoll' value='0'></option>
+<option i18n='controlAxisPitch' value='1'></option>
+<option i18n='controlAxisYaw' value='2'></option>
+<option i18n='controlAxisThrottle' value='3'></option>
+<option i18n='controlAxisAux1' value='4'></option>
+<option i18n='controlAxisAux2' value='5'></option>
+<option i18n='controlAxisAux3' value='6'></option>
+<option i18n='controlAxisAux4' value='7'></option>
+<option i18n='controlAxisAux5' value='8'></option>
+<option i18n='controlAxisAux6' value='9'></option>
+<option i18n='controlAxisAux7' value='10'></option>
+<option i18n='controlAxisAux8' value='11'></option>
+</select>
+<span class='labelSelect' i18n='controlAxisThrottle'></span>
+</label>
+</div>
+<div class='checkbox extra_functions20'>
+<input class='toggle function-o' name='LarsonScanner' type='checkbox'>
+<label>
+<span i18n='ledStripVtxFunction'></span>
+</label>
+</div>
+</div>
+<div class='blinkers extra_functions20'>
+<span class='color_section' i18n='ledStripBlinkTitle'></span>
+<div class='checkbox blinkOverlay'>
+<input class='toggle function-b' name='blink' type='checkbox'>
+<label>
+<span i18n='ledStripBlinkAlwaysOverlay'></span>
+</label>
+</div>
+<div class='checkbox landingBlinkOverlay'>
+<input class='toggle function-n' name='landingBlink' type='checkbox'>
+<label>
+<span i18n='ledStripBlinkLandingOverlay'></span>
+</label>
+</div>
+</div>
+<div class='overlays'>
+<span class='color_section' i18n='ledStripOverlayTitle'></span>
+<div class='checkbox warningOverlay'>
+<input class='toggle function-w' name='Warnings' type='checkbox'>
+<label>
+<span i18n='ledStripWarningsOverlay'></span>
+</label>
+</div>
+<div class='checkbox indicatorOverlay'>
+<input class='toggle function-i' name='Indicator' type='checkbox'>
+<label>
+<span i18n='ledStripIndecatorOverlay'></span>
+</label>
+</div>
+<div class='checkbox vtxOverlay'>
+<input class='toggle function-v' name='Vtx' type='checkbox'>
+<label>
+<span i18n='ledStripVtxOverlay'></span>
+</label>
+</div>
+</div>
+<div class='mode_colors'>
+<div class='section' i18n='ledStripModeColorsTitle'>
+<select class='modeSelect'>
+<option i18n='ledStripModeColorsModeOrientation' value='0'></option>
+<option i18n='ledStripModeColorsModeHeadfree' value='1'></option>
+<option i18n='ledStripModeColorsModeHorizon' value='2'></option>
+<option i18n='ledStripModeColorsModeAngle' value='3'></option>
+<option i18n='ledStripModeColorsModeMag' value='4'></option>
+<option i18n='ledStripModeColorsModeBaro' value='5'></option>
+</select>
+<button class='mode_color-0-0 dir-n' i18n='ledStripDirN'></button>
+<button class='mode_color-0-1 dir-e' i18n='ledStripDirE'></button>
+<button class='mode_color-0-2 dir-s' i18n='ledStripDirS'></button>
+<button class='mode_color-0-3 dir-w' i18n='ledStripDirW'></button>
+<button class='mode_color-0-4 dir-u' i18n='ledStripDirU'></button>
+<button class='mode_color-0-5 dir-d' i18n='ledStripDirD'></button>
+</div>
+<div class='section' i18n='ledStripModesOrientationTitle'>
+<div class='directions'>
+<button class='dir-n' i18n='ledStripDirN'></button>
+<button class='dir-e' i18n='ledStripDirE'></button>
+<button class='dir-s' i18n='ledStripDirS'></button>
+<button class='dir-w' i18n='ledStripDirW'></button>
+<button class='dir-u' i18n='ledStripDirU'></button>
+<button class='dir-d' i18n='ledStripDirD'></button>
+</div>
+<div class='colors'>
+<div class='colorDefineSliders'>
+<div i18n='ledStripColorSetupTitle'>
+<div class='colorDefineSliderContainer'>
+<label class='colorDefineSliderLabel' i18n='ledStripH'></label>
+<input class='sliderHSV' max='359' min='0' type='range' value='0'>
+<label class='colorDefineSliderValue Hvalue'>0</label>
+</div>
+<div class='colorDefineSliderContainer'>
+<label class='colorDefineSliderLabel' i18n='ledStripS'></label>
+<input class='sliderHSV' max='255' min='0' type='range' value='0'>
+<label class='colorDefineSliderValue Svalue'>0</label>
+</div>
+<div class='colorDefineSliderContainer'>
+<label class='colorDefineSliderLabel' i18n='ledStripV'></label>
+<input class='sliderHSV' max='255' min='0' type='range' value='0'>
+<label class='colorDefineSliderValue Vvalue'>0</label>
+</div>
+</div>
+<button class='color-0' i18n_title='colorBlack'>0</button>
+<button class='color-1' i18n_title='colorWhite'>1</button>
+<button class='color-2' i18n_title='colorRed'>2</button>
+<button class='color-3' i18n_title='colorOrange'>3</button>
+<button class='color-4' i18n_title='colorYellow'>4</button>
+<button class='color-5' i18n_title='colorLimeGreen'>5</button>
+<button class='color-6' i18n_title='colorGreen'>6</button>
+<button class='color-7' i18n_title='colorMintGreen'>7</button>
+<button class='color-8' i18n_title='colorCyan'>8</button>
+<button class='color-9' i18n_title='colorLightBlue'>9</button>
+<button class='color-10' i18n_title='colorBlue'>10</button>
+<button class='color-11' i18n_title='colorDarkViolet'>11</button>
+<button class='color-12' i18n_title='colorMagenta'>12</button>
+<button class='color-13' i18n_title='colorDeepPink'>13</button>
+<button class='color-14' i18n_title='colorBlack'>14</button>
+<button class='color-15' i18n_title='colorBlack'>15</button>
+</div>
+<div class='special_colors mode_colors'>
+<div class='section' i18n='ledStripModesSpecialColorsTitle'>
+<button class='mode_color-6-0' i18n='ledStripModeColorsModeDisarmed' i18n_title='colorGreen'></button>
+<button class='mode_color-6-1' i18n='ledStripModeColorsModeArmed' i18n_title='colorBlue'></button>
+<button class='mode_color-6-2' i18n='ledStripModeColorsModeAnimation' i18n_title='colorWhite'>
+<!-- button class="mode_color-6-3" i18n_title="colorBlack">Background</button -->
+</button>
+<button class='mode_color-6-4' i18n='ledStripModeColorsModeBlinkBg' i18n_title='colorBlack'></button>
+<button class='mode_color-6-5' i18n='ledStripModeColorsModeGPSNoSats' i18n_title='colorRed'></button>
+<button class='mode_color-6-6' i18n='ledStripModeColorsModeGPSNoLock' i18n_title='colorOrange'></button>
+<button class='mode_color-6-7' i18n='ledStripModeColorsModeGPSLocked' i18n_title='colorGreen'></button>
+</div>
+<div class='section' i18n='ledStripWiring'>
+<div class='wiringMode'>
+<button class='funcWire w100' i18n='ledStripWiringMode'></button>
+</div>
+<div class='wiringControls'>
+<button class='funcWireClearSelect w50' i18n='ledStripWiringClearControl'></button>
+<button class='funcWireClear w50' i18n='ledStripWiringClearAllControl'></button>
+</div>
+<p i18n='ledStripWiringMessage'></p>
+</div>
+<div class='colorControls'></div>
+<div class='clear-both'></div>
+</div>
+<div class='content_toolbar'>
+<div class='btn save_btn'>
+<a class='save' href='#' i18n='ledStripButtonSave'></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

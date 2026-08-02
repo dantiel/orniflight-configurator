@@ -76,10 +76,20 @@ GUI_control = ->
             @Mode = GUI_Modes.Other
     return
 
-GUI_Modes = 
+GUI_Modes =
     NWJS: 'NW.js'
     ChromeApp: 'Chrome'
     Other: 'Other'
+
+GUI_control::isNWJS = ->
+    @Mode == GUI_Modes.NWJS
+
+GUI_control::isBrowser = ->
+    @Mode == GUI_Modes.Other
+
+GUI_control::hasWebSerial = ->
+    typeof navigator != 'undefined' and !!navigator.serial
+
 # Timer managing methods
 # name = string
 # code = function reference (code to be executed)
@@ -374,4 +384,3 @@ GUI_control::isOther = ->
 
 # initialize object into GUI variable
 GUI = new GUI_control
-

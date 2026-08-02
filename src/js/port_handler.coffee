@@ -130,6 +130,9 @@ PortHandler.check = ->
     return
 
 PortHandler.check_usb_devices = (callback) ->
+    if typeof chrome == 'undefined' or !chrome.usb
+        if callback then callback false
+        return
     chrome.usb.getDevices usbDevices, (result) ->
         if result.length
             if !$('div#port-picker #port [value=\'DFU\']').length
@@ -246,4 +249,3 @@ PortHandler.flush_callbacks = ->
         killed++
         i--
     killed
-

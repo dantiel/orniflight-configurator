@@ -3,6 +3,7 @@ TABS.setup = yaw_fix: 0.0
 
 TABS.setup.initialize = (callback) ->
     self = this
+    isOffline = !CONFIGURATOR.connectionValid
 
     load_status = ->
         MSP.send_message MSPCodes.MSP_STATUS, false, false, load_mixer_config
@@ -20,6 +21,7 @@ TABS.setup.initialize = (callback) ->
         # translate to user-selected language
 
         get_slow_data = ->
+            return if isOffline
             MSP.send_message MSPCodes.MSP_STATUS, false, false, ->
                 $('#initialSetupArmingAllowed').toggle CONFIG.armingDisableFlags == 0
                 i = 0
@@ -43,6 +45,7 @@ TABS.setup.initialize = (callback) ->
             return
 
         get_fast_data = ->
+            return if isOffline
             MSP.send_message MSPCodes.MSP_RC, false, false, ->
                 MSP.send_message MSPCodes.MSP_ATTITUDE, false, false, ->
                     roll_e.text i18n.getMessage('initialSetupAttitude', [ SENSOR_DATA.kinematics[0] ])
@@ -67,13 +70,14 @@ TABS.setup.initialize = (callback) ->
             return
 
         i18n.localizePage()
-        if semver.lt(CONFIG.apiVersion, CONFIGURATOR.backupRestoreMinApiVersionAccepted)
-            $('#content .backup').addClass 'disabled'
-            $('#content .restore').addClass 'disabled'
-            GUI.log i18n.getMessage('initialSetupBackupAndRestoreApiVersion', [
-                CONFIG.apiVersion
-                CONFIGURATOR.backupRestoreMinApiVersionAccepted
-            ])
+        if !isOffline
+            if semver.lt(CONFIG.apiVersion, CONFIGURATOR.backupRestoreMinApiVersionAccepted)
+                $('#content .backup').addClass 'disabled'
+                $('#content .restore').addClass 'disabled'
+                GUI.log i18n.getMessage('initialSetupBackupAndRestoreApiVersion', [
+                    CONFIG.apiVersion
+                    CONFIGURATOR.backupRestoreMinApiVersionAccepted
+                ])
         # initialize 3D Model
         self.initModel()
         # set roll in interactive block
@@ -82,16 +86,25 @@ TABS.setup.initialize = (callback) ->
         $('span.pitch').text i18n.getMessage('initialSetupAttitude', [ 0 ])
         # set heading in interactive block
         $('span.heading').text i18n.getMessage('initialSetupAttitude', [ 0 ])
-        # check if we have accelerometer and magnetometer
-        if !have_sensor(CONFIG.activeSensors, 'acc')
+        if isOffline
             $('a.calibrateAccel').addClass 'disabled'
-            $('default_btn').addClass 'disabled'
-        if !have_sensor(CONFIG.activeSensors, 'mag')
             $('a.calibrateMag').addClass 'disabled'
-            $('default_btn').addClass 'disabled'
+            $('a.resetSettings').addClass 'disabled'
+            $('a.backup').addClass 'disabled'
+            $('a.restore').addClass 'disabled'
+            $('.initialSetupRebootBootloader').hide()
+            $('#arming-disable-flag').hide()
+        else
+            if !have_sensor(CONFIG.activeSensors, 'acc')
+                $('a.calibrateAccel').addClass 'disabled'
+                $('default_btn').addClass 'disabled'
+            if !have_sensor(CONFIG.activeSensors, 'mag')
+                $('a.calibrateMag').addClass 'disabled'
+                $('default_btn').addClass 'disabled'
         self.initializeInstruments()
-        $('#arming-disable-flag').attr 'title', i18n.getMessage('initialSetupArmingDisableFlagsTooltip')
-        if semver.gte(CONFIG.apiVersion, '1.40.0')
+        if !isOffline
+            $('#arming-disable-flag').attr 'title', i18n.getMessage('initialSetupArmingDisableFlagsTooltip')
+        if !isOffline and semver.gte(CONFIG.apiVersion, '1.40.0')
             if isExpertModeEnabled()
                 $('.initialSetupRebootBootloader').show()
             else
@@ -107,7 +120,7 @@ TABS.setup.initialize = (callback) ->
         $('a.calibrateAccel').click ->
             `var self`
             self = $(this)
-            if !self.hasClass('calibrating')
+            if !self.hasClass('calibrating') and !self.hasClass('disabled')
                 self.addClass 'calibrating'
                 # During this period MCU won't be able to process any serial commands because its locked in a for/while loop
                 # until this operation finishes, sending more commands through data_poll() will result in serial buffer overflow
@@ -146,6 +159,7 @@ TABS.setup.initialize = (callback) ->
             return
         dialogConfirmReset = $('.dialogConfirmReset')[0]
         $('a.resetSettings').click ->
+            return if $(this).hasClass('disabled')
             dialogConfirmReset.showModal()
             return
         $('.dialogConfirmReset-cancelbtn').click ->
@@ -164,6 +178,7 @@ TABS.setup.initialize = (callback) ->
         $('div#interactive_block > a.reset').text i18n.getMessage('initialSetupButtonResetZaxisValue', [ self.yaw_fix ])
         # reset yaw button hook
         $('div#interactive_block > a.reset').click ->
+            return if isOffline
             self.yaw_fix = SENSOR_DATA.kinematics[2] * -1.0
             $(this).text i18n.getMessage('initialSetupButtonResetZaxisValue', [ self.yaw_fix ])
             console.log 'YAW reset to 0 deg, fix: ' + self.yaw_fix + ' deg'
@@ -197,7 +212,7 @@ TABS.setup.initialize = (callback) ->
         roll_e = $('dd.roll')
         pitch_e = $('dd.pitch')
         heading_e = $('dd.heading')
-        if semver.lt(CONFIG.apiVersion, '1.36.0')
+        if !isOffline and semver.lt(CONFIG.apiVersion, '1.36.0')
             arming_disable_flags_e.hide()
         # DISARM FLAGS
         # We add all the arming/disarming flags available, and show/hide them if needed.
@@ -257,17 +272,21 @@ TABS.setup.initialize = (callback) ->
                 i++
             return
 
-        prepareDisarmFlags()
-        GUI.interval_add 'setup_data_pull_fast', get_fast_data, 33, true
-        # 30 fps
-        GUI.interval_add 'setup_data_pull_slow', get_slow_data, 250, true
+        if !isOffline
+            prepareDisarmFlags()
         GUI.interval_add 'setup_model_animate', animate_model, 33, true
+        if !isOffline
+            GUI.interval_add 'setup_data_pull_fast', get_fast_data, 33, true
+            GUI.interval_add 'setup_data_pull_slow', get_slow_data, 250, true
         GUI.content_ready callback
         return
 
     if GUI.active_tab != 'setup'
         GUI.active_tab = 'setup'
-    MSP.send_message MSPCodes.MSP_ACC_TRIM, false, false, load_status
+    if isOffline
+        load_html()
+    else
+        MSP.send_message MSPCodes.MSP_ACC_TRIM, false, false, load_status
     return
 
 TABS.setup.initializeInstruments = ->
@@ -279,6 +298,7 @@ TABS.setup.initializeInstruments = ->
     heading = $.flightIndicator('#heading', 'heading', options)
 
     @updateInstruments = ->
+        return if !CONFIGURATOR.connectionValid
         attitude.setRoll SENSOR_DATA.kinematics[0]
         attitude.setPitch SENSOR_DATA.kinematics[1]
         heading.setHeading SENSOR_DATA.kinematics[2]
@@ -380,4 +400,3 @@ TABS.setup.cleanup = (callback) ->
     if callback
         callback()
     return
-

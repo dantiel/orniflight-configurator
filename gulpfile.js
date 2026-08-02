@@ -59,6 +59,8 @@ gulp.task('clean', gulp.parallel(clean_dist, clean_apps, clean_debug, clean_rele
 
 gulp.task('clean-dist', clean_dist);
 
+gulp.task('clean-docs', clean_docs);
+
 gulp.task('clean-apps', clean_apps);
 
 gulp.task('clean-debug', clean_debug);
@@ -72,12 +74,18 @@ const getChangesetId = gulp.series(getHash, writeChangesetId);
 gulp.task('get-changeset-id', getChangesetId);
 
 // dist_yarn MUST be done after dist_src
-var distBuild = gulp.series(dist_src, dist_scss, dist_coffee, dist_changelog, dist_haml, dist_yarn, dist_locale, dist_libraries, dist_resources, getChangesetId);
+var distBuild = gulp.series(dist_src, dist_scss, dist_coffee, dist_changelog, dist_haml, dist_yarn, dist_locale, dist_libraries, dist_resources, getChangesetId, dist_index);
 var distRebuild = gulp.series(clean_dist, distBuild);
 gulp.task('dist', distRebuild);
 
 var appsBuild = gulp.series(gulp.parallel(clean_apps, distRebuild), apps, gulp.parallel(listPostBuildTasks(APPS_DIR)));
 gulp.task('apps', appsBuild);
+
+var docsBuild = gulp.series(clean_docs, distRebuild, copy_docs);
+gulp.task('docs', docsBuild);
+
+var devBuild = gulp.series(clean_dist, distBuild, watch_and_serve);
+gulp.task('dev', devBuild);
 
 var debugBuild = gulp.series(distBuild, debug, gulp.parallel(listPostBuildTasks(DEBUG_DIR)), start_debug)
 gulp.task('debug', debugBuild);
@@ -233,6 +241,10 @@ function clean_release() {
     return del([RELEASE_DIR + '**'], { force: true });
 }
 
+function clean_docs() {
+    return del(['./docs/**'], { force: true });
+}
+
 function clean_cache() {
     return del(['./cache/**'], { force: true });
 }
@@ -313,7 +325,7 @@ function dist_coffee(done) {
             // Compile to temp location, then move to dist
             const tmpDir = path.join(os.tmpdir(), 'orni_coffee_' + Date.now());
             if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
-            execSync('coffee -c -o "' + tmpDir + '" "' + coffeeFile + '"', { stdio: 'pipe' });
+            execSync('coffee -b -c -o "' + tmpDir + '" "' + coffeeFile + '"', { stdio: 'pipe' });
             const tmpJs = path.join(tmpDir, path.basename(coffeeFile, '.coffee') + '.js');
             if (fs.existsSync(tmpJs)) {
                 fs.renameSync(tmpJs, outPath);
@@ -1014,4 +1026,141 @@ function listReleaseTasks(done) {
     }
 
     return releaseTasks;
+}
+
+// -----------------
+//  Docs — GitHub Pages deployment
+// -----------------
+
+function copy_docs(done) {
+    var fse = require('fs-extra');
+    var path = require('path');
+    var DOCS_DIR = './docs/';
+
+    console.log('Copying dist/ → docs/ for GitHub Pages...');
+
+    // Copy entire dist, then remove NW.js-specific files
+    fse.copySync('./dist/', DOCS_DIR);
+
+    // Remove NW.js-only files that don't belong in browser
+    var removeFiles = ['main_nwjs.html', 'manifest.json', 'package.json', 'yarn.lock'];
+    removeFiles.forEach(function(f) {
+        var fp = path.join(DOCS_DIR, f);
+        if (fs.existsSync(fp)) fs.unlinkSync(fp);
+    });
+
+    // Create index.html from main.html (GitHub Pages entry point)
+    var mainPath = path.join(DOCS_DIR, 'main.html');
+    var indexPath = path.join(DOCS_DIR, 'index.html');
+    if (fs.existsSync(mainPath)) {
+        fs.copyFileSync(mainPath, indexPath);
+        console.log('  ✓ ' + indexPath + ' created');
+    }
+
+    console.log('  ✓ docs/ ready for GitHub Pages');
+    done();
+}
+
+// -----------------
+//  index.html for dist/ (browser convenience)
+// -----------------
+
+function dist_index(done) {
+    var path = require('path');
+    var mainPath = path.join(DIST_DIR, 'main.html');
+    var indexPath = path.join(DIST_DIR, 'index.html');
+    if (fs.existsSync(mainPath)) {
+        fs.copyFileSync(mainPath, indexPath);
+        console.log('  ✓ dist/index.html created');
+    }
+    done();
+}
+
+// -----------------
+//  Dev — watch + HTTP server for browser development
+// -----------------
+
+function watch_and_serve(done) {
+    var http = require('http');
+    var fs = require('fs');
+    var path = require('path');
+    var execSync = require('child_process').execSync;
+    var glob = require('glob');
+
+    var PORT = 3000;
+    var DIST_DIR = path.resolve('./dist/');
+
+    // ---- Watch for source changes ----
+    console.log('Watching for changes...');
+    var watchFn = function() {
+        var sassFiles = glob.sync('src/**/*.sass');
+        var scssFiles = glob.sync('src/**/*.scss');
+        var coffeeFiles = glob.sync('src/**/*.coffee');
+        var hamlFiles = glob.sync('src/**/*.haml');
+        var allSrc = [].concat(sassFiles, scssFiles, coffeeFiles, hamlFiles);
+
+        allSrc.forEach(function(f) {
+            fs.watchFile(f, { interval: 500 }, function(curr, prev) {
+                if (curr.mtime !== prev.mtime) {
+                    var rel = path.relative('src', f);
+                    console.log('  Changed: ' + rel);
+                    try {
+                        if (f.match(/\.sass$/)) {
+                            var out = path.join(DIST_DIR, rel.replace(/\.sass$/, '.css'));
+                            execSync('sass --no-source-map --style=compressed "' + f + '" "' + out + '"', { stdio: 'pipe' });
+                        } else if (f.match(/\.coffee$/)) {
+                            var out = path.join(DIST_DIR, rel.replace(/\.coffee$/, '.js'));
+                            execSync('npx coffee -b -c -p "' + f + '" > "' + out + '"', { stdio: 'pipe' });
+                        } else if (f.match(/\.haml$/)) {
+                            var out = path.join(DIST_DIR, rel.replace(/\.haml$/, '.html'));
+                            execSync('ruby tools/haml_compile.rb "' + f + '" "' + out + '"', { stdio: 'pipe' });
+                        }
+                    } catch(e) {
+                        console.error('  ✗ ' + (e.stderr ? e.stderr.toString() : e.message));
+                    }
+                }
+            });
+        });
+    };
+    watchFn();
+
+    // ---- HTTP server ----
+    var mimeTypes = {
+        '.html': 'text/html',
+        '.js': 'application/javascript',
+        '.css': 'text/css',
+        '.json': 'application/json',
+        '.png': 'image/png',
+        '.svg': 'image/svg+xml',
+        '.ico': 'image/x-icon',
+        '.woff': 'font/woff',
+        '.woff2': 'font/woff2'
+    };
+
+    var server = http.createServer(function(req, res) {
+        var urlPath = req.url.split('?')[0];
+        if (urlPath === '/') urlPath = '/main.html';
+        var filePath = path.join(DIST_DIR, urlPath);
+        var ext = path.extname(filePath);
+
+        fs.readFile(filePath, function(err, data) {
+            if (err) {
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end('Not found: ' + urlPath);
+                return;
+            }
+            res.writeHead(200, {
+                'Content-Type': mimeTypes[ext] || 'application/octet-stream',
+                'Access-Control-Allow-Origin': '*'
+            });
+            res.end(data);
+        });
+    });
+
+    server.listen(PORT, function() {
+        console.log('  ✓ Dev server: http://localhost:' + PORT + '  (Ctrl+C to stop)');
+        console.log('  ✓ Watching ' + glob.sync('src/**/*.{sass,scss,coffee,haml}').length + ' source files');
+    });
+
+    done();
 }

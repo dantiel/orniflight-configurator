@@ -114,7 +114,8 @@ startProcess = ->
             tabRequiresConnection = $(self).parent().hasClass('mode-connected')
             tab = tabClass.substring(4)
             tabName = $(self).text()
-            if tabRequiresConnection and !CONFIGURATOR.connectionValid
+            offlineCapableTabs = ['setup']
+            if tabRequiresConnection and !CONFIGURATOR.connectionValid and offlineCapableTabs.indexOf(tab) < 0
                 GUI.log i18n.getMessage('tabSwitchConnectionRequired')
                 return
             if GUI.connect_lock
@@ -616,7 +617,7 @@ $(document).ready ->
         CONFIGURATOR.version = data.version
         CONFIGURATOR.gitChangesetId = data.gitChangesetId
         # Version in the ChromeApp's manifest takes precedence.
-        if chrome.runtime and chrome.runtime.getManifest
+        if typeof chrome != 'undefined' && chrome.runtime && chrome.runtime.getManifest
             manifest = chrome.runtime.getManifest()
             CONFIGURATOR.version = manifest.version
             # manifest.json for ChromeApp can't have a version

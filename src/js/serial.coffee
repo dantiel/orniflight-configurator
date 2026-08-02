@@ -14,11 +14,18 @@ serial =
     transmitting: false
     outputBuffer: []
     logHead: 'SERIAL: '
+    _webSerialPorts: {}
     connect: (path, options, callback) ->
         self = this
         testUrl = path.match(/^tcp:\/\/([A-Za-z0-9\.-]+)(?:\:(\d+))?$/)
         if testUrl
             self.connectTcp testUrl[1], testUrl[2], options, callback
+        else if path.indexOf('webserial:') == 0
+            port = self._webSerialPorts[path]
+            if port
+                self.connectWebSerial port, options, callback
+            else if callback
+                callback false
         else
             self.connectSerial path, options, callback
         return
@@ -207,7 +214,27 @@ serial =
         `var i`
         self = this
         self.connected = false
-        if self.connectionId
+        if self.connectionType == 'webserial'
+            self.emptyOutputBuffer()
+            if self._webSerialReader
+                try self._webSerialReader.cancel()
+                self._webSerialReader = null
+            if self._webSerialWriter
+                self._webSerialWriter.close().then ->
+                    self._webSerialPort?.close()
+                    self.connectionId = false
+                    self.bitrate = 0
+                    console.log self.logHead + 'Connection closed, Sent: ' + self.bytesSent + ' bytes, Received: ' + self.bytesReceived + ' bytes'
+                    if callback
+                        callback true
+                    return
+                .catch ->
+                    self.connectionId = false
+                    self.bitrate = 0
+                    if callback
+                        callback false
+                    return
+        else if self.connectionId
             self.emptyOutputBuffer()
             # remove listeners
             i = self.onReceive.listeners.length - 1
@@ -238,13 +265,97 @@ serial =
             self.openCanceled = true
         return
     getDevices: (callback) ->
-        chrome.serial.getDevices (devices_array) ->
-            devices = []
-            devices_array.forEach (device) ->
-                devices.push device.path
+        self = this
+        if typeof navigator != 'undefined' and navigator.serial
+            navigator.serial.getPorts().then((ports) ->
+                devices = []
+                self._webSerialPorts = {}
+                ports.forEach (port) ->
+                    info = port.getInfo()
+                    path = "webserial:#{info.usbVendorId or 0}:#{info.usbProductId or 0}"
+                    self._webSerialPorts[path] = port
+                    devices.push path
+                    return
+                callback devices
                 return
-            callback devices
+            ).catch (err) ->
+                console.error 'WEBSERIAL getPorts error:', err
+                callback []
+                return
+        else
+            chrome.serial.getDevices (devices_array) ->
+                devices = []
+                devices_array.forEach (device) ->
+                    devices.push device.path
+                    return
+                callback devices
+                return
             return
+        return
+    requestPort: (callback) ->
+        self = this
+        if typeof navigator != 'undefined' and navigator.serial
+            navigator.serial.requestPort().then((port) ->
+                info = port.getInfo()
+                path = "webserial:#{info.usbVendorId or 0}:#{info.usbProductId or 0}"
+                self._webSerialPorts[path] = port
+                callback path
+                return
+            ).catch (err) ->
+                console.error 'WEBSERIAL requestPort error:', err
+                if err.name != 'NotFoundError'
+                    GUI.log i18n.getMessage('serialPortRequestFailed')
+                callback null
+                return
+        else
+            callback null
+        return
+    connectWebSerial: (port, options, callback) ->
+        self = this
+        self.openRequested = true
+        self.connectionType = 'webserial'
+        self.logHead = 'WEBSERIAL: '
+        self._webSerialPort = port
+        port.open { baudRate: options.bitrate }
+            .then ->
+                self.connected = true
+                self.connectionId = 'webserial'
+                self.bitrate = options.bitrate
+                self.bytesReceived = 0
+                self.bytesSent = 0
+                self.failed = 0
+                self.openRequested = false
+                if port.readable
+                    self._webSerialReader = port.readable.getReader()
+                    readLoop = ->
+                        self._webSerialReader.read().then ({value, done}) ->
+                            if done
+                                return
+                            if value
+                                self.bytesReceived += value.byteLength
+                                self.onReceive.listeners.forEach (l) ->
+                                    l { data: value, connectionId: 'webserial' }
+                                    return
+                            if self.connected
+                                readLoop()
+                            return
+                        .catch (err) ->
+                            console.error 'WEBSERIAL read error:', err
+                            self.onReceiveError.listeners.forEach (l) ->
+                                l { error: 'system_error', connectionId: 'webserial' }
+                                return
+                            return
+                    readLoop()
+                console.log self.logHead + 'Connection opened, Baud: ' + options.bitrate
+                if callback
+                    callback { connectionId: 'webserial', bitrate: options.bitrate }
+                return
+            .catch (err) ->
+                console.error 'WEBSERIAL open error:', err
+                self.openRequested = false
+                if callback
+                    callback false
+                return
         return
     getInfo: (callback) ->
         chromeType = if @connectionType == 'serial' then chrome.serial else chrome.sockets.tcp
@@ -273,6 +384,29 @@ serial =
                     callback
                         bytesSent: 0
                         error: 'undefined'
+                return
+            if self.connectionType == 'webserial'
+                self._webSerialWriter.write(data).then ->
+                    self.bytesSent += data.byteLength
+                    if callback
+                        callback { bytesSent: data.byteLength }
+                    self.outputBuffer.shift()
+                    if self.outputBuffer.length
+                        if self.outputBuffer.length > 100
+                            counter = 0
+                            while self.outputBuffer.length > 100
+                                self.outputBuffer.pop()
+                                counter++
+                            console.log self.logHead + 'Send buffer overflowing, dropped: ' + counter + ' entries'
+                        send()
+                    else
+                        self.transmitting = false
+                    return
+                .catch (err) ->
+                    console.error 'WEBSERIAL send error:', err
+                    if callback
+                        callback { bytesSent: 0, error: 'system_error' }
+                    return
                 return
             sendFn = if self.connectionType == 'serial' then chrome.serial.send else chrome.sockets.tcp.send
             sendFn self.connectionId, data, (sendInfo) ->
@@ -330,36 +464,58 @@ serial =
     onReceive:
         listeners: []
         addListener: (function_reference) ->
-            chromeType = if serial.connectionType == 'serial' then chrome.serial else chrome.sockets.tcp
-            chromeType.onReceive.addListener function_reference
-            @listeners.push function_reference
+            if serial.connectionType == 'webserial'
+                @listeners.push function_reference
+            else
+                chromeType = if serial.connectionType == 'serial' then chrome.serial else chrome.sockets.tcp
+                chromeType.onReceive.addListener function_reference
+                @listeners.push function_reference
             return
         removeListener: (function_reference) ->
-            chromeType = if serial.connectionType == 'serial' then chrome.serial else chrome.sockets.tcp
-            i = @listeners.length - 1
-            while i >= 0
-                if @listeners[i] == function_reference
-                    chromeType.onReceive.removeListener function_reference
-                    @listeners.splice i, 1
-                    break
-                i--
+            if serial.connectionType == 'webserial'
+                i = @listeners.length - 1
+                while i >= 0
+                    if @listeners[i] == function_reference
+                        @listeners.splice i, 1
+                        break
+                    i--
+            else
+                chromeType = if serial.connectionType == 'serial' then chrome.serial else chrome.sockets.tcp
+                i = @listeners.length - 1
+                while i >= 0
+                    if @listeners[i] == function_reference
+                        chromeType.onReceive.removeListener function_reference
+                        @listeners.splice i, 1
+                        break
+                    i--
             return
     onReceiveError:
         listeners: []
         addListener: (function_reference) ->
-            chromeType = if serial.connectionType == 'serial' then chrome.serial else chrome.sockets.tcp
-            chromeType.onReceiveError.addListener function_reference
-            @listeners.push function_reference
+            if serial.connectionType == 'webserial'
+                @listeners.push function_reference
+            else
+                chromeType = if serial.connectionType == 'serial' then chrome.serial else chrome.sockets.tcp
+                chromeType.onReceiveError.addListener function_reference
+                @listeners.push function_reference
             return
         removeListener: (function_reference) ->
-            chromeType = if serial.connectionType == 'serial' then chrome.serial else chrome.sockets.tcp
-            i = @listeners.length - 1
-            while i >= 0
-                if @listeners[i] == function_reference
-                    chromeType.onReceiveError.removeListener function_reference
-                    @listeners.splice i, 1
-                    break
-                i--
+            if serial.connectionType == 'webserial'
+                i = @listeners.length - 1
+                while i >= 0
+                    if @listeners[i] == function_reference
+                        @listeners.splice i, 1
+                        break
+                    i--
+            else
+                chromeType = if serial.connectionType == 'serial' then chrome.serial else chrome.sockets.tcp
+                i = @listeners.length - 1
+                while i >= 0
+                    if @listeners[i] == function_reference
+                        chromeType.onReceiveError.removeListener function_reference
+                        @listeners.splice i, 1
+                        break
+                    i--
             return
     emptyOutputBuffer: ->
         @outputBuffer = []

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap')
+
 :root
   --accent:  #8998fe
   --accent3: #aeb6f7
@@ -209,6 +211,37 @@ input[type="number"]::-webkit-inner-spin-button
 
 #port-picker .auto_connect, .gray
   color: var(--subtleAccent)
+
+#requestSerialPort
+  display: none
+  float: right
+  margin-right: 10px
+  margin-top: 3px
+
+#requestSerialPort a
+  font-size: 11px
+  color: var(--subtleAccent)
+  border: 1px solid var(--subtleAccent)
+  border-radius: 3px
+  padding: 2px 6px
+  text-decoration: none
+
+#requestSerialPort a:hover
+  background-color: var(--subtleAccent)
+  color: #fff
+
+#noWebSerialNotice
+  display: none
+  float: right
+  margin-right: 10px
+  margin-top: 5px
+  font-size: 10px
+  color: var(--subtleAccent)
+  opacity: 0.8
+
+#noWebSerialNotice a
+  color: var(--accent)
+  text-decoration: underline
 
 #header_dataflash
   display: none
