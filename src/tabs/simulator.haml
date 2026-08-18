@@ -1,0 +1,245 @@
+.tab-simulator
+  / STICK BAR
+  .sim-stickbar
+    .stick-channel
+      %label Throttle
+      %input.stick-throttle{type: "range", min: "1000", max: "2000", value: "1500", step: "1"}
+      %span.stick-val 1500
+    .stick-channel
+      %label Roll
+      %input.stick-roll{type: "range", min: "1000", max: "2000", value: "1500", step: "1"}
+      %span.stick-val 1500
+    .stick-channel
+      %label Pitch
+      %input.stick-pitch{type: "range", min: "1000", max: "2000", value: "1500", step: "1"}
+      %span.stick-val 1500
+    .stick-channel
+      %label Yaw
+      %input.stick-yaw{type: "range", min: "1000", max: "2000", value: "1500", step: "1"}
+      %span.stick-val 1500
+
+  / MAIN SPLIT
+  .sim-body
+    .sim-left
+      #canvas_wrapper
+        %canvas#canvas{oncontextmenu: "return false"}
+        .sim-canvas-hint Left-drag: rotate view | Right-drag: disturb model
+        #gyro-indicator
+          %canvas#gyro_canvas{width: "90", height: "90"}
+      .sim-view-lock
+        %label
+          %input#view_lock_cb{type: "checkbox"}
+          Lock View
+      .sim-wave-container
+        %canvas#wave_canvas{width: "100%", height: "120"}
+      .sim-telemetry
+        %span#sim-telemetry
+
+    .sim-right
+      / FLIGHT PROFILE
+      .gui_box
+        .gui_box_titlebar
+          .spacer_box_title Flight Profile
+        .slider-grid
+          .slider-row
+            %label Amplitude (&deg;)
+            %input{type: "range", min: "10", max: "60", step: "1", value: "45", name: "amp_max"}
+            %span.val{"data-for" => "amp_max"} 45
+          .slider-row
+            %label Max Freq (Hz)
+            %input{type: "range", min: "1", max: "5", step: "0.1", value: "3", name: "freq_max"}
+            %span.val{"data-for" => "freq_max"} 3.0
+          .slider-row
+            %label Servo Speed
+            %input{type: "range", min: "5", max: "250", value: "60", name: "servo_speed"}
+            %span.val{"data-for" => "servo_speed"} 60
+          .slider-row
+            %label Disturb Force
+            %input{type: "range", min: "10", max: "300", value: "80", name: "disturb_force"}
+            %span.val{"data-for" => "disturb_force"} 80
+          .slider-row
+            %label Aeroelastic Coef
+            %input{type: "range", min: "0", max: "40", step: "0.5", value: "20", name: "aeroelastic_coef"}
+            %span.val{"data-for" => "aeroelastic_coef"} 20.0
+          .slider-row
+            %label Glide Aero Coef
+            %input{type: "range", min: "0", max: "40", step: "0.5", value: "4", name: "glide_aero_coef"}
+            %span.val{"data-for" => "glide_aero_coef"} 4.0
+          .slider-row
+            %label Wing Pairs
+            %input{type: "range", min: "1", max: "4", step: "1", value: "2", name: "wing_pairs"}
+            %span.val{"data-for" => "wing_pairs"} 2
+          .slider-row
+            %label CG Position (&sigma;)
+            %input{type: "range", min: "-100", max: "100", step: "1", value: "0", name: "cg_position"}
+            %span.val{"data-for" => "cg_position"} 0
+          .slider-row
+            %label Mount &theta; Pair 1 (&deg;)
+            %input{type: "range", min: "-30", max: "30", value: "30", name: "mount_angle_0"}
+            %span.val{"data-for" => "mount_angle_0"} 30
+          .slider-row
+            %label Mount Dist Pair 1 (&sigma;)
+            %input{type: "range", min: "-100", max: "100", step: "1", value: "40", name: "mount_distance_0"}
+            %span.val{"data-for" => "mount_distance_0"} 40
+          .slider-row
+            %label Mount &theta; Pair 2 (&deg;)
+            %input{type: "range", min: "-30", max: "30", value: "-30", name: "mount_angle_1"}
+            %span.val{"data-for" => "mount_angle_1"} -30
+          .slider-row
+            %label Mount Dist Pair 2 (&sigma;)
+            %input{type: "range", min: "-100", max: "100", step: "1", value: "-40", name: "mount_distance_1"}
+            %span.val{"data-for" => "mount_distance_1"} -40
+          .slider-row
+            %label Mount &theta; Pair 3 (&deg;)
+            %input{type: "range", min: "-30", max: "30", value: "0", name: "mount_angle_2"}
+            %span.val{"data-for" => "mount_angle_2"} 0
+          .slider-row
+            %label Mount Dist Pair 3 (&sigma;)
+            %input{type: "range", min: "-100", max: "100", step: "1", value: "0", name: "mount_distance_2"}
+            %span.val{"data-for" => "mount_distance_2"} 0
+          .slider-row
+            %label Mount &theta; Pair 4 (&deg;)
+            %input{type: "range", min: "-30", max: "30", value: "0", name: "mount_angle_3"}
+            %span.val{"data-for" => "mount_angle_3"} 0
+          .slider-row
+            %label Mount Dist Pair 4 (&sigma;)
+            %input{type: "range", min: "-100", max: "100", step: "1", value: "0", name: "mount_distance_3"}
+            %span.val{"data-for" => "mount_distance_3"} 0
+
+      / ONDAS WAVE
+      .gui_box
+        .gui_box_titlebar
+          .spacer_box_title ONDAS Wave
+        .slider-grid
+          .slider-row
+            %label Cadence (P->phase)
+            %input{type: "range", min: "0", max: "100", value: "30", name: "cadence_gain"}
+            %span.val{"data-for" => "cadence_gain"} 30
+          .slider-row
+            %label Ferocity P
+            %input{type: "range", min: "0", max: "100", value: "20", name: "ferocity_p_gain"}
+            %span.val{"data-for" => "ferocity_p_gain"} 20
+          .slider-row
+            %label Ferocity D
+            %input{type: "range", min: "0", max: "100", value: "40", name: "ferocity_d_gain"}
+            %span.val{"data-for" => "ferocity_d_gain"} 40
+          .slider-row
+            %label Balance (I->up/down)
+            %input{type: "range", min: "0", max: "100", value: "10", name: "balance_gain"}
+            %span.val{"data-for" => "balance_gain"} 10
+          .slider-row
+            %label Warp Roll (L/R diff)
+            %input{type: "range", min: "0", max: "100", value: "20", name: "warp_gain"}
+            %span.val{"data-for" => "warp_gain"} 20
+          .slider-row
+            %label Warp Yaw (fore/aft)
+            %input{type: "range", min: "0", max: "100", value: "15", name: "warp_yaw_gain"}
+            %span.val{"data-for" => "warp_yaw_gain"} 15
+          .slider-row
+            %label Warp Pitch (fore/aft)
+            %input{type: "range", min: "0", max: "100", value: "30", name: "warp_pitch_gain"}
+            %span.val{"data-for" => "warp_pitch_gain"} 30
+          .slider-row
+            %label Fero Roll
+            %input{type: "range", min: "0", max: "100", value: "30", name: "ferocity_roll_gain"}
+            %span.val{"data-for" => "ferocity_roll_gain"} 30
+          .slider-row
+            %label Fero Yaw
+            %input{type: "range", min: "0", max: "100", value: "25", name: "ferocity_yaw_gain"}
+            %span.val{"data-for" => "ferocity_yaw_gain"} 25
+          .slider-row
+            %label SSFF
+            %input{type: "range", min: "0", max: "100", value: "20", name: "ssff"}
+            %span.val{"data-for" => "ssff"} 20
+          .slider-row
+            %label Anchor (damping)
+            %input{type: "range", min: "0", max: "100", value: "10", name: "anchor_gain"}
+            %span.val{"data-for" => "anchor_gain"} 10
+
+      / STICK FEEDFORWARD
+      .gui_box
+        .gui_box_titlebar
+          .spacer_box_title Stick Feedforward
+        .slider-grid
+          .slider-row
+            %label Stick→Ferocity
+            %input{type: "range", min: "0", max: "100", step: "1", value: "15", name: "stick_fero"}
+            %span.val{"data-for" => "stick_fero"} 15
+          .slider-row
+            %label Stick→Asymmetry
+            %input{type: "range", min: "0", max: "100", step: "1", value: "25", name: "stick_asym"}
+            %span.val{"data-for" => "stick_asym"} 25
+          .slider-row
+            %label Stick→L/R Diff
+            %input{type: "range", min: "0", max: "100", step: "1", value: "15", name: "stick_lrdiff"}
+            %span.val{"data-for" => "stick_lrdiff"} 15
+          .slider-row
+            %label Stick→Fore/Aft
+            %input{type: "range", min: "0", max: "100", step: "1", value: "15", name: "stick_fadiff"}
+            %span.val{"data-for" => "stick_fadiff"} 15
+          .slider-row
+            %label Attitude Level P
+            %input{type: "range", min: "0", max: "15", step: "0.5", value: "3", name: "attitude_P"}
+            %span.val{"data-for" => "attitude_P"} 3.0
+
+      / PID GAINS
+      .gui_box
+        .gui_box_titlebar
+          .spacer_box_title PID Gains
+        .slider-grid
+          .slider-row
+            %label Roll P
+            %input{type: "range", min: "0", max: "199", step: "1", value: "50", name: "roll_P"}
+            %input.pid-num{type: "number", min: "0", max: "199", step: "1", value: "50", name: "roll_P_num"}
+            %span.val{"data-for" => "roll_P"} 50
+          .slider-row
+            %label Roll I
+            %input{type: "range", min: "0", max: "199", step: "1", value: "30", name: "roll_I"}
+            %input.pid-num{type: "number", min: "0", max: "199", step: "1", value: "30", name: "roll_I_num"}
+            %span.val{"data-for" => "roll_I"} 30
+          .slider-row
+            %label Roll D
+            %input{type: "range", min: "0", max: "199", step: "1", value: "25", name: "roll_D"}
+            %input.pid-num{type: "number", min: "0", max: "199", step: "1", value: "25", name: "roll_D_num"}
+            %span.val{"data-for" => "roll_D"} 25
+          .slider-row
+            %label Pitch P
+            %input{type: "range", min: "0", max: "199", step: "1", value: "70", name: "pitch_P"}
+            %input.pid-num{type: "number", min: "0", max: "199", step: "1", value: "70", name: "pitch_P_num"}
+            %span.val{"data-for" => "pitch_P"} 70
+          .slider-row
+            %label Pitch I
+            %input{type: "range", min: "0", max: "199", step: "1", value: "40", name: "pitch_I"}
+            %input.pid-num{type: "number", min: "0", max: "199", step: "1", value: "40", name: "pitch_I_num"}
+            %span.val{"data-for" => "pitch_I"} 40
+          .slider-row
+            %label Pitch D
+            %input{type: "range", min: "0", max: "199", step: "1", value: "35", name: "pitch_D"}
+            %input.pid-num{type: "number", min: "0", max: "199", step: "1", value: "35", name: "pitch_D_num"}
+            %span.val{"data-for" => "pitch_D"} 35
+          .slider-row
+            %label Yaw P
+            %input{type: "range", min: "0", max: "199", step: "1", value: "40", name: "yaw_P"}
+            %input.pid-num{type: "number", min: "0", max: "199", step: "1", value: "40", name: "yaw_P_num"}
+            %span.val{"data-for" => "yaw_P"} 40
+          .slider-row
+            %label Yaw I
+            %input{type: "range", min: "0", max: "199", step: "1", value: "35", name: "yaw_I"}
+            %input.pid-num{type: "number", min: "0", max: "199", step: "1", value: "35", name: "yaw_I_num"}
+            %span.val{"data-for" => "yaw_I"} 35
+          .slider-row
+            %label Yaw D
+            %input{type: "range", min: "0", max: "199", step: "1", value: "0", name: "yaw_D"}
+            %input.pid-num{type: "number", min: "0", max: "199", step: "1", value: "0", name: "yaw_D_num"}
+            %span.val{"data-for" => "yaw_D"} 0
+
+      / ACTIONS
+      .gui_box
+        .gui_box_titlebar
+          .spacer_box_title Actions
+        .preset-buttons
+          %a.preset-btn.regular-button{"data-preset" => "gentle"} &#9675; Gentle
+          %a.preset-btn.regular-button{"data-preset" => "sport"}  &#9679; Sport
+          %a.preset-btn.regular-button{"data-preset" => "acro"}   &#9650; Acro
+          %a.disturb-btn.regular-button &#10026; DISTURB
+          %a.reset-btn.regular-button &#8634; Reset

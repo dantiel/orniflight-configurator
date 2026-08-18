@@ -1,6 +1,0 @@
-<script>
-  // Direct load: bypass chrome.app.window.create relay.
-      // Chrome App APIs are unstable in Chromium 130+; loading main.html directly
-      // in the NW.js window avoids the fragile onLaunched → create → callback chain.
-      window.location.href = 'main.html';
-</script>

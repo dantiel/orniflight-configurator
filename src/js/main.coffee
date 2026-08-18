@@ -17,7 +17,7 @@ checkSetupAnalytics = (callback) ->
             ], (result) ->
                 if !analytics
                     setupAnalytics result
-                callback analytics
+                callback? analytics
                 return
             return
     else if callback
@@ -47,7 +47,7 @@ setupAnalytics = (result) ->
     optOut = ! !result.analyticsOptOut
     checkForDebugVersions = ! !result.checkForConfiguratorUnstableVersions
     debugMode = (if typeof process == 'undefined' then 'undefined' else _typeof(process)) == 'object' and process.versions['nw-flavor'] == 'sdk'
-    analytics = new Analytics('UA-123002063-1', userId, 'OrniFlight Configurator', CONFIGURATOR.version, CONFIGURATOR.gitChangesetId, GUI.operating_system, checkForDebugVersions, optOut, debugMode, getBuildType())
+    `analytics = new Analytics('UA-123002063-1', userId, 'OrniFlight Configurator', CONFIGURATOR.version, CONFIGURATOR.gitChangesetId, GUI.operating_system, checkForDebugVersions, optOut, debugMode, getBuildType())`
     if (if typeof process == 'undefined' then 'undefined' else _typeof(process)) == 'object'
         process.on 'uncaughtException', logException
     analytics.sendEvent analytics.EVENT_CATEGORIES.APPLICATION, 'AppStart', sessionControl: 'start'
@@ -207,6 +207,8 @@ startProcess = ->
                         TABS.onboard_logging.initialize content_ready
                     when 'cli'
                         TABS.cli.initialize content_ready, GUI.nwGui
+                    when 'simulator'
+                        TABS.simulator.initialize content_ready
                     else
                         console.log 'Tab not found:' + tab
                 return

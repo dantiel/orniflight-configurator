@@ -1,0 +1,310 @@
+<div class='tab-simulator'>
+<!-- STICK BAR -->
+<div class='sim-stickbar'>
+<div class='stick-channel'>
+<label>Throttle</label>
+<input class='stick-throttle' max='2000' min='1000' step='1' type='range' value='1500'>
+<span class='stick-val'>1500</span>
+</div>
+<div class='stick-channel'>
+<label>Roll</label>
+<input class='stick-roll' max='2000' min='1000' step='1' type='range' value='1500'>
+<span class='stick-val'>1500</span>
+</div>
+<div class='stick-channel'>
+<label>Pitch</label>
+<input class='stick-pitch' max='2000' min='1000' step='1' type='range' value='1500'>
+<span class='stick-val'>1500</span>
+</div>
+<div class='stick-channel'>
+<label>Yaw</label>
+<input class='stick-yaw' max='2000' min='1000' step='1' type='range' value='1500'>
+<span class='stick-val'>1500</span>
+</div>
+</div>
+<!-- MAIN SPLIT -->
+<div class='sim-body'>
+<div class='sim-left'>
+<div id='canvas_wrapper'>
+<canvas id='canvas' oncontextmenu='return false'></canvas>
+<div class='sim-canvas-hint'>Left-drag: rotate view | Right-drag: disturb model</div>
+<div id='gyro-indicator'>
+<canvas height='90' id='gyro_canvas' width='90'></canvas>
+</div>
+</div>
+<div class='sim-view-lock'>
+<label>
+<input id='view_lock_cb' type='checkbox'>
+Lock View
+</label>
+</div>
+<div class='sim-wave-container'>
+<canvas height='120' id='wave_canvas' width='100%'></canvas>
+</div>
+<div class='sim-telemetry'>
+<span id='sim-telemetry'></span>
+</div>
+</div>
+<div class='sim-right'>
+<!-- FLIGHT PROFILE -->
+<div class='gui_box'>
+<div class='gui_box_titlebar'>
+<div class='spacer_box_title'>Flight Profile</div>
+</div>
+<div class='slider-grid'>
+<div class='slider-row'>
+<label>Amplitude (&deg;)</label>
+<input max='60' min='10' name='amp_max' step='1' type='range' value='45'>
+<span class='val' data-for='amp_max'>45</span>
+</div>
+<div class='slider-row'>
+<label>Max Freq (Hz)</label>
+<input max='5' min='1' name='freq_max' step='0.1' type='range' value='3'>
+<span class='val' data-for='freq_max'>3.0</span>
+</div>
+<div class='slider-row'>
+<label>Servo Speed</label>
+<input max='250' min='5' name='servo_speed' type='range' value='60'>
+<span class='val' data-for='servo_speed'>60</span>
+</div>
+<div class='slider-row'>
+<label>Disturb Force</label>
+<input max='300' min='10' name='disturb_force' type='range' value='80'>
+<span class='val' data-for='disturb_force'>80</span>
+</div>
+<div class='slider-row'>
+<label>Aeroelastic Coef</label>
+<input max='40' min='0' name='aeroelastic_coef' step='0.5' type='range' value='20'>
+<span class='val' data-for='aeroelastic_coef'>20.0</span>
+</div>
+<div class='slider-row'>
+<label>Glide Aero Coef</label>
+<input max='40' min='0' name='glide_aero_coef' step='0.5' type='range' value='4'>
+<span class='val' data-for='glide_aero_coef'>4.0</span>
+</div>
+<div class='slider-row'>
+<label>Wing Pairs</label>
+<input max='4' min='1' name='wing_pairs' step='1' type='range' value='2'>
+<span class='val' data-for='wing_pairs'>2</span>
+</div>
+<div class='slider-row'>
+<label>CG Position (&sigma;)</label>
+<input max='100' min='-100' name='cg_position' step='1' type='range' value='0'>
+<span class='val' data-for='cg_position'>0</span>
+</div>
+<div class='slider-row'>
+<label>Mount &theta; Pair 1 (&deg;)</label>
+<input max='30' min='-30' name='mount_angle_0' type='range' value='30'>
+<span class='val' data-for='mount_angle_0'>30</span>
+</div>
+<div class='slider-row'>
+<label>Mount Dist Pair 1 (&sigma;)</label>
+<input max='100' min='-100' name='mount_distance_0' step='1' type='range' value='40'>
+<span class='val' data-for='mount_distance_0'>40</span>
+</div>
+<div class='slider-row'>
+<label>Mount &theta; Pair 2 (&deg;)</label>
+<input max='30' min='-30' name='mount_angle_1' type='range' value='-30'>
+<span class='val' data-for='mount_angle_1'>-30</span>
+</div>
+<div class='slider-row'>
+<label>Mount Dist Pair 2 (&sigma;)</label>
+<input max='100' min='-100' name='mount_distance_1' step='1' type='range' value='-40'>
+<span class='val' data-for='mount_distance_1'>-40</span>
+</div>
+<div class='slider-row'>
+<label>Mount &theta; Pair 3 (&deg;)</label>
+<input max='30' min='-30' name='mount_angle_2' type='range' value='0'>
+<span class='val' data-for='mount_angle_2'>0</span>
+</div>
+<div class='slider-row'>
+<label>Mount Dist Pair 3 (&sigma;)</label>
+<input max='100' min='-100' name='mount_distance_2' step='1' type='range' value='0'>
+<span class='val' data-for='mount_distance_2'>0</span>
+</div>
+<div class='slider-row'>
+<label>Mount &theta; Pair 4 (&deg;)</label>
+<input max='30' min='-30' name='mount_angle_3' type='range' value='0'>
+<span class='val' data-for='mount_angle_3'>0</span>
+</div>
+<div class='slider-row'>
+<label>Mount Dist Pair 4 (&sigma;)</label>
+<input max='100' min='-100' name='mount_distance_3' step='1' type='range' value='0'>
+<span class='val' data-for='mount_distance_3'>0</span>
+</div>
+</div>
+</div>
+<!-- ONDAS WAVE -->
+<div class='gui_box'>
+<div class='gui_box_titlebar'>
+<div class='spacer_box_title'>ONDAS Wave</div>
+</div>
+<div class='slider-grid'>
+<div class='slider-row'>
+<label>Cadence (P->phase)</label>
+<input max='100' min='0' name='cadence_gain' type='range' value='30'>
+<span class='val' data-for='cadence_gain'>30</span>
+</div>
+<div class='slider-row'>
+<label>Ferocity P</label>
+<input max='100' min='0' name='ferocity_p_gain' type='range' value='20'>
+<span class='val' data-for='ferocity_p_gain'>20</span>
+</div>
+<div class='slider-row'>
+<label>Ferocity D</label>
+<input max='100' min='0' name='ferocity_d_gain' type='range' value='40'>
+<span class='val' data-for='ferocity_d_gain'>40</span>
+</div>
+<div class='slider-row'>
+<label>Balance (I->up/down)</label>
+<input max='100' min='0' name='balance_gain' type='range' value='10'>
+<span class='val' data-for='balance_gain'>10</span>
+</div>
+<div class='slider-row'>
+<label>Warp Roll (L/R diff)</label>
+<input max='100' min='0' name='warp_gain' type='range' value='20'>
+<span class='val' data-for='warp_gain'>20</span>
+</div>
+<div class='slider-row'>
+<label>Warp Yaw (fore/aft)</label>
+<input max='100' min='0' name='warp_yaw_gain' type='range' value='15'>
+<span class='val' data-for='warp_yaw_gain'>15</span>
+</div>
+<div class='slider-row'>
+<label>Warp Pitch (fore/aft)</label>
+<input max='100' min='0' name='warp_pitch_gain' type='range' value='30'>
+<span class='val' data-for='warp_pitch_gain'>30</span>
+</div>
+<div class='slider-row'>
+<label>Fero Roll</label>
+<input max='100' min='0' name='ferocity_roll_gain' type='range' value='30'>
+<span class='val' data-for='ferocity_roll_gain'>30</span>
+</div>
+<div class='slider-row'>
+<label>Fero Yaw</label>
+<input max='100' min='0' name='ferocity_yaw_gain' type='range' value='25'>
+<span class='val' data-for='ferocity_yaw_gain'>25</span>
+</div>
+<div class='slider-row'>
+<label>SSFF</label>
+<input max='100' min='0' name='ssff' type='range' value='20'>
+<span class='val' data-for='ssff'>20</span>
+</div>
+<div class='slider-row'>
+<label>Anchor (damping)</label>
+<input max='100' min='0' name='anchor_gain' type='range' value='10'>
+<span class='val' data-for='anchor_gain'>10</span>
+</div>
+</div>
+</div>
+<!-- STICK FEEDFORWARD -->
+<div class='gui_box'>
+<div class='gui_box_titlebar'>
+<div class='spacer_box_title'>Stick Feedforward</div>
+</div>
+<div class='slider-grid'>
+<div class='slider-row'>
+<label>Stick→Ferocity</label>
+<input max='100' min='0' name='stick_fero' step='1' type='range' value='15'>
+<span class='val' data-for='stick_fero'>15</span>
+</div>
+<div class='slider-row'>
+<label>Stick→Asymmetry</label>
+<input max='100' min='0' name='stick_asym' step='1' type='range' value='25'>
+<span class='val' data-for='stick_asym'>25</span>
+</div>
+<div class='slider-row'>
+<label>Stick→L/R Diff</label>
+<input max='100' min='0' name='stick_lrdiff' step='1' type='range' value='15'>
+<span class='val' data-for='stick_lrdiff'>15</span>
+</div>
+<div class='slider-row'>
+<label>Stick→Fore/Aft</label>
+<input max='100' min='0' name='stick_fadiff' step='1' type='range' value='15'>
+<span class='val' data-for='stick_fadiff'>15</span>
+</div>
+<div class='slider-row'>
+<label>Attitude Level P</label>
+<input max='15' min='0' name='attitude_P' step='0.5' type='range' value='3'>
+<span class='val' data-for='attitude_P'>3.0</span>
+</div>
+</div>
+</div>
+<!-- PID GAINS -->
+<div class='gui_box'>
+<div class='gui_box_titlebar'>
+<div class='spacer_box_title'>PID Gains</div>
+</div>
+<div class='slider-grid'>
+<div class='slider-row'>
+<label>Roll P</label>
+<input max='199' min='0' name='roll_P' step='1' type='range' value='50'>
+<input class='pid-num' max='199' min='0' name='roll_P_num' step='1' type='number' value='50'>
+<span class='val' data-for='roll_P'>50</span>
+</div>
+<div class='slider-row'>
+<label>Roll I</label>
+<input max='199' min='0' name='roll_I' step='1' type='range' value='30'>
+<input class='pid-num' max='199' min='0' name='roll_I_num' step='1' type='number' value='30'>
+<span class='val' data-for='roll_I'>30</span>
+</div>
+<div class='slider-row'>
+<label>Roll D</label>
+<input max='199' min='0' name='roll_D' step='1' type='range' value='25'>
+<input class='pid-num' max='199' min='0' name='roll_D_num' step='1' type='number' value='25'>
+<span class='val' data-for='roll_D'>25</span>
+</div>
+<div class='slider-row'>
+<label>Pitch P</label>
+<input max='199' min='0' name='pitch_P' step='1' type='range' value='70'>
+<input class='pid-num' max='199' min='0' name='pitch_P_num' step='1' type='number' value='70'>
+<span class='val' data-for='pitch_P'>70</span>
+</div>
+<div class='slider-row'>
+<label>Pitch I</label>
+<input max='199' min='0' name='pitch_I' step='1' type='range' value='40'>
+<input class='pid-num' max='199' min='0' name='pitch_I_num' step='1' type='number' value='40'>
+<span class='val' data-for='pitch_I'>40</span>
+</div>
+<div class='slider-row'>
+<label>Pitch D</label>
+<input max='199' min='0' name='pitch_D' step='1' type='range' value='35'>
+<input class='pid-num' max='199' min='0' name='pitch_D_num' step='1' type='number' value='35'>
+<span class='val' data-for='pitch_D'>35</span>
+</div>
+<div class='slider-row'>
+<label>Yaw P</label>
+<input max='199' min='0' name='yaw_P' step='1' type='range' value='40'>
+<input class='pid-num' max='199' min='0' name='yaw_P_num' step='1' type='number' value='40'>
+<span class='val' data-for='yaw_P'>40</span>
+</div>
+<div class='slider-row'>
+<label>Yaw I</label>
+<input max='199' min='0' name='yaw_I' step='1' type='range' value='35'>
+<input class='pid-num' max='199' min='0' name='yaw_I_num' step='1' type='number' value='35'>
+<span class='val' data-for='yaw_I'>35</span>
+</div>
+<div class='slider-row'>
+<label>Yaw D</label>
+<input max='199' min='0' name='yaw_D' step='1' type='range' value='0'>
+<input class='pid-num' max='199' min='0' name='yaw_D_num' step='1' type='number' value='0'>
+<span class='val' data-for='yaw_D'>0</span>
+</div>
+</div>
+</div>
+<!-- ACTIONS -->
+<div class='gui_box'>
+<div class='gui_box_titlebar'>
+<div class='spacer_box_title'>Actions</div>
+</div>
+<div class='preset-buttons'>
+<a class='preset-btn regular-button' data-preset='gentle'>&#9675; Gentle</a>
+<a class='preset-btn regular-button' data-preset='sport'>&#9679; Sport</a>
+<a class='preset-btn regular-button' data-preset='acro'>&#9650; Acro</a>
+<a class='disturb-btn regular-button'>&#10026; DISTURB</a>
+<a class='reset-btn regular-button'>&#8634; Reset</a>
+</div>
+</div>
+</div>
+</div>
+</div>

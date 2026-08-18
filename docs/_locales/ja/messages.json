@@ -5331,5 +5331,113 @@
   "noWebSerialNotice": {
     "message": "⚠ WebSerial非対応 — FC接続には<a href=\"https://github.com/dantiel/orniflight-configurator/releases\" target=\"_blank\">デスクトップアプリ</a>を使用してください",
     "description": "Notice shown when WebSerial API is not available (Safari, Firefox), directing users to the desktop app"
+  },
+  "tabSimulator": {
+    "message": "シミュレーター",
+    "description": "Simulator tab name"
+  },
+  "simulatorThrottle": {
+    "message": "スロットル",
+    "description": "Simulator virtual stick label"
+  },
+  "simulatorRoll": {
+    "message": "ロール",
+    "description": "Simulator virtual stick label"
+  },
+  "simulatorPitch": {
+    "message": "ピッチ",
+    "description": "Simulator virtual stick label"
+  },
+  "simulatorYaw": {
+    "message": "ヨー",
+    "description": "Simulator virtual stick label"
+  },
+  "simulatorTelemetry": {
+    "message": "テレメトリ",
+    "description": "Simulator telemetry panel title"
+  },
+  "simulatorONDASParams": {
+    "message": "ONDASパラメータ",
+    "description": "Simulator ONDAS params panel title"
+  },
+  "simulatorPIDGains": {
+    "message": "PIDゲイン",
+    "description": "Simulator PID gains panel title"
+  },
+  "simulatorPresets": {
+    "message": "プリセット",
+    "description": "Simulator presets panel title"
+  },
+  "simulatorPresetGentle": {
+    "message": "穏やか",
+    "description": "Simulator preset: gentle tuning"
+  },
+  "simulatorPresetAcro": {
+    "message": "アクロ",
+    "description": "Simulator preset: acro tuning"
+  },
+  "simulatorPresetRace": {
+    "message": "レース",
+    "description": "Simulator preset: aggressive tuning"
+  },
+  "simulatorReset": {
+    "message": "リセット",
+    "description": "Simulator reset button"
+  },
+  "simulatorCadenceGain": {
+    "message": "ケイデンス",
+    "description": "Simulator ONDAS param: cadence_gain"
+  },
+  "simulatorFerocityDGain": {
+    "message": "フェロシティD",
+    "description": "Simulator ONDAS param: ferocity_d_gain"
+  },
+  "simulatorFerocityPGain": {
+    "message": "フェロシティP",
+    "description": "Simulator ONDAS param: ferocity_p_gain"
+  },
+  "simulatorBalanceGain": {
+    "message": "バランス",
+    "description": "Simulator ONDAS param: balance_gain"
+  },
+  "simulatorFerocityRollGain": {
+    "message": "フェロシティロール",
+    "description": "Simulator ONDAS param: ferocity_roll_gain"
+  },
+  "simulatorFerocityYawGain": {
+    "message": "フェロシティヨー",
+    "description": "Simulator ONDAS param: ferocity_yaw_gain"
+  },
+  "simulatorWarpGain": {
+    "message": "ワープ",
+    "description": "Simulator ONDAS param: warp_gain"
+  },
+  "simulatorWarpYawGain": {
+    "message": "ワープヨー",
+    "description": "Simulator ONDAS param: warp_yaw_gain"
+  },
+  "simulatorAnchorGain": {
+    "message": "アンカー",
+    "description": "Simulator ONDAS param: anchor_gain"
+  },
+  "simulatorResonanceGain": {
+    "message": "レゾナンス",
+    "description": "Simulator ONDAS param: resonance_gain"
+  },
+  "simulatorPrescience": {
+    "message": "Prescience",
+    "description": "Simulator ONDAS param: prescience"
+  },
+  "simulatorEspelho": {
+    "message": "Espelho",
+    "description": "Simulator ONDAS param: espelho"
+  },
+  "simulatorSaudade": {
+    "message": "Saudade",
+    "description": "Simulator ONDAS param: saudade"
+  },
+  "simulatorSsff": {
+    "message": "SSFF",
+    "description": "Simulator ONDAS param: ssff"
   }
 }

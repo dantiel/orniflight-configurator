@@ -5327,5 +5327,113 @@
   "noWebSerialNotice": {
     "message": "⚠ Sem WebSerial — use o <a href=\"https://github.com/dantiel/orniflight-configurator/releases\" target=\"_blank\">aplicativo desktop</a> para conexão FC",
     "description": "Notice shown when WebSerial API is not available (Safari, Firefox), directing users to the desktop app"
+  },
+  "tabSimulator": {
+    "message": "Simulador",
+    "description": "Simulator tab name"
+  },
+  "simulatorThrottle": {
+    "message": "Acelerador",
+    "description": "Simulator virtual stick label"
+  },
+  "simulatorRoll": {
+    "message": "Rolagem",
+    "description": "Simulator virtual stick label"
+  },
+  "simulatorPitch": {
+    "message": "Arfagem",
+    "description": "Simulator virtual stick label"
+  },
+  "simulatorYaw": {
+    "message": "Guinada",
+    "description": "Simulator virtual stick label"
+  },
+  "simulatorTelemetry": {
+    "message": "Telemetria",
+    "description": "Simulator telemetry panel title"
+  },
+  "simulatorONDASParams": {
+    "message": "Parâmetros ONDAS",
+    "description": "Simulator ONDAS params panel title"
+  },
+  "simulatorPIDGains": {
+    "message": "Ganhos PID",
+    "description": "Simulator PID gains panel title"
+  },
+  "simulatorPresets": {
+    "message": "Predefinições",
+    "description": "Simulator presets panel title"
+  },
+  "simulatorPresetGentle": {
+    "message": "Suave",
+    "description": "Simulator preset: gentle tuning"
+  },
+  "simulatorPresetAcro": {
+    "message": "Acro",
+    "description": "Simulator preset: acro tuning"
+  },
+  "simulatorPresetRace": {
+    "message": "Corrida",
+    "description": "Simulator preset: aggressive tuning"
+  },
+  "simulatorReset": {
+    "message": "Redefinir",
+    "description": "Simulator reset button"
+  },
+  "simulatorCadenceGain": {
+    "message": "Cadência",
+    "description": "Simulator ONDAS param: cadence_gain"
+  },
+  "simulatorFerocityDGain": {
+    "message": "Ferocidade D",
+    "description": "Simulator ONDAS param: ferocity_d_gain"
+  },
+  "simulatorFerocityPGain": {
+    "message": "Ferocidade P",
+    "description": "Simulator ONDAS param: ferocity_p_gain"
+  },
+  "simulatorBalanceGain": {
+    "message": "Balanço",
+    "description": "Simulator ONDAS param: balance_gain"
+  },
+  "simulatorFerocityRollGain": {
+    "message": "Ferocidade Roll",
+    "description": "Simulator ONDAS param: ferocity_roll_gain"
+  },
+  "simulatorFerocityYawGain": {
+    "message": "Ferocidade Yaw",
+    "description": "Simulator ONDAS param: ferocity_yaw_gain"
+  },
+  "simulatorWarpGain": {
+    "message": "Warp",
+    "description": "Simulator ONDAS param: warp_gain"
+  },
+  "simulatorWarpYawGain": {
+    "message": "Warp Yaw",
+    "description": "Simulator ONDAS param: warp_yaw_gain"
+  },
+  "simulatorAnchorGain": {
+    "message": "Âncora",
+    "description": "Simulator ONDAS param: anchor_gain"
+  },
+  "simulatorResonanceGain": {
+    "message": "Ressonância",
+    "description": "Simulator ONDAS param: resonance_gain"
+  },
+  "simulatorPrescience": {
+    "message": "Prescience",
+    "description": "Simulator ONDAS param: prescience"
+  },
+  "simulatorEspelho": {
+    "message": "Espelho",
+    "description": "Simulator ONDAS param: espelho"
+  },
+  "simulatorSaudade": {
+    "message": "Saudade",
+    "description": "Simulator ONDAS param: saudade"
+  },
+  "simulatorSsff": {
+    "message": "SSFF",
+    "description": "Simulator ONDAS param: ssff"
   }
 }

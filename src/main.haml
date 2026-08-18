@@ -25,6 +25,7 @@
     %link{href: "./css/tabs/logging.css", media: "all", rel: "stylesheet", type: "text/css"}
     %link{href: "./css/tabs/onboard_logging.css", media: "all", rel: "stylesheet", type: "text/css"}
     %link{href: "./css/tabs/firmware_flasher.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{href: "./css/tabs/simulator.css", media: "all", rel: "stylesheet", type: "text/css"}
     %link{href: "./css/tabs/adjustments.css", media: "all", rel: "stylesheet", type: "text/css"}
     %link{href: "./css/tabs/auxiliary.css", media: "all", rel: "stylesheet", type: "text/css"}
     %link{href: "./css/tabs/failsafe.css", media: "all", rel: "stylesheet", type: "text/css"}
@@ -54,6 +55,7 @@
     %link{disabled: "", href: "./css/tabs-dark/logging-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
     %link{disabled: "", href: "./css/tabs-dark/onboard_logging-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
     %link{disabled: "", href: "./css/tabs-dark/firmware_flasher-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
+    %link{disabled: "", href: "./css/tabs-dark/simulator-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
     %link{disabled: "", href: "./css/tabs-dark/adjustments-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
     %link{disabled: "", href: "./css/tabs-dark/auxiliary-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
     %link{disabled: "", href: "./css/tabs-dark/failsafe-dark.css", media: "all", rel: "stylesheet", type: "text/css"}
@@ -135,6 +137,7 @@
     %script{src: "./js/tabs/onboard_logging.js", type: "text/javascript"}
     %script{src: "./js/FirmwareCache.js", type: "text/javascript"}
     %script{src: "./js/tabs/firmware_flasher.js", type: "text/javascript"}
+    %script{src: "./js/tabs/simulator.js", type: "text/javascript"}
     %script{src: "./js/tabs/failsafe.js", type: "text/javascript"}
     %script{src: "./js/LogoManager.js", type: "text/javascript"}
     %script{src: "./js/tabs/osd.js", type: "text/javascript"}
@@ -242,6 +245,8 @@
               %a.tabicon.ic_welcome{href: "#", i18n: "tabLanding", i18n_title: "tabLanding"}
             %li.tab_setup
               %a.tabicon.ic_setup{href: "#", i18n: "tabSetup", i18n_title: "tabSetup"}
+            %li.tab_simulator
+              %a.tabicon.ic_wizard{href: "#", i18n: "tabSimulator"}
             %li.tab_changelog
               %a.tabicon.ic_help{href: "#", i18n: "tabChangelog"}
             %li.tab_privacy_policy

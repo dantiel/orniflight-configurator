@@ -243,6 +243,9 @@ startProcess = function() {
           case 'cli':
             TABS.cli.initialize(content_ready, GUI.nwGui);
             break;
+          case 'simulator':
+            TABS.simulator.initialize(content_ready);
+            break;
           default:
             console.log('Tab not found:' + tab);
         }

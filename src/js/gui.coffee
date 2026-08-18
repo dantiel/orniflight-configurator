@@ -15,6 +15,7 @@ GUI_control = ->
     @defaultAllowedTabsWhenDisconnected = [
         'landing'
         'setup'
+        'simulator'
         'changelog'
         'firmware_flasher'
         'privacy_policy'

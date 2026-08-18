@@ -15,7 +15,7 @@ GUI_control = function() {
   this.operating_system;
   this.interval_array = [];
   this.timeout_array = [];
-  this.defaultAllowedTabsWhenDisconnected = ['landing', 'setup', 'changelog', 'firmware_flasher', 'privacy_policy', 'help'];
+  this.defaultAllowedTabsWhenDisconnected = ['landing', 'setup', 'simulator', 'changelog', 'firmware_flasher', 'privacy_policy', 'help'];
   this.defaultAllowedFCTabsWhenConnected = ['setup', 'failsafe', 'transponder', 'osd', 'power', 'adjustments', 'auxiliary', 'cli', 'configuration', 'gps', 'led_strip', 'logging', 'onboard_logging', 'modes', 'motors', 'pid_tuning', 'ports', 'receiver', 'sensors', 'servos', 'vtx'];
   this.defaultAllowedOSDTabsWhenConnected = ['setup_osd', 'osd', 'power', 'sensors', 'transponder'];
   this.allowedTabs = this.defaultAllowedTabsWhenDisconnected;
