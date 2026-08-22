@@ -261,8 +261,14 @@ TABS.simulator._applyWingGeometry = ->
 # Per-pair pitch rank = fore/aft lever arm (z_eff − CG) normalized by the
 # largest |lever|. Direction AND magnitude derive from the actual station,
 # NOT pair index — so grouped stations (biplane decks) share a rank and a
-# double-decker's two front wings deflect identically. A single pair (n=1)
-# has no fore/aft differential → rank 0.
+# double-decker's two front wings deflect identically.
+#
+# A single pair (n=1, two servos) has no fore/aft differential to exploit.
+# Instead the lone wing acts as a whole-aircraft elevator: rank = 1 (common
+# mode, both wings deflect together) and the PITCH MOMENT ∝ lever arm
+# (z_eff − CG). Authority therefore vanishes when the wing sits AT the CG
+# and flips sign between canard (wing ahead) and tail (wing behind) — i.e.
+# pitch is governed by mount distance AND CG position.
 TABS.simulator._pitchGeometry = ->
     self = this
     n = self._pairCount ? 2
@@ -271,7 +277,12 @@ TABS.simulator._pitchGeometry = ->
     levers = []
     ranks = []
     if n <= 1
-        return { ranks: [0], levers: [0] }
+        th = self._mountAngle[0] ? 0
+        d  = self._mountDist[0]  ? 0
+        rad = th * PI / 180
+        zEff = d - A_LAT * Math.tan(rad)
+        lever = zEff - cg
+        return { ranks: [1], levers: [lever] }
     maxLever = 0
     for p in [0...n]
         th = self._mountAngle[p] ? 0

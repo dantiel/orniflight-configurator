@@ -300,7 +300,7 @@ TABS.simulator._applyWingGeometry = function() {
 };
 
 TABS.simulator._pitchGeometry = function() {
-  var A_LAT, cg, d, j, k, lever, levers, maxLever, n, p, rad, ranks, ref, ref1, ref2, ref3, ref4, ref5, self, th, zEff;
+  var A_LAT, cg, d, j, k, lever, levers, maxLever, n, p, rad, ranks, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, self, th, zEff;
   self = this;
   n = (ref = self._pairCount) != null ? ref : 2;
   A_LAT = 0.164;
@@ -308,22 +308,27 @@ TABS.simulator._pitchGeometry = function() {
   levers = [];
   ranks = [];
   if (n <= 1) {
+    th = (ref2 = self._mountAngle[0]) != null ? ref2 : 0;
+    d = (ref3 = self._mountDist[0]) != null ? ref3 : 0;
+    rad = th * PI / 180;
+    zEff = d - A_LAT * Math.tan(rad);
+    lever = zEff - cg;
     return {
-      ranks: [0],
-      levers: [0]
+      ranks: [1],
+      levers: [lever]
     };
   }
   maxLever = 0;
-  for (p = j = 0, ref2 = n; 0 <= ref2 ? j < ref2 : j > ref2; p = 0 <= ref2 ? ++j : --j) {
-    th = (ref3 = self._mountAngle[p]) != null ? ref3 : 0;
-    d = (ref4 = self._mountDist[p]) != null ? ref4 : 0;
+  for (p = j = 0, ref4 = n; 0 <= ref4 ? j < ref4 : j > ref4; p = 0 <= ref4 ? ++j : --j) {
+    th = (ref5 = self._mountAngle[p]) != null ? ref5 : 0;
+    d = (ref6 = self._mountDist[p]) != null ? ref6 : 0;
     rad = th * PI / 180;
     zEff = d - A_LAT * Math.tan(rad);
     lever = zEff - cg;
     levers[p] = lever;
     maxLever = Math.max(maxLever, Math.abs(lever));
   }
-  for (p = k = 0, ref5 = n; 0 <= ref5 ? k < ref5 : k > ref5; p = 0 <= ref5 ? ++k : --k) {
+  for (p = k = 0, ref7 = n; 0 <= ref7 ? k < ref7 : k > ref7; p = 0 <= ref7 ? ++k : --k) {
     ranks[p] = maxLever < 1e-6 ? 0 : levers[p] / maxLever;
   }
   return {
