@@ -1049,6 +1049,11 @@ function copy_docs(done) {
         if (fs.existsSync(fp)) fs.unlinkSync(fp);
     });
 
+    // Disable Jekyll processing on GitHub Pages. Without this, Jekyll skips
+    // underscore-prefixed directories (docs/_locales/), so the i18n files
+    // would 404 on the published site.
+    fs.writeFileSync(path.join(DOCS_DIR, '.nojekyll'), '');
+
     // Create index.html from main.html (GitHub Pages entry point)
     var mainPath = path.join(DOCS_DIR, 'main.html');
     var indexPath = path.join(DOCS_DIR, 'index.html');

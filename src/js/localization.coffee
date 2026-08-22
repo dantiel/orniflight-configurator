@@ -76,7 +76,7 @@ i18n.init = (cb) ->
             ns: [ 'messages' ]
             defaultNS: [ 'messages' ]
             fallbackLng: 'en'
-            backend: loadPath: '/_locales/{{lng}}/{{ns}}.json'
+            backend: loadPath: './_locales/{{lng}}/{{ns}}.json'
         }, (err, t) ->
             if err != undefined
                 console.error 'Error loading i18n ' + err
@@ -195,4 +195,3 @@ i18n.addResources = (bundle) ->
     ns = takeFirst(i18next.options.defaultNS)
     i18next.addResourceBundle lang, ns, bundle, true, true
     return
-

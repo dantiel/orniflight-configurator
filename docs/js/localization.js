@@ -68,7 +68,7 @@ i18n.init = function(cb) {
       defaultNS: ['messages'],
       fallbackLng: 'en',
       backend: {
-        loadPath: '/_locales/{{lng}}/{{ns}}.json'
+        loadPath: './_locales/{{lng}}/{{ns}}.json'
       }
     }, function(err, t) {
       var detectedLanguage;
