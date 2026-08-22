@@ -83,9 +83,16 @@ Lock View
 <span class='val' data-for='glide_aero_coef'>4.0</span>
 </div>
 <div class='slider-row'>
-<label>Wing Pairs</label>
-<input max='4' min='1' name='wing_pairs' step='1' type='range' value='2'>
-<span class='val' data-for='wing_pairs'>2</span>
+<label>Arrangement</label>
+<select class='arrangement-select' name='arrangement'>
+<option value='tandem_x'>Tandem X (4-servo)</option>
+<option value='single'>Single Pair (2-servo)</option>
+<option value='single_canard'>Single Canard (2-servo)</option>
+<option value='tandem_parallel'>Tandem Parallel (4-servo)</option>
+<option value='triple'>Triple (6-servo)</option>
+<option value='quad'>Quad (8-servo)</option>
+<option value='double_decker'>Double Decker (8-servo)</option>
+</select>
 </div>
 <div class='slider-row'>
 <label>CG Position (&sigma;)</label>

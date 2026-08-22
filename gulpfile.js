@@ -81,7 +81,7 @@ gulp.task('dist', distRebuild);
 var appsBuild = gulp.series(gulp.parallel(clean_apps, distRebuild), apps, gulp.parallel(listPostBuildTasks(APPS_DIR)));
 gulp.task('apps', appsBuild);
 
-var docsBuild = gulp.series(clean_docs, distRebuild, copy_docs);
+var docsBuild = gulp.series(clean_docs, distRebuild, copy_docs, bundle_vendor_docs);
 gulp.task('docs', docsBuild);
 
 var devBuild = gulp.series(clean_dist, distBuild, watch_and_serve);
@@ -1058,6 +1058,68 @@ function copy_docs(done) {
     }
 
     console.log('  ✓ docs/ ready for GitHub Pages');
+    done();
+}
+
+// Bundle the node_modules/ vendor files that dist/index.html references via
+// ./node_modules/<pkg>/<file>. dist_yarn installs them into dist/node_modules,
+// but node_modules/ is gitignored, so GitHub Pages would 404 them. Copy the
+// referenced packages into a tracked docs/js/libraries/vendor/ location and
+// rewrite the HTML references to match.
+function bundle_vendor_docs(done) {
+    var fse = require('fs-extra');
+    var path = require('path');
+    var DOCS_DIR = './docs/';
+
+    console.log('Bundling node_modules vendor files into docs/...');
+
+    // Every package referenced by ./node_modules/ in the served HTML.
+    var vendorPackages = [
+        'jbox',
+        'lru_map',
+        'i18next',
+        'i18next-xhr-backend',
+        'marked',
+        'universal-ga',
+        'short-unique-id',
+        'object-hash',
+        'jquery',
+        'jquery-ui-npm',
+        'bluebird',
+        'inflection',
+        'jquery-textcomplete'
+    ];
+
+    var vendorDest = path.join(DOCS_DIR, 'js', 'libraries', 'vendor');
+    fse.ensureDirSync(vendorDest);
+
+    vendorPackages.forEach(function(pkg) {
+        // Prefer the yarn-installed dist copy (exact version dist/index.html
+        // was built against), fall back to the root node_modules.
+        var src = path.join('./dist/node_modules', pkg);
+        if (!fs.existsSync(src)) src = path.join('./node_modules', pkg);
+
+        if (fs.existsSync(src)) {
+            fse.copySync(src, path.join(vendorDest, pkg));
+        } else {
+            console.log('  WARN: vendor package not found, skipping: ' + pkg);
+        }
+    });
+
+    // Rewrite ./node_modules/ -> ./js/libraries/vendor/ in the served HTML.
+    ['index.html', 'main.html'].forEach(function(f) {
+        var fp = path.join(DOCS_DIR, f);
+        if (!fs.existsSync(fp)) return;
+
+        var content = fs.readFileSync(fp, 'utf8');
+        var replaced = content.split('./node_modules/').join('./js/libraries/vendor/');
+        if (replaced !== content) {
+            fs.writeFileSync(fp, replaced);
+            console.log('  ✓ ' + f + ' vendor paths rewritten');
+        }
+    });
+
+    console.log('  ✓ vendor bundle ready for GitHub Pages');
     done();
 }
 

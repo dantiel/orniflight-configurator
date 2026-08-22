@@ -12,6 +12,49 @@ DT = 1.0 / 30.0
 
 TABS.simulator = {}
 
+# ── Servo arrangements: named ornithopter servo layouts. Each defines the
+# wing-pair count, CG station (σ·100, + = nose) and per-pair mount geometry
+# (θ in deg, distance in σ·100). Replaces a bare pair-count slider.
+TABS.simulator.ARRANGEMENTS =
+    tandem_x:
+        pairs: 2
+        cg: 0
+        angles: [30, -30, 0, 0]
+        dists: [40, -40, 0, 0]
+    single:
+        pairs: 1
+        cg: -20
+        angles: [0, 0, 0, 0]
+        dists: [0, 0, 0, 0]
+    single_canard:
+        pairs: 1
+        cg: 20
+        angles: [0, 0, 0, 0]
+        dists: [0, 0, 0, 0]
+    tandem_parallel:
+        pairs: 2
+        cg: 0
+        angles: [20, 20, 0, 0]
+        dists: [40, -40, 0, 0]
+    triple:
+        pairs: 3
+        cg: 0
+        angles: [30, 0, -30, 0]
+        dists: [45, 0, -45, 0]
+    quad:
+        pairs: 4
+        cg: 0
+        angles: [30, 10, -10, -30]
+        dists: [50, 17, -17, -50]
+    double_decker:
+        pairs: 4
+        cg: 0
+        angles: [30, 30, -30, -30]
+        dists: [40, 40, -40, -40]
+        ys: [6, -6, 6, -6]
+
+DEFAULT_ARRANGEMENT = 'tandem_x'
+
 TABS.simulator.initialize = (callback) ->
     self = this
     $('#content').load 'tabs/simulator.html', ->
@@ -34,7 +77,7 @@ TABS.simulator._initUI = ->
     # Slider config map — read all named inputs
     sliderNames = [
         'amp_max', 'freq_max', 'servo_speed', 'disturb_force',
-        'wing_pairs', 'cg_position',
+        'cg_position',
         'mount_angle_0', 'mount_angle_1', 'mount_angle_2', 'mount_angle_3',
         'mount_distance_0', 'mount_distance_1', 'mount_distance_2', 'mount_distance_3',
         'aeroelastic_coef', 'glide_aero_coef',
@@ -52,6 +95,8 @@ TABS.simulator._initUI = ->
         for s in sliderNames
             el = $("input[name=\"#{s}\"]")
             self.cfg[s] = if el.length then parseFloat(el.val()) else 0
+        arrEl = $("select[name='arrangement']")
+        self.cfg.arrangement = if arrEl.length then arrEl.val() else DEFAULT_ARRANGEMENT
         self._readWingConfig()
 
     self._readSliders()
@@ -64,10 +109,13 @@ TABS.simulator._initUI = ->
         # Sync number input if present
         numEl = $("input[name='#{name}_num']")
         if numEl.length then numEl.val $(this).val()
-        # Wing-pair count change → rebuild geometry
-        if name == 'wing_pairs'
+        # Mount geometry (CG / per-pair angle & distance) → live re-read
+        if name == 'cg_position' or name.indexOf('mount_') == 0
             self._readWingConfig()
-            self._applyWingGeometry()
+
+    # Servo arrangement selector → apply named geometry + rebuild model
+    $("select[name='arrangement']").on 'change', ->
+        self._applyArrangement $(this).val()
 
     # Number input sync back to slider
     $('.sim-right input.pid-num').on 'input', ->
@@ -169,14 +217,19 @@ TABS.simulator._initUI = ->
 
 TABS.simulator._readWingConfig = ->
     self = this
-    self._pairCount = Math.max(1, Math.min(4, Math.round(self.cfg.wing_pairs ? 2)))
+    arr = self.cfg.arrangement or DEFAULT_ARRANGEMENT
+    spec = TABS.simulator.ARRANGEMENTS[arr] or TABS.simulator.ARRANGEMENTS[DEFAULT_ARRANGEMENT]
+    self._arrangement = arr
+    self._pairCount = spec.pairs
     # Normalized station σ ∈ [−1, +1]: + = nose, − = tail, 0 = centre
-    self._cg = (self.cfg.cg_position ? 0) / 100.0
+    self._cg = (self.cfg.cg_position ? spec.cg) / 100.0
     self._mountAngle = []
     self._mountDist  = []
+    self._mountY     = []
     for p in [0...4]
-        self._mountAngle[p] = self.cfg['mount_angle_' + p] ? 0
-        self._mountDist[p]  = (self.cfg['mount_distance_' + p] ? 0) / 100.0
+        self._mountAngle[p] = self.cfg['mount_angle_' + p] ? (spec.angles[p] ? 0)
+        self._mountDist[p]  = (self.cfg['mount_distance_' + p] ? (spec.dists[p] ? 0)) / 100.0
+        self._mountY[p]     = spec.ys?[p] ? 1
     return
 
 # Rebuild 3D geometry + slew arrays when wing-pair count changes.
@@ -184,7 +237,8 @@ TABS.simulator._applyWingGeometry = ->
     self = this
     return unless self.model
     n = self._pairCount
-    self.model.setPairCount(n)
+    yPositions = (self._mountY[p] ? 1 for p in [0...n])
+    self.model.setPairCount(n, yPositions)
     self._slewMountL = []
     self._slewMountR = []
     for p in [0...n]
@@ -195,6 +249,53 @@ TABS.simulator._applyWingGeometry = ->
         self._slewFlapCenter[i] = 0
         self._slewFeroDL[i] = 0.5; self._slewFeroUL[i] = 0.5
         self._slewFeroDR[i] = 0.5; self._slewFeroUR[i] = 0.5
+    return
+
+# Per-pair pitch rank = fore/aft lever arm (z_eff − CG) normalized by the
+# largest |lever|. Direction AND magnitude derive from the actual station,
+# NOT pair index — so grouped stations (biplane decks) share a rank and a
+# double-decker's two front wings deflect identically. A single pair (n=1)
+# has no fore/aft differential → rank 0.
+TABS.simulator._pitchGeometry = ->
+    self = this
+    n = self._pairCount ? 2
+    A_LAT = 0.164
+    cg = self._cg ? 0
+    levers = []
+    ranks = []
+    if n <= 1
+        return { ranks: [0], levers: [0] }
+    maxLever = 0
+    for p in [0...n]
+        th = self._mountAngle[p] ? 0
+        d  = self._mountDist[p]  ? 0
+        rad = th * PI / 180
+        zEff = d - A_LAT * Math.tan(rad)
+        lever = zEff - cg
+        levers[p] = lever
+        maxLever = Math.max(maxLever, Math.abs(lever))
+    for p in [0...n]
+        ranks[p] = if maxLever < 1e-6 then 0 else levers[p] / maxLever
+    { ranks: ranks, levers: levers }
+
+# Apply a named servo arrangement: write its defaults into the mount/CG
+# sliders, then re-read wing config and rebuild the 3D model.
+TABS.simulator._applyArrangement = (arr) ->
+    self = this
+    spec = TABS.simulator.ARRANGEMENTS[arr] or TABS.simulator.ARRANGEMENTS[DEFAULT_ARRANGEMENT]
+    self.cfg.arrangement = arr
+    setSlider = (name, val) ->
+        slider = $("input[name='#{name}']")
+        if slider.length
+            slider.val val
+            self.cfg[name] = parseFloat(val)
+            $(".val[data-for='#{name}']").text val
+    setSlider 'cg_position', spec.cg
+    for p in [0...4]
+        setSlider 'mount_angle_' + p, spec.angles[p] ? 0
+        setSlider 'mount_distance_' + p, spec.dists[p] ? 0
+    self._readWingConfig()
+    self._applyWingGeometry()
     return
 
 # ═══════════════════════════════════════════════════════════════
@@ -298,7 +399,8 @@ TABS.simulator._initModel = ->
 
     try
         self.model = new Model(wrapper, canvas, waveEl)
-        self.model.setPairCount(n)
+        yPositions = (self._mountY[p] ? 1 for p in [0...n])
+        self.model.setPairCount(n, yPositions)
         # Initialize flapParams matching Model defaults
         fp = self.model.flapParams
         fp.throttle = 1500
@@ -645,11 +747,10 @@ TABS.simulator._applyServoSpeedLimit = ->
     n = self._pairCount ? 2
     nServo = n * 2
 
-    # Pitch fore/aft differential rank: +1 frontmost .. −1 rearmost.
-    # A single pair (n=1) has no fore/aft lever → pitch only via CG offset.
-    pitchRank = (p) ->
-        return 0 if n <= 1
-        1 - 2 * p / (n - 1)
+    # Pitch fore/aft differential rank: +1 frontmost .. −1 rearmost,
+    # derived from the actual fore/aft station (not pair index) so grouped
+    # stations (biplane decks) deflect identically.
+    pitchRank = (p) -> self._pitchGeometry().ranks[p] ? 0
 
     # Flap-centre per wing: pitch (fore/aft diff) + roll (L/R diff) + yaw (L/R × sin sweep).
     applyFlapCenter = (cPitch, cRoll, cYaw, setFn) ->
@@ -826,20 +927,20 @@ TABS.simulator._physicsStep = ->
     #   d_p = mount distance (normalized σ, + = nose)
     #   a   = A_LAT (normalized half-width)
     # Pitch lever = z_eff − CG ; roll ∝ cos(θ) ; yaw ∝ sin²(θ).
-    pitchRank = (p) -> if n <= 1 then 0 else 1 - 2 * p / (n - 1)
+    geo = self._pitchGeometry()
+    ranks = geo.ranks
+    levers = geo.levers
 
     pitchSum = 0.0
     rollCos  = 0.0
     yawSin2  = 0.0
     for p in [0...n]
         th = self._mountAngle[p] ? 0
-        d  = self._mountDist[p]  ? 0
         rad = th * PI / 180
         cosT = Math.cos(rad)
         sinT = Math.sin(rad)
-        zEff = d - A_LAT * Math.tan(rad)
-        lever = zEff - cg
-        pitchSum += (elevatorDeg * pitchRank(p)) * cosT * lever
+        lever = levers[p] ? 0
+        pitchSum += (elevatorDeg * (ranks[p] ? 0)) * cosT * lever
         rollCos  += cosT
         yawSin2  += sinT * sinT
     rollCos /= n
@@ -917,7 +1018,7 @@ TABS.simulator._updateTelemetry = ->
     fcR = if self._slewFlapCenter? and self._slewFlapCenter[1]? then ((self._slewFlapCenter[1] - self._slewFlapCenter[0]) / 2).toFixed(1) else '?'
     pairs = self._pairCount ? 2
     cgS   = ((self._cg ? 0) * 100).toFixed(0)
-    "v0811-30 " +
+    "v0811-31 " +
             "FLAP:#{self._slew.freq.toFixed(1)}Hz AMP:#{self._slew.amp.toFixed(0)}deg " +
             "Pairs:#{pairs} CG:#{cgS} " +
             "Servo:[#{sa[0].toFixed(0)},#{sa[1].toFixed(0)},#{sa[2].toFixed(0)},#{sa[3].toFixed(0)}] " +

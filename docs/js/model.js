@@ -345,8 +345,8 @@ Model.prototype._buildFixedBody = function() {
   this.modelWrapper.add(rightFeather);
 };
 
-Model.prototype.buildOrnithopter = function(pairCount) {
-  var CHORD_HALF, leftAero, leftFlap, leftMount, leftPivot, leftWing, old, p, pp, rightAero, rightFlap, rightMount, rightPivot, rightWing, s, sphereGeo, sphereL, sphereR, wingGeo, wingPair, z, zPositions;
+Model.prototype.buildOrnithopter = function(pairCount, yPositions) {
+  var CHORD_HALF, leftAero, leftFlap, leftMount, leftPivot, leftWing, old, p, pp, rightAero, rightFlap, rightMount, rightPivot, rightWing, s, sphereGeo, sphereL, sphereR, wingGeo, wingPair, y, z, zPositions;
   leftPivot = void 0;
   leftWing = void 0;
   old = void 0;
@@ -360,9 +360,11 @@ Model.prototype.buildOrnithopter = function(pairCount) {
   sphereR = void 0;
   wingGeo = void 0;
   wingPair = void 0;
+  y = void 0;
   z = void 0;
   zPositions = void 0;
   pairCount = Math.max(1, Math.min(4, pairCount || 2));
+  yPositions = yPositions || [1, 1, 1, 1];
   if (this.wingPivots) {
     pp = 0;
     while (pp < this.wingPivots.length) {
@@ -387,6 +389,7 @@ Model.prototype.buildOrnithopter = function(pairCount) {
   p = 0;
   while (p < pairCount) {
     z = zPositions[p];
+    y = yPositions[p] || 1;
     wingPair = {
       leftMount: null,
       leftFlap: null,
@@ -396,7 +399,7 @@ Model.prototype.buildOrnithopter = function(pairCount) {
       rightAero: null
     };
     leftMount = new THREE.Object3D;
-    leftMount.position.set(-4.5, 1, z);
+    leftMount.position.set(-4.5, y, z);
     leftMount.name = 'wingPair' + p + '_leftMount';
     this.modelWrapper.add(leftMount);
     leftFlap = new THREE.Object3D;
@@ -412,7 +415,7 @@ Model.prototype.buildOrnithopter = function(pairCount) {
     wingPair.leftFlap = leftFlap;
     wingPair.leftAero = leftAero;
     rightMount = new THREE.Object3D;
-    rightMount.position.set(4.5, 1, z);
+    rightMount.position.set(4.5, y, z);
     rightMount.name = 'wingPair' + p + '_rightMount';
     this.modelWrapper.add(rightMount);
     rightFlap = new THREE.Object3D;
@@ -449,8 +452,8 @@ Model.prototype.buildOrnithopter = function(pairCount) {
   this.render();
 };
 
-Model.prototype.setPairCount = function(n) {
-  this.buildOrnithopter(Math.max(1, Math.min(4, n || 2)));
+Model.prototype.setPairCount = function(n, yPositions) {
+  this.buildOrnithopter(Math.max(1, Math.min(4, n || 2)), yPositions);
 };
 
 Model.prototype.setServoPositions = function(pwmArray) {

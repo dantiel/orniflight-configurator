@@ -332,7 +332,7 @@ Model::_buildFixedBody = ->
     @modelWrapper.add rightFeather
     return
 
-Model::buildOrnithopter = (pairCount) ->
+Model::buildOrnithopter = (pairCount, yPositions) ->
     leftPivot = undefined
     leftWing = undefined
     old = undefined
@@ -346,9 +346,12 @@ Model::buildOrnithopter = (pairCount) ->
     sphereR = undefined
     wingGeo = undefined
     wingPair = undefined
+    y = undefined
     z = undefined
     zPositions = undefined
     pairCount = Math.max(1, Math.min(4, pairCount or 2))
+    # Vertical deck offsets (biplane). Default all decks at +1 (top of fuselage).
+    yPositions = yPositions or [ 1, 1, 1, 1 ]
     if @wingPivots
         pp = 0
         while pp < @wingPivots.length
@@ -369,6 +372,7 @@ Model::buildOrnithopter = (pairCount) ->
     p = 0
     while p < pairCount
         z = zPositions[p]
+        y = yPositions[p] or 1
         wingPair =
             leftMount: null
             leftFlap: null
@@ -378,7 +382,7 @@ Model::buildOrnithopter = (pairCount) ->
             rightAero: null
         # Left wing hierarchy: Mount(Y=sweep) → Flap(Z=flapping) → Aero(Y=flex) → mesh(LE at pivot)
         leftMount = new (THREE.Object3D)
-        leftMount.position.set -4.5, 1, z
+        leftMount.position.set -4.5, y, z
         leftMount.name = 'wingPair' + p + '_leftMount'
         @modelWrapper.add leftMount
         leftFlap = new (THREE.Object3D)
@@ -395,7 +399,7 @@ Model::buildOrnithopter = (pairCount) ->
         wingPair.leftAero = leftAero
         # Right wing hierarchy: Mount(Y=sweep) → Flap(Z=flapping) → Aero(Y=flex) → mesh(LE at pivot)
         rightMount = new (THREE.Object3D)
-        rightMount.position.set 4.5, 1, z
+        rightMount.position.set 4.5, y, z
         rightMount.name = 'wingPair' + p + '_rightMount'
         @modelWrapper.add rightMount
         rightFlap = new (THREE.Object3D)
@@ -431,8 +435,8 @@ Model::buildOrnithopter = (pairCount) ->
     @render()
     return
 
-Model::setPairCount = (n) ->
-    @buildOrnithopter Math.max(1, Math.min(4, n or 2))
+Model::setPairCount = (n, yPositions) ->
+    @buildOrnithopter Math.max(1, Math.min(4, n or 2)), yPositions
     return
 
 Model::setServoPositions = (pwmArray) ->
