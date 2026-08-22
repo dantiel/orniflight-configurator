@@ -54,6 +54,7 @@ TABS.simulator.ARRANGEMENTS =
         ys: [6, -6, 6, -6]
 
 DEFAULT_ARRANGEMENT = 'tandem_x'
+HALF_BODY = 27.5   # half-fuselage model units — σ ∈ [−1,+1] → Z = σ × HALF_BODY
 
 TABS.simulator.initialize = (callback) ->
     self = this
@@ -112,6 +113,11 @@ TABS.simulator._initUI = ->
         # Mount geometry (CG / per-pair angle & distance) → live re-read
         if name == 'cg_position' or name.indexOf('mount_') == 0
             self._readWingConfig()
+            # Fore/aft station sliders move the wings live (no full rebuild)
+            if name.indexOf('mount_distance_') == 0 and self.model
+                n = self._pairCount ? 2
+                zPositions = ((self._mountDist[p] ? 0) * HALF_BODY for p in [0...n])
+                self.model.setPairStations zPositions
 
     # Servo arrangement selector → apply named geometry + rebuild model
     $("select[name='arrangement']").on 'change', ->
@@ -238,7 +244,8 @@ TABS.simulator._applyWingGeometry = ->
     return unless self.model
     n = self._pairCount
     yPositions = (self._mountY[p] ? 1 for p in [0...n])
-    self.model.setPairCount(n, yPositions)
+    zPositions = ((self._mountDist[p] ? 0) * HALF_BODY for p in [0...n])
+    self.model.setPairCount(n, yPositions, zPositions)
     self._slewMountL = []
     self._slewMountR = []
     for p in [0...n]
@@ -400,7 +407,8 @@ TABS.simulator._initModel = ->
     try
         self.model = new Model(wrapper, canvas, waveEl)
         yPositions = (self._mountY[p] ? 1 for p in [0...n])
-        self.model.setPairCount(n, yPositions)
+        zPositions = ((self._mountDist[p] ? 0) * HALF_BODY for p in [0...n])
+        self.model.setPairCount(n, yPositions, zPositions)
         # Initialize flapParams matching Model defaults
         fp = self.model.flapParams
         fp.throttle = 1500

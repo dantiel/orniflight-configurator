@@ -345,8 +345,8 @@ Model.prototype._buildFixedBody = function() {
   this.modelWrapper.add(rightFeather);
 };
 
-Model.prototype.buildOrnithopter = function(pairCount, yPositions) {
-  var CHORD_HALF, leftAero, leftFlap, leftMount, leftPivot, leftWing, old, p, pp, rightAero, rightFlap, rightMount, rightPivot, rightWing, s, sphereGeo, sphereL, sphereR, wingGeo, wingPair, y, z, zPositions;
+Model.prototype.buildOrnithopter = function(pairCount, yPositions, zPositions) {
+  var CHORD_HALF, leftAero, leftFlap, leftMount, leftPivot, leftWing, old, p, pp, rightAero, rightFlap, rightMount, rightPivot, rightWing, s, sphereGeo, sphereL, sphereR, wingGeo, wingPair, y, z;
   leftPivot = void 0;
   leftWing = void 0;
   old = void 0;
@@ -385,7 +385,7 @@ Model.prototype.buildOrnithopter = function(pairCount, yPositions) {
   this.wingPivots = [];
   wingGeo = new THREE.BoxGeometry(65, 0.8, 12);
   CHORD_HALF = -6;
-  zPositions = this._pairZPositions[pairCount] || this._pairZPositions[2];
+  zPositions = zPositions || this._pairZPositions[pairCount] || this._pairZPositions[2];
   p = 0;
   while (p < pairCount) {
     z = zPositions[p];
@@ -432,11 +432,9 @@ Model.prototype.buildOrnithopter = function(pairCount, yPositions) {
     wingPair.rightAero = rightAero;
     sphereGeo = new THREE.SphereGeometry(2, 8, 8);
     sphereL = new THREE.Mesh(sphereGeo, this._matPivot);
-    sphereL.position.copy(leftMount.position);
-    this.modelWrapper.add(sphereL);
+    leftMount.add(sphereL);
     sphereR = new THREE.Mesh(sphereGeo, this._matPivot);
-    sphereR.position.copy(rightMount.position);
-    this.modelWrapper.add(sphereR);
+    rightMount.add(sphereR);
     this.wingPivots.push(wingPair);
     p++;
   }
@@ -452,8 +450,25 @@ Model.prototype.buildOrnithopter = function(pairCount, yPositions) {
   this.render();
 };
 
-Model.prototype.setPairCount = function(n, yPositions) {
-  this.buildOrnithopter(Math.max(1, Math.min(4, n || 2)), yPositions);
+Model.prototype.setPairCount = function(n, yPositions, zPositions) {
+  this.buildOrnithopter(Math.max(1, Math.min(4, n || 2)), yPositions, zPositions);
+};
+
+Model.prototype.setPairStations = function(zPositions) {
+  var p, z;
+  if (!(zPositions && this.wingPivots)) {
+    return;
+  }
+  p = 0;
+  while (p < this.wingPivots.length) {
+    z = zPositions[p];
+    if ((z != null) && isFinite(z)) {
+      this.wingPivots[p].leftMount.position.z = z;
+      this.wingPivots[p].rightMount.position.z = z;
+    }
+    p++;
+  }
+  this.render();
 };
 
 Model.prototype.setServoPositions = function(pwmArray) {

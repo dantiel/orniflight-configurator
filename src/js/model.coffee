@@ -332,7 +332,7 @@ Model::_buildFixedBody = ->
     @modelWrapper.add rightFeather
     return
 
-Model::buildOrnithopter = (pairCount, yPositions) ->
+Model::buildOrnithopter = (pairCount, yPositions, zPositions) ->
     leftPivot = undefined
     leftWing = undefined
     old = undefined
@@ -368,7 +368,7 @@ Model::buildOrnithopter = (pairCount, yPositions) ->
     wingGeo = new (THREE.BoxGeometry)(65, 0.8, 12)
     # Chord offset: leading edge at pivot, chord extends backward (-Z)
     CHORD_HALF = -6
-    zPositions = @_pairZPositions[pairCount] or @_pairZPositions[2]
+    zPositions = zPositions or @_pairZPositions[pairCount] or @_pairZPositions[2]
     p = 0
     while p < pairCount
         z = zPositions[p]
@@ -414,14 +414,13 @@ Model::buildOrnithopter = (pairCount, yPositions) ->
         wingPair.rightMount = rightMount
         wingPair.rightFlap = rightFlap
         wingPair.rightAero = rightAero
-        # Pivot indicator spheres at mount positions
+        # Pivot indicator spheres at mount positions (parented so they follow
+        # fore/aft station changes from setPairStations)
         sphereGeo = new (THREE.SphereGeometry)(2, 8, 8)
         sphereL = new (THREE.Mesh)(sphereGeo, @_matPivot)
-        sphereL.position.copy leftMount.position
-        @modelWrapper.add sphereL
+        leftMount.add sphereL
         sphereR = new (THREE.Mesh)(sphereGeo, @_matPivot)
-        sphereR.position.copy rightMount.position
-        @modelWrapper.add sphereR
+        rightMount.add sphereR
         @wingPivots.push wingPair
         p++
     @flapParams.servoCount = pairCount * 2
@@ -435,8 +434,23 @@ Model::buildOrnithopter = (pairCount, yPositions) ->
     @render()
     return
 
-Model::setPairCount = (n, yPositions) ->
-    @buildOrnithopter Math.max(1, Math.min(4, n or 2)), yPositions
+Model::setPairCount = (n, yPositions, zPositions) ->
+    @buildOrnithopter Math.max(1, Math.min(4, n or 2)), yPositions, zPositions
+    return
+
+# Live fore/aft station update — moves existing wing pairs without a rebuild
+# (driven by the mount_distance sliders). zPositions = absolute Z units
+# (half-fuselage = 27.5, σ ∈ [−1,+1] → Z = σ × 27.5).
+Model::setPairStations = (zPositions) ->
+    return unless zPositions and @wingPivots
+    p = 0
+    while p < @wingPivots.length
+        z = zPositions[p]
+        if z? and isFinite(z)
+            @wingPivots[p].leftMount.position.z = z
+            @wingPivots[p].rightMount.position.z = z
+        p++
+    @render()
     return
 
 Model::setServoPositions = (pwmArray) ->
