@@ -623,7 +623,7 @@ Model.prototype.startAnimation = function() {
           }
           velL = (flapZL - (self._prevFlapZL[p] || 0)) / dt;
           velR = (flapZR - (self._prevFlapZR[p] || 0)) / dt;
-          aeroFlexL = -aeroCoef * velL * 0.0015;
+          aeroFlexL = aeroCoef * velL * 0.0015;
           aeroFlexR = -aeroCoef * velR * 0.0015;
         } else {
           aeroFlexL = 0;

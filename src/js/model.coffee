@@ -622,7 +622,10 @@ Model::startAnimation = ->
                     velL = (flapZL - (self._prevFlapZL[p] or 0)) / dt
                     velR = (flapZR - (self._prevFlapZR[p] or 0)) / dt
                     # Scale: aeroCoef 0..40 → flex ~0..14° at 3 rad/s (normal flapping velocity)
-                    aeroFlexL = -aeroCoef * velL * 0.0015
+                    # flapZL is down-positive (left tip down = +rotation.z); flapZR is the
+                    # mirrored right value (down = −rotation.z). Flex opposes the flap: wing
+                    # moving down → TE up. So use +velL and −velR → SAME sign on both wings.
+                    aeroFlexL = aeroCoef * velL * 0.0015
                     aeroFlexR = -aeroCoef * velR * 0.0015
                 else
                     aeroFlexL = 0; aeroFlexR = 0
