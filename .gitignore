@@ -6,11 +6,13 @@ yarn-debug.log*
 yarn-error.log*
 
 # Configurator Build process
-cache/
-apps/
-dist/
-debug/
-release/
+# (anchored to repo root so nested vendor dirs like docs/js/libraries/vendor/*/dist
+# are NOT ignored)
+/cache/
+/apps/
+/dist/
+/debug/
+/release/
 
 # OSX
 .DS_store
