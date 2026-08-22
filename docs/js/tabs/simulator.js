@@ -76,7 +76,7 @@ TABS.simulator._initUI = function() {
   self._disturbDragging = false;
   self._disturbStartX = 0;
   self._disturbStartY = 0;
-  sliderNames = ['amp_max', 'freq_max', 'servo_speed', 'disturb_force', 'cg_position', 'mount_angle_0', 'mount_angle_1', 'mount_angle_2', 'mount_angle_3', 'mount_distance_0', 'mount_distance_1', 'mount_distance_2', 'mount_distance_3', 'aeroelastic_coef', 'glide_aero_coef', 'cadence_gain', 'ferocity_p_gain', 'ferocity_d_gain', 'balance_gain', 'warp_gain', 'warp_yaw_gain', 'warp_pitch_gain', 'ferocity_roll_gain', 'ferocity_yaw_gain', 'ssff', 'anchor_gain', 'attitude_P', 'stick_fero', 'stick_asym', 'stick_lrdiff', 'stick_fadiff', 'roll_P', 'roll_I', 'roll_D', 'pitch_P', 'pitch_I', 'pitch_D', 'yaw_P', 'yaw_I', 'yaw_D'];
+  sliderNames = ['amp_max', 'freq_max', 'servo_speed', 'disturb_force', 'cg_position', 'mount_angle_0', 'mount_angle_1', 'mount_angle_2', 'mount_angle_3', 'mount_distance_0', 'mount_distance_1', 'mount_distance_2', 'mount_distance_3', 'aeroelastic_coef', 'glide_aero_coef', 'cadence_gain', 'ferocity_p_gain', 'ferocity_d_gain', 'balance_gain', 'warp_gain', 'warp_yaw_gain', 'warp_pitch_gain', 'ferocity_roll_gain', 'ferocity_yaw_gain', 'ssff', 'anchor_gain', 'attitude_P', 'stick_fero', 'stick_asym', 'stick_lrdiff', 'stick_fadiff', 'roll_P', 'roll_I', 'roll_D', 'pitch_P', 'pitch_I', 'pitch_D', 'yaw_P', 'yaw_I', 'yaw_D', 'yaw_amp_mix'];
   self._readSliders = function() {
     var arrEl, el, j, len, s;
     self.cfg = {};
@@ -211,6 +211,7 @@ TABS.simulator._initUI = function() {
     self._slew.feroPitchFA = 0;
     self._slew.asymBias = 0;
     self._slew.phaseYaw = 0;
+    self._slew.ampYaw = 0;
     results = [];
     for (i = l = 0, ref3 = ((ref4 = self._pairCount) != null ? ref4 : 2) * 2; 0 <= ref3 ? l < ref3 : l > ref3; i = 0 <= ref3 ? ++l : --l) {
       results.push(self._slewFlapCenter[i] = 0);
@@ -466,7 +467,8 @@ TABS.simulator._initModel = function() {
     feroDiffY: 0.0,
     feroPitchFA: 0.0,
     asymBias: 0.0,
-    phaseYaw: 0.0
+    phaseYaw: 0.0,
+    ampYaw: 0.0
   };
   n = (ref = self._pairCount) != null ? ref : 2;
   self._slewFeroDL = [];
@@ -849,9 +851,11 @@ TABS.simulator._computeTargets = function() {
   self._targetFeroDiffY = self._feroDiffY || 0;
   self._targetFeroPitchFA = self._feroPitchFA || 0;
   self._targetAsymBias = self._asymBias || 0;
+  self._yawAmpMix = Math.max(0, Math.min(1, (self.cfg.yaw_amp_mix || 0) / 100));
   self._targetFlapCenterPitch = (self._feroPitchFA || 0) * 15.0;
   self._targetFlapCenterRoll = (self._feroDiffR || 0) * 15.0;
-  self._targetFlapCenterYaw = (self._feroDiffY || 0) * 15.0;
+  self._targetFlapCenterYaw = (self._feroDiffY || 0) * (1.0 - self._yawAmpMix) * 15.0;
+  self._targetAmpYaw = (self._feroDiffY || 0) * self._yawAmpMix;
   self._targetPhaseYaw = 0.0;
 };
 
@@ -894,6 +898,7 @@ TABS.simulator._applyServoSpeedLimit = function() {
     self._slew.feroPitchFA = self._targetFeroPitchFA;
     self._slew.asymBias = self._targetAsymBias;
     self._slew.phaseYaw = self._targetPhaseYaw;
+    self._slew.ampYaw = self._targetAmpYaw || 0;
     aB = self._targetAsymBias || 0;
     fBase = Math.max(0.5, Math.min(8.0, self._targetFeroBase));
     fD = Math.max(0.5, Math.min(8.0, fBase - aB * 0.8));
@@ -936,6 +941,7 @@ TABS.simulator._applyServoSpeedLimit = function() {
   self._slew.feroPitchFA = slew(self._slew.feroPitchFA, self._targetFeroPitchFA, maxFero);
   self._slew.asymBias = slew(self._slew.asymBias, self._targetAsymBias, maxFero);
   self._slew.phaseYaw = slew(self._slew.phaseYaw, self._targetPhaseYaw, maxPhs);
+  self._slew.ampYaw = slew(self._slew.ampYaw, self._targetAmpYaw || 0, maxFero);
   aB = self._targetAsymBias || 0;
   fBase = Math.max(0.5, Math.min(8.0, self._targetFeroBase));
   fD = Math.max(0.5, Math.min(8.0, fBase - aB * 0.8));
@@ -979,7 +985,7 @@ TABS.simulator._updateModel = function() {
     fp.flapCenterL[p] = (ref2 = self._slewFlapCenter[p * 2]) != null ? ref2 : 0;
     fp.flapCenterR[p] = (ref3 = self._slewFlapCenter[p * 2 + 1]) != null ? ref3 : 0;
   }
-  fp.yaw = 1500;
+  fp.yaw = 1500 + (self._slew.ampYaw || 0) * 500;
   self._lrSig = 0;
   fp.amplitudeFA = 0.0;
   self._normP = (self.stickPitch - 1500) / 500;
@@ -1007,7 +1013,7 @@ TABS.simulator._updateModel = function() {
 };
 
 TABS.simulator._physicsStep = function() {
-  var A_LAT, LIMIT, aileronDeg, ampScale, anchorBoost, authority, cg, cosT, ctrlPitch, ctrlRoll, ctrlYaw, dampBase, dampPitch, dampRoll, dampYaw, elevatorDeg, geo, glideScale, j, lever, levers, n, p, pitchCoef, pitchSum, rad, ranks, ref, ref1, ref2, ref3, ref4, ref5, rollCoef, rollCos, rudderDeg, self, sin30, sinT, th, yawCoef, yawMount, yawSin2;
+  var A_LAT, LIMIT, aileronDeg, ampScale, ampYawCoef, ampYawDeg, anchorBoost, authority, centerYawDeg, cg, cosT, ctrlPitch, ctrlRoll, ctrlYaw, dampBase, dampPitch, dampRoll, dampYaw, elevatorDeg, geo, glideScale, j, lever, levers, mix, n, p, pitchCoef, pitchSum, rad, ranks, ref, ref1, ref2, ref3, ref4, ref5, rollCoef, rollCos, rudderDeg, self, sin30, sinT, th, yawCoef, yawMount, yawSin2;
   self = this;
   n = (ref = self._pairCount) != null ? ref : 2;
   A_LAT = 0.164;
@@ -1015,6 +1021,9 @@ TABS.simulator._physicsStep = function() {
   elevatorDeg = (self._slew.feroPitchFA || 0) * 15.0;
   aileronDeg = (self._slew.feroDiffR || 0) * 15.0;
   rudderDeg = (self._slew.feroDiffY || 0) * 15.0;
+  mix = Math.max(0, Math.min(1, (self.cfg.yaw_amp_mix || 0) / 100));
+  centerYawDeg = rudderDeg * (1.0 - mix);
+  ampYawDeg = rudderDeg * mix;
   geo = self._pitchGeometry();
   ranks = geo.ranks;
   levers = geo.levers;
@@ -1043,7 +1052,8 @@ TABS.simulator._physicsStep = function() {
   yawMount = Math.max(0, Math.min(1.5, yawSin2 / (sin30 * sin30)));
   ctrlRoll = aileronDeg * rollCoef * rollCos * authority;
   ctrlPitch = pitchSum * pitchCoef * authority;
-  ctrlYaw = rudderDeg * yawCoef * yawMount * authority;
+  ampYawCoef = 9.0;
+  ctrlYaw = centerYawDeg * yawCoef * yawMount * authority + ampYawDeg * ampYawCoef * ampScale;
   dampBase = 1.3;
   anchorBoost = (self.cfg.anchor_gain || 0) * 0.08;
   dampRoll = (dampBase + anchorBoost) * authority;

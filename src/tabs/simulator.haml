@@ -238,6 +238,10 @@
             %input{type: "range", min: "0", max: "199", step: "1", value: "0", name: "yaw_D"}
             %input.pid-num{type: "number", min: "0", max: "199", step: "1", value: "0", name: "yaw_D_num"}
             %span.val{"data-for" => "yaw_D"} 0
+          .slider-row
+            %label Yaw Amp Mix (%)
+            %input{type: "range", min: "0", max: "100", step: "1", value: "50", name: "yaw_amp_mix"}
+            %span.val{"data-for" => "yaw_amp_mix"} 50
 
       / ACTIONS
       .gui_box

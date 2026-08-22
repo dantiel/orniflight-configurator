@@ -87,7 +87,7 @@ TABS.simulator._initUI = ->
         'stick_fero', 'stick_asym', 'stick_lrdiff', 'stick_fadiff',
         'roll_P', 'roll_I', 'roll_D',
         'pitch_P', 'pitch_I', 'pitch_D',
-        'yaw_P', 'yaw_I', 'yaw_D'
+        'yaw_P', 'yaw_I', 'yaw_D', 'yaw_amp_mix'
     ]
 
     self._readSliders = ->
@@ -201,7 +201,7 @@ TABS.simulator._initUI = ->
         self._slew.freq = 0;    self._slew.freqMod = 1.0
         self._slew.amp = 0;     self._slew.feroBase = 0.5
         self._slew.feroDiffR = 0; self._slew.feroDiffY = 0; self._slew.feroPitchFA = 0
-        self._slew.asymBias = 0;  self._slew.phaseYaw = 0
+        self._slew.asymBias = 0;  self._slew.phaseYaw = 0;  self._slew.ampYaw = 0
         for i in [0...(self._pairCount ? 2) * 2]
             self._slewFlapCenter[i] = 0
 
@@ -375,7 +375,7 @@ TABS.simulator._initModel = ->
         freq: 0.0;      freqMod: 1.0
         amp: 0.0;       feroBase: 0.5
         feroDiffR: 0.0; feroDiffY: 0.0; feroPitchFA: 0.0
-        asymBias: 0.0;  phaseYaw: 0.0
+        asymBias: 0.0;  phaseYaw: 0.0;  ampYaw: 0.0
 
     n = self._pairCount ? 2
     # Per-wing slew arrays sized to pair count
@@ -671,7 +671,7 @@ TABS.simulator._ondasModulation = ->
     # Roll L/R differential — stick × P-gain + PID correction
     feroDiffR = self.setpoint.roll / 360 * 2.0 * pScaleR + ps.roll.SumF * 0.4
 
-    # Yaw L/R flap-amplitude differential (drag asymmetry → yaw about vertical axis)
+    # Yaw L/R flap-CENTRE differential (swept-wing proverse drag → yaw about vertical axis)
     feroDiffY = self.setpoint.yaw / 360 * 2.0 * pScaleY + ps.yaw.SumF * 0.4
 
     # Pitch fore/aft symmetric differential — PID→physics path
@@ -727,17 +727,23 @@ TABS.simulator._computeTargets = ->
     self._targetFeroPitchFA = self._feroPitchFA or 0
     self._targetAsymBias    = self._asymBias    or 0
 
+    # Yaw mixing: split the yaw command across two orthogonal mechanisms.
+    #   yaw_amp_mix = 0   → pure flap-centre differential (∝ sin mount, glide-capable)
+    #   yaw_amp_mix = 100 → pure L/R amplitude differential (thrust asymmetry, flapping-only)
+    self._yawAmpMix = Math.max(0, Math.min(1, (self.cfg.yaw_amp_mix or 0) / 100))
+
     # Flap centre offset: PID controls where wing spends its time (same in glide & flapping).
     # Mount angle is STATIC — NEVER changes. It only SCALES physics authority.
     # feroPitchFA → all wings shift together (elevator). feroDiffR → L/R opposite (aileron).
-    # feroDiffY → L/R flap-AMPLITUDE differential (rudder): one side flaps harder,
-    # producing asymmetric drag/thrust that yaws the craft about its vertical axis.
+    # feroDiffY → L/R flap-CENTRE differential (rudder): each swept wing holds a
+    # bias angle ∝ sin(mount), producing proverse drag that yaws about vertical axis.
     # In glide (amp=0): wings hold at centre offset. In flapping: oscillation ADDED on top.
     self._targetFlapCenterPitch = (self._feroPitchFA or 0) * 15.0   # ±30° centre shift
     self._targetFlapCenterRoll  = (self._feroDiffR   or 0) * 15.0
-    self._targetFlapCenterYaw   = (self._feroDiffY   or 0) * 15.0   # ±30° L/R diff
+    self._targetFlapCenterYaw   = (self._feroDiffY   or 0) * (1.0 - self._yawAmpMix) * 15.0   # ±30° L/R diff
+    self._targetAmpYaw          = (self._feroDiffY   or 0) * self._yawAmpMix                 # L/R amplitude diff
     # Phase scissoring DISABLED: front/rear phase shift produces PITCH not yaw.
-    # Yaw = L/R flap-amplitude differential (drag asymmetry) — see _updateModel lrSig.
+    # Yaw = L/R flap-centre differential ∝ sin(mount) — see applyFlapCenter yawOff.
     self._targetPhaseYaw        = 0.0
     return
 
@@ -781,6 +787,7 @@ TABS.simulator._applyServoSpeedLimit = ->
         self._slew.feroPitchFA  = self._targetFeroPitchFA
         self._slew.asymBias     = self._targetAsymBias
         self._slew.phaseYaw   = self._targetPhaseYaw
+        self._slew.ampYaw     = self._targetAmpYaw or 0
         aB = self._targetAsymBias or 0
         fBase = Math.max(0.5, Math.min(8.0, self._targetFeroBase))
         fD = Math.max(0.5, Math.min(8.0, fBase - aB * 0.8))
@@ -817,6 +824,7 @@ TABS.simulator._applyServoSpeedLimit = ->
     self._slew.feroPitchFA = slew(self._slew.feroPitchFA, self._targetFeroPitchFA, maxFero)
     self._slew.asymBias    = slew(self._slew.asymBias,    self._targetAsymBias,    maxFero)
     self._slew.phaseYaw  = slew(self._slew.phaseYaw,  self._targetPhaseYaw,  maxPhs)
+    self._slew.ampYaw     = slew(self._slew.ampYaw,    self._targetAmpYaw or 0,   maxFero)
 
     # Per-wing ferocity: UNIFORM across all wings. asymBias gives up/down
     # stroke balance (pitch via thrust timing). Roll is flap centre only.
@@ -862,9 +870,9 @@ TABS.simulator._updateModel = ->
         fp.flapCenterL[p] = self._slewFlapCenter[p * 2]     ? 0
         fp.flapCenterR[p] = self._slewFlapCenter[p * 2 + 1] ? 0
 
-    # Yaw is FLAP-CENTRE (see _slewFlapCenter), not amplitude. Keep fp.yaw
-    # neutral so model.coffee applies no L/R amplitude differential.
-    fp.yaw = 1500
+    # Yaw is split by yaw_amp_mix: flap-centre (rendered via _slewFlapCenter)
+    # + L/R amplitude differential (fp.yaw). 1500 = neutral (no amp differential).
+    fp.yaw = 1500 + (self._slew.ampYaw or 0) * 500
     self._lrSig = 0
 
     # Pitch: asymBias only (up/down stroke balance) — NO front/rear amplitude differential
@@ -918,7 +926,10 @@ TABS.simulator._physicsStep = ->
     # state, read from the same slew values that drive _slewFlapCenter.
     elevatorDeg = (self._slew.feroPitchFA or 0) * 15.0   # fore/aft diff → pitch
     aileronDeg  = (self._slew.feroDiffR   or 0) * 15.0   # L/R diff → roll
-    rudderDeg   = (self._slew.feroDiffY   or 0) * 15.0   # L/R flap-centre diff → yaw (deg)
+    rudderDeg   = (self._slew.feroDiffY   or 0) * 15.0   # total yaw command (deg)
+    mix         = Math.max(0, Math.min(1, (self.cfg.yaw_amp_mix or 0) / 100))
+    centerYawDeg = rudderDeg * (1.0 - mix)   # flap-centre (proverse drag ∝ sin² mount)
+    ampYawDeg    = rudderDeg * mix           # amplitude (thrust asymmetry ∝ flapping amp)
 
     # ── Mount-geometry lever arms (per pair) ───────────────────
     # Effective fore/aft station = centreline crossing of the swept
@@ -960,7 +971,8 @@ TABS.simulator._physicsStep = ->
     yawMount = Math.max(0, Math.min(1.5, yawSin2 / (sin30 * sin30)))
     ctrlRoll  = aileronDeg  * rollCoef  * rollCos  * authority
     ctrlPitch = pitchSum    * pitchCoef * authority
-    ctrlYaw   = rudderDeg   * yawCoef   * yawMount * authority
+    ampYawCoef = 9.0   # thrust-asymmetry authority — mount-sweep independent, flapping-gated
+    ctrlYaw   = centerYawDeg * yawCoef * yawMount * authority + ampYawDeg * ampYawCoef * ampScale
 
     # Passive aerodynamic damping: a rotating craft presents asymmetric
     # airflow to its wings, which oppose the rotation. Scales with wing
