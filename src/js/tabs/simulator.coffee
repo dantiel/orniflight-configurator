@@ -268,11 +268,16 @@ TABS.simulator._applyWingGeometry = ->
 # mode, both wings deflect together) and the PITCH MOMENT ∝ lever arm
 # (z_eff − CG). Authority therefore vanishes when the wing sits AT the CG
 # and flips sign between canard (wing ahead) and tail (wing behind) — i.e.
-# pitch is governed by mount distance AND CG position.
+# pitch is governed by mount distance, CG position AND mount angle (sweep).
 TABS.simulator._pitchGeometry = ->
     self = this
     n = self._pairCount ? 2
-    A_LAT = 0.164
+    # Sweep lever: lateral distance from the mount pivot to the wing MAC.
+    # Wing BoxGeometry span = 65 (semi-span 65 from centreline); MAC sits at
+    # mid-semi-span 32.5, mount at ±4.5 → 28 units outboard. Normalized by
+    # HALF_BODY so z_eff = d − A_LAT·tan(θ) shifts the AC fore/aft with sweep.
+    # (Was 0.164 = shoulder half-width — ~6× too weak, made sweep look inert.)
+    A_LAT = 28.0 / HALF_BODY   # ≈ 1.018
     cg = self._cg ? 0
     levers = []
     ranks = []
@@ -931,8 +936,6 @@ TABS.simulator._updateModel = ->
 TABS.simulator._physicsStep = ->
     self = this
     n = self._pairCount ? 2
-    A_LAT = 0.164   # normalized half-width at wing root (4.5 / 27.5)
-    cg = self._cg ? 0
 
     # ═══════════════════════════════════════════════════════════
     #  WING-DRIVEN AERODYNAMICS — the deployed wing is the ONLY
@@ -955,7 +958,7 @@ TABS.simulator._physicsStep = ->
     # span line:  z_eff[p] = d_p − a·tan(θ_p)
     #   θ_p = mount angle (deg, + = swept back)
     #   d_p = mount distance (normalized σ, + = nose)
-    #   a   = A_LAT (normalized half-width)
+    #   a   = sweep lever (MAC lateral offset from mount pivot, normalized ≈ 1.018)
     # Pitch lever = z_eff − CG ; roll ∝ cos(θ) ; yaw ∝ sin²(θ).
     geo = self._pitchGeometry()
     ranks = geo.ranks

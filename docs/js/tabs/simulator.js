@@ -303,7 +303,7 @@ TABS.simulator._pitchGeometry = function() {
   var A_LAT, cg, d, j, k, lever, levers, maxLever, n, p, rad, ranks, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, self, th, zEff;
   self = this;
   n = (ref = self._pairCount) != null ? ref : 2;
-  A_LAT = 0.164;
+  A_LAT = 28.0 / HALF_BODY;
   cg = (ref1 = self._cg) != null ? ref1 : 0;
   levers = [];
   ranks = [];
@@ -1048,11 +1048,9 @@ TABS.simulator._updateModel = function() {
 };
 
 TABS.simulator._physicsStep = function() {
-  var A_LAT, LIMIT, aileronDeg, ampScale, ampYawCoef, ampYawDeg, anchorBoost, authority, centerYawDeg, cg, cosT, ctrlPitch, ctrlRoll, ctrlYaw, dampBase, dampPitch, dampRoll, dampYaw, elevatorDeg, geo, glideScale, j, lever, levers, mix, n, p, pitchCoef, pitchSum, rad, ranks, ref, ref1, ref2, ref3, ref4, ref5, rollCoef, rollCos, rudderDeg, self, sin30, sinT, th, yawCoef, yawMount, yawSin2;
+  var LIMIT, aileronDeg, ampScale, ampYawCoef, ampYawDeg, anchorBoost, authority, centerYawDeg, cosT, ctrlPitch, ctrlRoll, ctrlYaw, dampBase, dampPitch, dampRoll, dampYaw, elevatorDeg, geo, glideScale, j, lever, levers, mix, n, p, pitchCoef, pitchSum, rad, ranks, ref, ref1, ref2, ref3, ref4, rollCoef, rollCos, rudderDeg, self, sin30, sinT, th, yawCoef, yawMount, yawSin2;
   self = this;
   n = (ref = self._pairCount) != null ? ref : 2;
-  A_LAT = 0.164;
-  cg = (ref1 = self._cg) != null ? ref1 : 0;
   elevatorDeg = (self._slew.feroPitchFA || 0) * 15.0;
   aileronDeg = (self._slew.feroDiffR || 0) * 15.0;
   rudderDeg = (self._slew.feroDiffY || 0) * 15.0;
@@ -1065,13 +1063,13 @@ TABS.simulator._physicsStep = function() {
   pitchSum = 0.0;
   rollCos = 0.0;
   yawSin2 = 0.0;
-  for (p = j = 0, ref2 = n; 0 <= ref2 ? j < ref2 : j > ref2; p = 0 <= ref2 ? ++j : --j) {
-    th = (ref3 = self._mountAngle[p]) != null ? ref3 : 0;
+  for (p = j = 0, ref1 = n; 0 <= ref1 ? j < ref1 : j > ref1; p = 0 <= ref1 ? ++j : --j) {
+    th = (ref2 = self._mountAngle[p]) != null ? ref2 : 0;
     rad = th * PI / 180;
     cosT = Math.cos(rad);
     sinT = Math.sin(rad);
-    lever = (ref4 = levers[p]) != null ? ref4 : 0;
-    pitchSum += (elevatorDeg * ((ref5 = ranks[p]) != null ? ref5 : 0)) * cosT * lever;
+    lever = (ref3 = levers[p]) != null ? ref3 : 0;
+    pitchSum += (elevatorDeg * ((ref4 = ranks[p]) != null ? ref4 : 0)) * cosT * lever;
     rollCos += cosT;
     yawSin2 += sinT * sinT;
   }
